@@ -1,3 +1,4 @@
+import 'package:fitness/screens/authentications/forget_password/ForgetPassword.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginWidget.dart';
 import 'package:fitness/screens/authentications/signup_screen/SignUpScreen.dart';
@@ -21,15 +22,15 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: AppSizes.spaceBtwSections + 30),
-               Container(
-                 alignment: Alignment.topLeft,
-                child: Icon(
+              Container(
+                alignment: Alignment.topLeft,
+                child: const Icon(
                   Icons.fitness_center,
                   size: 100,
                   color: Colors.blueAccent,
                 ),
               ),
-              const SizedBox(height: AppSizes.spaceBtwSections+10),
+              const SizedBox(height: AppSizes.spaceBtwSections + 10),
 
               // Welcome Textx
               const Text(
@@ -41,14 +42,25 @@ class LoginScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.start,
               ),
-              const SizedBox(height: AppSizes.appBarHeight ),
+              const SizedBox(height: AppSizes.appBarHeight),
 
               const LoginWidget(),
 
+              Container(
+                margin: const EdgeInsets.only(right: 20),
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                    onPressed: () {
+                      Get.to(() => ForgetPassword());
+                    },
+                    child: Text('Forget Password',textAlign: TextAlign.end,
+                        style: Theme.of(context).textTheme.labelMedium)),
+              ),
               const SizedBox(height: AppSizes.spaceBtwSections),
               const LoginDividerWidget(),
 
               const SizedBox(height: AppSizes.appBarHeight + 10),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -58,8 +70,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-
-                      Get.to(()=>const SignUpScreen());
+                      Get.to(() => const SignUpScreen());
                       // Handle sign-up action
                     },
                     child: const Text('Sign Up'),

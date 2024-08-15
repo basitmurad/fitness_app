@@ -4,15 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-class LoginController extends GetxController{
-
+class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  var isPasswordVisible = true.obs;
 
-
-
-  void login(){
-
+  void login() {
     final email = emailController.text;
     final password = passwordController.text;
 
@@ -27,17 +24,13 @@ class LoginController extends GetxController{
       return;
     }
 
-    final  result= validatePassword(password);
-    if(result!=null){
-
+    final result = validatePassword(password);
+    if (result != null) {
       Fluttertoast.showToast(msg: result);
       return;
     }
 
-
     Fluttertoast.showToast(msg: "Login Successfully");
-
-
   }
 
   String? validatePassword(String password) {
@@ -55,6 +48,11 @@ class LoginController extends GetxController{
     }
     return null; // Password is valid
   }
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
   @override
   void onClose() {
     emailController.dispose();

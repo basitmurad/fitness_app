@@ -15,11 +15,10 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final LoginController controller = Get.put(LoginController());
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10 ,),
+      padding: const EdgeInsets.symmetric(horizontal: 10,),
       child: Form(child: Column(children: [
 
 
@@ -38,39 +37,45 @@ class LoginWidget extends StatelessWidget {
           ),
         ),
 
-        const SizedBox( height: AppSizes.spaceBtwInputFields,),
-        TextFormField(
-          controller: controller.passwordController,
+        const SizedBox(height: AppSizes.spaceBtwInputFields,),
+        Obx((){
+          return         TextFormField(
+            controller: controller.passwordController,
+            obscureText:true,
 
-          decoration: InputDecoration(
+            decoration: InputDecoration(
 
-            label: const Text('Password'),
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              borderSide: BorderSide(color: Colors.black),
+              label: const Text('Password'),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(color: Colors.black),
+              ),
+              hintText: '1cwer34d',
+
+
+              suffixIcon:
+              IconButton(
+                icon: Icon(
+                  controller.isPasswordVisible.value
+                      ? Icons.visibility
+                      : Icons.visibility_off,
+                ),
+                onPressed: controller.togglePasswordVisibility,
+              ),
+
+
             ),
-            hintText: '1cwer34d',
+          );
 
-            suffixIcon: GestureDetector(
-              onTap: () {
-                // Add your action here
-                print('Suffix icon tapped!');
-                Fluttertoast.showToast(msg: "Click");
-              },
-              child: const Icon(Icons.password),
-            ),
-          ),
-        ),
+        })
 
-
-
-        const SizedBox(height: AppSizes.appBarHeight -15,),
+,
+        const SizedBox(height: AppSizes.appBarHeight - 15,),
         SizedBox(
-            width: AppDevicesUtils.getScreenWidth(context) * 0.8 ,
-            child: ElevatedButton(onPressed: (){
-
+            width: AppDevicesUtils.getScreenWidth(context) * 0.8,
+            child: ElevatedButton(onPressed: () {
               controller.login();
-            }, child: const Text('Login' ,style: TextStyle(fontSize: 14),)))
+            }, child: const Text('Login', style: TextStyle(fontSize: 14),)))
       ],)),
     );
   }

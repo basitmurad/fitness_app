@@ -1,7 +1,9 @@
+import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
+import 'package:fitness/screens/authentications/login_screen/widgets/LoginWidget.dart';
+import 'package:fitness/screens/authentications/signup_screen/SignUpScreen.dart';
 import 'package:fitness/utils/constants/sizes/AppSizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/constants/device/AppDevicesUtils.dart';
@@ -11,83 +13,63 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-
-            SizedBox(height: AppSizes.spaceBtwSections +30,),
-            const Center(
-              child: Icon(
-                Icons.fitness_center,
-                size: 100,
-                color: Colors.blueAccent,
-              ),
-            ),
-            const SizedBox(height: 40),
-
-            // Welcome Text
-            const Text(
-              'Welcome to Fitness App',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: AppSizes.appBarHeight +30),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10 ,),
-              child: Form(child: Column(children: [
-
-
-                TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text('Email'),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide(color: Colors.black)
-                    ),
-
-                    hintText: 'abx1234@gmail.com',
-                    suffixIcon: Icon(Icons.email),
-
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: AppSizes.spaceBtwSections + 30),
+               Container(
+                 alignment: Alignment.topLeft,
+                child: Icon(
+                  Icons.fitness_center,
+                  size: 100,
+                  color: Colors.blueAccent,
                 ),
+              ),
+              const SizedBox(height: AppSizes.spaceBtwSections+10),
 
-                const SizedBox( height: AppSizes.spaceBtwInputFields,),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text('Password'),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide(color: Colors.black)
-                    ),
-
-                    hintText: '1cwer34d',
-                    suffixIcon: Icon(Icons.password),
-
-                  ),
+              // Welcome Textx
+              const Text(
+                'Connect, Compete,\nand Conquer Your Fitness Goals Together.',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.start,
+              ),
+              const SizedBox(height: AppSizes.appBarHeight ),
 
+              const LoginWidget(),
 
-                SizedBox(height: AppSizes.appBarHeight -15,),
-                SizedBox(
-                  width: AppDevicesUtils.getScreenWidth(context) * 0.8 ,
-                    height: 49,
-                    child: ElevatedButton(onPressed: (){}, child: Text('Login' ,style: TextStyle(fontSize: 14),)))
-              ],)),
-            )
+              const SizedBox(height: AppSizes.spaceBtwSections),
+              const LoginDividerWidget(),
 
+              const SizedBox(height: AppSizes.appBarHeight + 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Create An Account ?',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  TextButton(
+                    onPressed: () {
 
-
-          ],
+                      Get.to(()=>const SignUpScreen());
+                      // Handle sign-up action
+                    },
+                    child: const Text('Sign Up'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-
     );
   }
 }

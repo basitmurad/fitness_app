@@ -1,12 +1,13 @@
+import 'package:fitness/screens/authentications/forget_password/ResetPassword.dart';
 import 'package:fitness/screens/authentications/forget_password/controller/ForgetController.dart';
-import 'package:fitness/utils/constants/device/AppDevicesUtils.dart';
-import 'package:fitness/utils/constants/sizes/AppSizes.dart';
+import 'package:fitness/utils/constants/AppDevicesUtils.dart';
+import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../utils/constants/image_paths/ImagePaths.dart';
+import '../../../utils/constants/ImagePaths.dart';
 
 class ForgetPassword extends StatelessWidget {
    ForgetPassword({super.key});
@@ -49,6 +50,8 @@ class ForgetPassword extends StatelessWidget {
             SizedBox(
               width: AppDevicesUtils.getScreenWidth(context) * 0.8,
               child: ElevatedButton(onPressed: (){
+
+                Get.to(() => ResetPassword());
 
               }, child: const Text('Submit'),),
             )

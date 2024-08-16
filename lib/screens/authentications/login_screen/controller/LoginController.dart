@@ -31,6 +31,7 @@ class LoginController extends GetxController {
     }
 
     Fluttertoast.showToast(msg: "Login Successfully");
+
   }
 
   String? validatePassword(String password) {
@@ -51,6 +52,10 @@ class LoginController extends GetxController {
 
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
+  void createNewUser(String email , String password){
+
   }
 
   @override

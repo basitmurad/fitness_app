@@ -9,25 +9,25 @@ class LoginDividerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(left: 20,right: 20),
       child: Row(
         children: [
           Expanded(
             child: Divider(
-              color: Colors.black,
+              color: Colors.grey,
               thickness: 2.0,
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
-              'OR',
+              'Or Sign In With',
               style: TextStyle(fontSize: 16),
             ),
           ),
           Expanded(
             child: Divider(
-              color: Colors.black,
+              color: Colors.grey,
               thickness: 2.0,
             ),
           ),

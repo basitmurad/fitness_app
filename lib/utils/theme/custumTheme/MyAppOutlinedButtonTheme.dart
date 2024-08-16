@@ -1,6 +1,6 @@
 
-import 'package:fitness/utils/appcolor/AppColor.dart';
-import 'package:fitness/utils/constants/sizes/AppSizes.dart';
+import 'package:fitness/utils/constants/AppColor.dart';
+import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:flutter/material.dart';
 class MyAppOutlinedButtonTheme{
 

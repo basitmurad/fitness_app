@@ -2,12 +2,13 @@ import 'package:fitness/screens/authentications/forget_password/ForgetPassword.d
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginWidget.dart';
 import 'package:fitness/screens/authentications/signup_screen/SignUpScreen.dart';
-import 'package:fitness/utils/constants/sizes/AppSizes.dart';
+import 'package:fitness/utils/constants/ImagePaths.dart';
+import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/constants/device/AppDevicesUtils.dart';
+import '../../../utils/constants/AppDevicesUtils.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -21,7 +22,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: AppSizes.spaceBtwSections + 30),
+              const SizedBox(height: AppSizes.spaceBtwSections + 10),
               Container(
                 alignment: Alignment.topLeft,
                 child: const Icon(
@@ -30,7 +31,7 @@ class LoginScreen extends StatelessWidget {
                   color: Colors.blueAccent,
                 ),
               ),
-              const SizedBox(height: AppSizes.spaceBtwSections + 10),
+              const SizedBox(height: AppSizes.spaceBtwSections ),
 
               // Welcome Textx
               const Text(
@@ -42,39 +43,51 @@ class LoginScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.start,
               ),
-              const SizedBox(height: AppSizes.appBarHeight),
+              const SizedBox(height: AppSizes.spaceBtwSections),
 
               const LoginWidget(),
 
-              Container(
-                margin: const EdgeInsets.only(right: 20),
-                alignment: Alignment.bottomRight,
-                child: TextButton(
-                    onPressed: () {
-                      Get.to(() => ForgetPassword());
-                    },
-                    child: Text('Forget Password',textAlign: TextAlign.end,
-                        style: Theme.of(context).textTheme.labelMedium)),
-              ),
               const SizedBox(height: AppSizes.spaceBtwSections),
+
               const LoginDividerWidget(),
 
-              const SizedBox(height: AppSizes.appBarHeight + 10),
+
+              const SizedBox(height: AppSizes.spaceBtwSections -10,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Create An Account ?',
-                    style: TextStyle(fontSize: 14),
+
+                  Container(
+                    width: 60.0,
+                    height: 60.0,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Background color inside the circle
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.grey, // Stroke color
+                        width: 2.0, // Stroke width
+                      ),
+                    ),
+                    child: Image.asset(ImagePaths.googleIcon),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Get.to(() => const SignUpScreen());
-                      // Handle sign-up action
-                    },
-                    child: const Text('Sign Up'),
+                  const SizedBox(width: 10),
+                  Container(
+                    width: 60.0,
+                    height: 60.0,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Background color inside the circle
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.grey, // Stroke color
+                        width: 2.0, // Stroke width
+                      ),
+                    ),
+                    child: Image.asset(ImagePaths.googleIcon),
                   ),
+
                 ],
               ),
             ],

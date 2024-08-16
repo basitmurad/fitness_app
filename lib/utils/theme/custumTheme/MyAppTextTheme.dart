@@ -1,4 +1,4 @@
-import 'package:fitness/utils/appcolor/AppColor.dart';
+import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:flutter/material.dart';
 class MyAppTextTheme{
 

@@ -1,3 +1,4 @@
+
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -7,22 +8,27 @@ class OnboardingController extends GetxController {
 
   final pageController = PageController();
 
-  RxInt currentIndex = 0.obs;
+  Rx<int> currentPageIndex = 0.obs;
 
-  void updatePage(int index) {
-    currentIndex.value = index;
-  }
+  void updatePage(int index) => currentPageIndex.value = index;
 
   void nextPage() {
-    if (currentIndex == 2) {
+    if (currentPageIndex.value == 2) {
       Get.offAll(const LoginScreen());
     } else {
-      int page = currentIndex.value + 1;
+      int page = currentPageIndex.value + 1;
       pageController.jumpToPage(page);
     }
   }
 
-  void skipPage(){
-Get.offAll(const LoginScreen());
+  void dotNavigatorClick(int index) {
+    currentPageIndex.value = index;
+    pageController.jumpToPage(index);
+  }
+
+  void skipPage() {
+    currentPageIndex.value = 2;
+    pageController.jumpToPage(2);
+    Get.offAll(const LoginScreen());
   }
 }

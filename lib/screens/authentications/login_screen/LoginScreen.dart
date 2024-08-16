@@ -1,14 +1,11 @@
 import 'package:fitness/screens/authentications/forget_password/ForgetPassword.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginWidget.dart';
-import 'package:fitness/screens/authentications/signup_screen/SignUpScreen.dart';
-import 'package:fitness/utils/constants/ImagePaths.dart';
+import 'package:fitness/screens/authentications/login_screen/widgets/SocialButton.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../../utils/constants/AppDevicesUtils.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -54,42 +51,7 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: AppSizes.spaceBtwSections -10,),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-
-                  Container(
-                    width: 60.0,
-                    height: 60.0,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white, // Background color inside the circle
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.grey, // Stroke color
-                        width: 2.0, // Stroke width
-                      ),
-                    ),
-                    child: Image.asset(ImagePaths.googleIcon),
-                  ),
-                  const SizedBox(width: 10),
-                  Container(
-                    width: 60.0,
-                    height: 60.0,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white, // Background color inside the circle
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.grey, // Stroke color
-                        width: 2.0, // Stroke width
-                      ),
-                    ),
-                    child: Image.asset(ImagePaths.googleIcon),
-                  ),
-
-                ],
-              ),
+              const SocialButton(),
             ],
           ),
         ),
@@ -97,3 +59,4 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+

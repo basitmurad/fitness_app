@@ -87,6 +87,7 @@ class AppDevicesUtils {
     return MediaQuery.of(Get.context!).size.width;
   }
 
+
   static void showStatusBar() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   }

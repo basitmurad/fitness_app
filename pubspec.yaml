@@ -20,6 +20,7 @@ dependencies:
   iconsax: ^0.0.8
   fluttertoast: ^8.2.8
   email_validator: ^3.0.0
+  smooth_page_indicator: ^1.2.0+3
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +37,7 @@ flutter:
   assets:
     - assets/myicons/
     - assets/images/
+    - assets/illustration/
 
 
 

@@ -83,6 +83,9 @@ class AppDevicesUtils {
   static void hideStatusBar() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   }
+  static double screenWidth() {
+    return MediaQuery.of(Get.context!).size.width;
+  }
 
   static void showStatusBar() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);

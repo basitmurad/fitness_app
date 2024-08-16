@@ -39,7 +39,6 @@ flutter:
 
 
 
-  #--------------- LOCAL FONTS ------------------#
   fonts:
     - family: Poppins
       fonts:

@@ -2,7 +2,6 @@ import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../utils/constants/AppDevicesUtils.dart';
 
 class SignUpScreen extends StatelessWidget {

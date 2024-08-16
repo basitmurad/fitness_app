@@ -1,4 +1,5 @@
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
+import 'package:fitness/screens/authentications/onboarding_screen/Onbooarding.dart';
 import 'package:fitness/utils/constants/theme/MyAppTextFieldTheme.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
-        home: LoginScreen());
+        home: OnboardingScreen());
     // return MaterialApp(
     //   title: 'Flutter Demo',
     //   theme: ThemeData(

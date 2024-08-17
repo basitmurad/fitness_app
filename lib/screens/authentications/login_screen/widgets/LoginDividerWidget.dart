@@ -22,7 +22,7 @@ class LoginDividerWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
               'Or Sign In With',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16 ,color: Colors.black),
             ),
           ),
           Expanded(

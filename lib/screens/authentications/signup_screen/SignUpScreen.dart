@@ -1,8 +1,10 @@
-import 'package:fitness/utils/constants/AppImagePaths.dart';
+import 'package:fitness/screens/authentications/signup_screen/controller/SignUpController.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
 
@@ -11,6 +13,8 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SignUpController genderController = Get.put(SignUpController());
+
     return  Scaffold(
       appBar: AppBar(
 
@@ -44,7 +48,26 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSizes.spaceBtwInputFields,),
-                TextFormField(
+          TextFormField(
+            style: const TextStyle(color: Colors.black),
+
+            decoration: InputDecoration(
+              label:   Text(AppStrings.password ),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(color: Colors.black),
+              ),
+
+              hintText: AppStrings.password,
+
+              suffixIcon: IconButton(onPressed: (){}, icon: const Icon(Icons.visibility),)
+
+            ),
+          )
+                ,
+
+              const SizedBox(height: AppSizes.spaceBtwInputFields,),
+          TextFormField(
                   decoration:  InputDecoration(
                     label: Text(AppStrings.name),
                     border: const OutlineInputBorder(
@@ -60,25 +83,34 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(height: AppSizes.spaceBtwInputFields,),
 
 
+          Row(
 
-                TextFormField(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Obx(() => Radio<String>(
+                value: AppStrings.male,
+                groupValue: genderController.selectedGender.value,
+                onChanged: (value) {
+                  genderController.setGender(value!);
+                },
+              )),
+               Text(AppStrings.male),
 
-                  decoration: const InputDecoration(
-                    label: Text('Age'),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                        borderSide: BorderSide(color: Colors.black)
-                    ),
+              const SizedBox( width: 70,),
+              Obx(() => Radio<String>(
+                value: AppStrings.female,
+                groupValue: genderController.selectedGender.value,
+                onChanged: (value) {
+                  genderController.setGender(value!);
+                },
+              )),
+               Text(AppStrings.female),
+            ],
+          ),
 
 
 
-                    hintText: '10',
-                    suffixIcon: Icon(Iconsax.user),
-
-                  ),
-                ),
-                const SizedBox(height: AppSizes.spaceBtwInputFields+20,),
-
+                const SizedBox(height: AppSizes.spaceBtwSections+30,),
 
 
                 SizedBox(

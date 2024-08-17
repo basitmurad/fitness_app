@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 
-
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
@@ -20,6 +19,7 @@ class OnboardingScreen extends StatelessWidget {
 
     return Scaffold(
       body: Stack(
+        // alignment: Alignment.center,
         children: [
           PageView(
             controller: controller.pageController,

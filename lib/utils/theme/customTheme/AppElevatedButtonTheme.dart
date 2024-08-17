@@ -19,6 +19,7 @@ class AppElevatedButtonTheme
     )
 
 
+
   );
   static final darkTheme= ElevatedButtonThemeData(
 
@@ -33,6 +34,8 @@ class AppElevatedButtonTheme
           textStyle: const TextStyle(fontSize: 16, color: Colors.white , fontWeight: FontWeight.w700),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))
       )
+
+
 
   );
 }

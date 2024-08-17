@@ -21,6 +21,8 @@ dependencies:
   fluttertoast: ^8.2.8
   email_validator: ^3.0.0
   smooth_page_indicator: ^1.2.0+3
+  flutter_native_splash: ^2.4.1
+  firebase_core: ^2.24.2
 
 dev_dependencies:
   flutter_test:

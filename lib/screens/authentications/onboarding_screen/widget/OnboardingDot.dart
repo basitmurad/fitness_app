@@ -12,13 +12,17 @@ class OnboardingDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =OnboardingController.instance;
+    final controller = OnboardingController.instance;
     return Positioned(
-        bottom: AppDevicesUtils.getBottomNavigationHeight()+20,
+
+        bottom: AppDevicesUtils.getBottomNavigationHeight(),
         left: AppSizes.defaultSpace,
         child: SmoothPageIndicator(
           onDotClicked: controller.dotNavigatorClick,
           controller: controller.pageController, count: 3,
-          effect: const ExpandingDotsEffect(activeDotColor: AppColor.borderPrimary,dotHeight: 6),));
-  }
-}
+          effect: const ExpandingDotsEffect(
+
+              dotColor: AppColor.grey,
+
+              activeDotColor: AppColor.buttonPrimary, dotHeight: 6),));
+

@@ -12,6 +12,16 @@ class AppStrings{
 
 
 static String done = "Done";
+static String menu = "Menu";
+
+static String dashboard = "Dashboard";
+static String logout = "Logout";
+static String male = "Male";
+static String setting = "Settings";
+static String home = "Home";
+static String password = "Password";
+static String female = "Female";
+static String connectCompelete = "Connect, Compete,\nand Conquer Your Fitness Goals Together";
 static String name = "Name";
 static String signUP = "Sign up";
 static String nameText = "basit murad";

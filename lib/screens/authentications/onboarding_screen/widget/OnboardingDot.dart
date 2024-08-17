@@ -25,4 +25,6 @@ class OnboardingDot extends StatelessWidget {
               dotColor: AppColor.grey,
 
               activeDotColor: AppColor.buttonPrimary, dotHeight: 6),));
+  }}
+
 

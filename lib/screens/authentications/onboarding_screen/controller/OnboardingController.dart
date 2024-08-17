@@ -1,4 +1,3 @@
-
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';

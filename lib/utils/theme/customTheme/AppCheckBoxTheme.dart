@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-class MyAppCheckBoxTheme{
+class AppCheckBoxTheme{
 
-  MyAppCheckBoxTheme._();
+  AppCheckBoxTheme._();
 
   static CheckboxThemeData lightTheme = CheckboxThemeData(
 
@@ -11,6 +11,7 @@ class MyAppCheckBoxTheme{
       if(states.contains(MaterialState.selected))
         {
           return Colors.white;
+
         }
       else {
         return Colors.black;

@@ -2,9 +2,9 @@
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:flutter/material.dart';
-class MyAppOutlinedButtonTheme{
+class AppOutlinedButtonTheme{
 
-  MyAppOutlinedButtonTheme._();
+  AppOutlinedButtonTheme._();
 
   static final lightTheme  = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
@@ -28,30 +28,6 @@ class MyAppOutlinedButtonTheme{
     ),
   );
 
-  // static final lightTheme = OutlinedButtonThemeData(
-  //
-  //     style: ElevatedButton.styleFrom(
-  //         elevation: 0,
-  //         foregroundColor: MyAppColors.dark ,
-  //
-  //         side: BorderSide(color: MyAppColors.borderPrimary),
-  //         padding: EdgeInsets.symmetric(vertical: 18),
-  //         textStyle: TextStyle(fontSize: 16, color: Colors.black , fontWeight: FontWeight.w700),
-  //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))
-  //     )
-  // );
-  // static final darkTheme = OutlinedButtonThemeData(
-  //
-  //     style: ElevatedButton.styleFrom(
-  //         elevation: 0,
-  //         foregroundColor: Colors.white ,
-  //
-  //         side: BorderSide(color: Colors.blueAccent),
-  //         padding: EdgeInsets.symmetric(vertical: 18),
-  //         textStyle: TextStyle(fontSize: 16, color: Colors.white  , fontWeight: FontWeight.w700),
-  //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))
-  //     )
-  //
-  // );
+
 
 }

@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../utils/constants/AppDevicesUtils.dart';
 import '../../../../utils/constants/AppSizes.dart';
 
-class OnbooardingPages extends StatelessWidget {
-  const OnbooardingPages({
+class OnboardingPages extends StatelessWidget {
+  const OnboardingPages({
     super.key, required this.title, required this.subtitle, required this.imagePath,
   });
 

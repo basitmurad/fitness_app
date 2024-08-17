@@ -1,14 +1,12 @@
-
 import 'package:flutter/material.dart';
-
-import 'custumTheme/MyAppBarTheme.dart';
-import 'custumTheme/MyAppBottomSheetTheme.dart';
-import 'custumTheme/MyAppCheckBoxTheme.dart';
-import 'custumTheme/MyAppChipTheme.dart';
-import 'custumTheme/MyAppElevatedButtonTheme.dart';
-import 'custumTheme/MyAppOutlinedButtonTheme.dart';
-import 'custumTheme/MyAppTextFieldTheme.dart';
-import 'custumTheme/MyAppTextTheme.dart';
+import 'customTheme/AppBarTheme.dart';
+import 'customTheme/AppBottomSheetTheme.dart';
+import 'customTheme/AppCheckBoxTheme.dart';
+import 'customTheme/AppChipTheme.dart';
+import 'customTheme/AppElevatedButtonTheme.dart';
+import 'customTheme/AppOutlinedButtonTheme.dart';
+import 'customTheme/AppTextFieldTheme.dart';
+import 'customTheme/AppTextTheme.dart';
 
 class MyAppTheme {
   MyAppTheme._();
@@ -18,27 +16,27 @@ class MyAppTheme {
       fontFamily: 'Poppins',
       brightness: Brightness.light,
       primaryColor: Colors.blue,
-      textTheme: MyAppTextTheme.lightTextTheme,
-      chipTheme: MyAppChipTheme.lightTheme,
+      textTheme: AppTextTheme.lightTextTheme,
+      chipTheme: AppChipTheme.lightTheme,
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: MyAppBarTheme.lightTheme,
-      elevatedButtonTheme: MyAppElevatedButtomTheme.lightTheme,
-      outlinedButtonTheme: MyAppOutlinedButtonTheme.lightTheme,
-      bottomSheetTheme: MyAppBottomSheetTheme.lightTheme,
-      checkboxTheme: MyAppCheckBoxTheme.lightTheme,
-      inputDecorationTheme: MyAppTextFieldTheme.lightTheme);
+      elevatedButtonTheme: AppElevatedButtonTheme.lightTheme,
+      outlinedButtonTheme: AppOutlinedButtonTheme.lightTheme,
+      bottomSheetTheme: AppBottomSheetTheme.lightTheme,
+      checkboxTheme: AppCheckBoxTheme.lightTheme,
+      inputDecorationTheme: AppTextFieldTheme.lightTheme);
   static ThemeData darkTheme = ThemeData(
       useMaterial3: true,
       fontFamily: 'Poppins',
       brightness: Brightness.dark,
       primaryColor: Colors.blue,
-      textTheme: MyAppTextTheme.darkTextTheme,
-      chipTheme: MyAppChipTheme.darkTheme,
+      textTheme: AppTextTheme.darkTextTheme,
+      chipTheme: AppChipTheme.darkTheme,
       scaffoldBackgroundColor: Colors.black,
       appBarTheme: MyAppBarTheme.darkTheme,
-      elevatedButtonTheme: MyAppElevatedButtomTheme.darkTheme,
-      outlinedButtonTheme: MyAppOutlinedButtonTheme.darkTheme,
-      bottomSheetTheme: MyAppBottomSheetTheme.darkTheme,
-      checkboxTheme: MyAppCheckBoxTheme.darkTheme,
-      inputDecorationTheme: MyAppTextFieldTheme.darkTheme);
+      elevatedButtonTheme: AppElevatedButtonTheme.darkTheme,
+      outlinedButtonTheme: AppOutlinedButtonTheme.darkTheme,
+      bottomSheetTheme: AppBottomSheetTheme.darkTheme,
+      checkboxTheme: AppCheckBoxTheme.darkTheme,
+      inputDecorationTheme: AppTextFieldTheme.darkTheme);
 }

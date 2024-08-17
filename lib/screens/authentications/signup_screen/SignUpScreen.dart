@@ -1,4 +1,6 @@
+import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
+import 'package:fitness/utils/constants/AppString.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -22,36 +24,36 @@ class SignUpScreen extends StatelessWidget {
             children: [
 
 
-              Text('Unlock Your Best Self—Join Us Today!' ,style: Theme.of(context).textTheme.bodyLarge,),
+              Text(AppStrings.unlockBest ,style: Theme.of(context).textTheme.bodyLarge,),
               const SizedBox(height: AppSizes.spaceBtwSections +20,),
 
               Form(child: Column(children: [
 
 
                 TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text('Email'),
-                    border: OutlineInputBorder(
+                  decoration:  InputDecoration(
+                    label: Text(AppStrings.emailText),
+                    border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                         borderSide: BorderSide(color: Colors.black)
                     ),
 
-                    hintText: 'abx1234@gmail.com',
-                    suffixIcon: Icon(Iconsax.direct),
+                    hintText: AppStrings.email,
+                    suffixIcon: const Icon(Iconsax.direct),
 
                   ),
                 ),
                 const SizedBox(height: AppSizes.spaceBtwInputFields,),
                 TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text('Name'),
-                    border: OutlineInputBorder(
+                  decoration:  InputDecoration(
+                    label: Text(AppStrings.name),
+                    border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                         borderSide: BorderSide(color: Colors.black)
                     ),
 
-                    hintText: 'basit murad',
-                    suffixIcon: Icon(Icons.person),
+                    hintText: AppStrings.nameText,
+                    suffixIcon: const Icon(Icons.person),
 
                   ),
                 ),
@@ -83,10 +85,11 @@ class SignUpScreen extends StatelessWidget {
                   width: AppDevicesUtils.getScreenWidth(context) * 0.8,
                   child: ElevatedButton(onPressed: (){
 
+
                     AppDevicesUtils.hideKeyboard(context);
 
-                  }, child: const Text
-                    ('Sign up'),),
+                  }, child:  Text
+                    (AppStrings.signUP),),
                 )
 
               ],))

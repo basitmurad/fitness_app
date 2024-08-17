@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-class MyAppBottomSheetTheme{
+class AppBottomSheetTheme{
 
-  MyAppBottomSheetTheme._();
+  AppBottomSheetTheme._();
 
   static BottomSheetThemeData lightTheme = BottomSheetThemeData(
 
@@ -9,7 +9,7 @@ class MyAppBottomSheetTheme{
     backgroundColor: Colors.white,
     modalBackgroundColor: Colors.white,
 
-    constraints: BoxConstraints(maxWidth: double.infinity),
+    constraints: const BoxConstraints(maxWidth: double.infinity),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
   );
   static BottomSheetThemeData darkTheme = BottomSheetThemeData(
@@ -18,7 +18,7 @@ class MyAppBottomSheetTheme{
     backgroundColor: Colors.black,
     modalBackgroundColor: Colors.black,
 
-    constraints: BoxConstraints(maxWidth: double.infinity),
+    constraints: const BoxConstraints(maxWidth: double.infinity),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
 
   );

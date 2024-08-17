@@ -1,5 +1,8 @@
+import 'package:fitness/utils/constants/AppColor.dart';
+import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -16,12 +19,12 @@ class Dashboard extends StatelessWidget {
           children: <Widget>[
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: AppColor.borderPrimary,
               ),
               child: Text(
                 'Menu',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColor.buttonDisabled,
                   fontSize: 24,
                 ),
               ),
@@ -52,8 +55,20 @@ class Dashboard extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            // Your dashboard content here
+          children: [
+            Container(
+              height: AppDevicesUtils.getScreenWidth(context) * 0.5,
+              width: AppDevicesUtils.getScreenWidth(context) * 0.5,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(10),
+              ),
+            )
+            // Yo ur dashboard content here
+
+
+
+
           ],
         ),
       ),

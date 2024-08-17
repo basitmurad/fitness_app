@@ -2,9 +2,9 @@ import 'package:fitness/screens/authentications/onboarding_screen/controller/Onb
 import 'package:fitness/screens/authentications/onboarding_screen/widget/OnboardingDot.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/widget/OnboardingNext.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/widget/OnboardingSkip.dart';
-import 'package:fitness/screens/authentications/onboarding_screen/widget/OnbooardingPages.dart';
+import 'package:fitness/screens/authentications/onboarding_screen/widget/OnboardingPages.dart';
 import 'package:fitness/utils/constants/AppString.dart';
-import 'package:fitness/utils/constants/ImagePaths.dart';
+import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -25,20 +25,20 @@ class OnboardingScreen extends StatelessWidget {
             controller: controller.pageController,
             onPageChanged: controller.updatePage,
             children: [
-              OnbooardingPages(
+              OnboardingPages(
                 title: AppStrings.pic1TextHeader,
                 subtitle: AppStrings.pic1TextDetail,
-                imagePath: ImagePaths.forgetillustration,
+                imagePath: AppImagePaths.forgetillustration,
               ),
-              OnbooardingPages(
+              OnboardingPages(
                 title: AppStrings.pic2TextHeader,
                 subtitle: AppStrings.pic2TextDetail,
-                imagePath: ImagePaths.forgetillustration,
+                imagePath: AppImagePaths.forgetillustration,
               ),
-              OnbooardingPages(
+              OnboardingPages(
                 title: AppStrings.pic3TextHeader,
                 subtitle: AppStrings.pic3TextDetail,
-                imagePath: ImagePaths.pic1,
+                imagePath: AppImagePaths.pic1,
               ),
             ],
           ),

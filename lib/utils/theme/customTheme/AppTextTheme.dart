@@ -1,8 +1,8 @@
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:flutter/material.dart';
-class MyAppTextTheme{
+class AppTextTheme{
 
-  MyAppTextTheme._();
+  AppTextTheme._();
 
   static TextTheme lightTextTheme= TextTheme(
     headlineLarge: const TextStyle().copyWith(fontSize: 32.0, fontWeight: FontWeight.bold, color: AppColor.dark),
@@ -36,6 +36,7 @@ class MyAppTextTheme{
     bodySmall: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w500, color: AppColor.light.withOpacity(0.5)),
     labelLarge: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.normal, color: AppColor.light),
     labelMedium: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.normal, color: AppColor.light.withOpacity(0.5)),
+
 
   );
 

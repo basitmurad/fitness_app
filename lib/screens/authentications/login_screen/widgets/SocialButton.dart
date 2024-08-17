@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/constants/ImagePaths.dart';
+import '../../../../utils/constants/AppImagePaths.dart';
 
 class SocialButton extends StatelessWidget {
   const SocialButton({
@@ -26,7 +26,7 @@ class SocialButton extends StatelessWidget {
               width: 2.0, // Stroke width
             ),
           ),
-          child: Image.asset(ImagePaths.googleIcon),
+          child: Image.asset(AppImagePaths.googleIcon),
         ),
         const SizedBox(width: 10),
         Container(
@@ -41,7 +41,7 @@ class SocialButton extends StatelessWidget {
               width: 2.0, // Stroke width
             ),
           ),
-          child: Image.asset(ImagePaths.googleIcon),
+          child: Image.asset(AppImagePaths.googleIcon),
         ),
 
       ],

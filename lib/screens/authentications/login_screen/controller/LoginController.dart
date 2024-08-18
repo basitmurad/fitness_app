@@ -15,23 +15,24 @@ class LoginController extends GetxController {
 
     // Validate email and password
     if (email.isEmpty || password.isEmpty) {
-      Fluttertoast.showToast(msg: "Please fill in all fields.");
+      setMessage('Failed', 'Fields are empty', Colors.redAccent);
       return;
     }
 
     if (!EmailValidator.validate(email)) {
-      Fluttertoast.showToast(msg: "Please enter a valid email address.");
+
+      setMessage('Failed', 'Enter a valid email', Colors.redAccent);
       return;
     }
 
     final result = validatePassword(password);
     if (result != null) {
-      Fluttertoast.showToast(msg: result);
+      setMessage('Failed', 'Enter a valid password', Colors.redAccent);
       return;
     }
 
-    Fluttertoast.showToast(msg: "Login Successfully");
 
+    loginToAccount(email, password);
   }
 
   String? validatePassword(String password) {
@@ -54,9 +55,23 @@ class LoginController extends GetxController {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
 
-  void createNewUser(String email , String password){
+  void loginToAccount(String email , String password){
+
+    setMessage('Success', 'Successfully login ', Colors.blue);
+
 
   }
+
+  void setMessage(String title, String message , Color backgroundColor ) {
+    Get.snackbar(
+        title, // Title of the Snackbar
+        message, // Message
+        snackPosition: SnackPosition.BOTTOM, // Position of the Snackbar
+        backgroundColor: backgroundColor, // Background color
+        colorText: Colors.white, // Text color
+        duration: const Duration(seconds: 2));
+  }
+
 
   @override
   void onClose() {

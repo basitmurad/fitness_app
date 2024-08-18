@@ -20,7 +20,6 @@ class AppTextTheme{
     labelLarge: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.normal, color: AppColor.dark),
     labelMedium: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.normal, color: AppColor.dark.withOpacity(0.5)),
 
-    // headlineLarg1e: const TextStyle().copyWith(fontSize: 32.0, fontWeight: FontWeight.bold, color: MyAppColors.light),
 
 
   );

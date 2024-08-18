@@ -1,8 +1,10 @@
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/SocialButton.dart';
+import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
+import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
 
 
@@ -11,6 +13,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = MyAppHelperFunctions.isDarkMode(context);
 
 
     return Scaffold(
@@ -32,8 +35,8 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: AppSizes.spaceBtwSections),
                 Text(
                   AppStrings.accountText,
-                  style: const TextStyle(
-                    color: Colors.black,
+                  style:  TextStyle(
+                    color: dark ? Colors.white : Colors.black,
                     fontSize: 18,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,

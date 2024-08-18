@@ -1,49 +1,38 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../utils/constants/AppImagePaths.dart';
 
 class SocialButton extends StatelessWidget {
-  const SocialButton({
-    super.key,
-  });
-
+  const SocialButton({super.key});
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Row(
+
+
+
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-
+        const SizedBox(height: 20),
         Container(
-          width: 60.0,
-          height: 60.0,
+          width: screenWidth * 0.2,
+          height: 50.0,
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.white, // Background color inside the circle
+            color: Colors.white,
             shape: BoxShape.circle,
             border: Border.all(
-              color: Colors.grey, // Stroke color
-              width: 2.0, // Stroke width
+              color: Colors.grey,
+              width: 2.0,
             ),
           ),
-          child: Image.asset(AppImagePaths.googleIcon),
-        ),
-        const SizedBox(width: 10),
-        Container(
-          width: 60.0,
-          height: 60.0,
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.white, // Background color inside the circle
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.grey, // Stroke color
-              width: 2.0, // Stroke width
-            ),
-          ),
-          child: Image.asset(AppImagePaths.googleIcon),
-        ),
 
+
+
+          child: Center(
+            child: Image.asset(AppImagePaths.googleIcon),
+          ),
+        ),
+        const SizedBox(width: 40), // Adjust horizontal spacing
       ],
     );
   }

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
+import '../../../../navigation_menu.dart';
+
 class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -19,18 +21,26 @@ class LoginController extends GetxController {
       return;
     }
 
-    if (!EmailValidator.validate(email)) {
-
+    if(!isValidEmail(email)){
       setMessage('Failed', 'Enter a valid email', Colors.redAccent);
+      emailController.text = "";
       return;
     }
+    // if (!EmailValidator.validate(email)) {
+    //
+    //   setMessage('Failed', 'Enter a valid email', Colors.redAccent);
+    //   return;
+    // }
 
     final result = validatePassword(password);
     if (result != null) {
       setMessage('Failed', 'Enter a valid password', Colors.redAccent);
+      passwordController.text = "";
       return;
     }
 
+
+    // setMessage('Success', 'Successfully login ', Colors.blue);
 
     loginToAccount(email, password);
   }
@@ -50,7 +60,12 @@ class LoginController extends GetxController {
     }
     return null; // Password is valid
   }
-
+  bool isValidEmail(String email) {
+    final regex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    return regex.hasMatch(email);
+  }
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
@@ -58,18 +73,23 @@ class LoginController extends GetxController {
   void loginToAccount(String email , String password){
 
     setMessage('Success', 'Successfully login ', Colors.blue);
+    Get.to(() => const NavigationMenu()); // Correct navigation
 
 
   }
 
-  void setMessage(String title, String message , Color backgroundColor ) {
+  void setMessage(String title, String message, Color backgroundColor) {
     Get.snackbar(
-        title, // Title of the Snackbar
-        message, // Message
-        snackPosition: SnackPosition.BOTTOM, // Position of the Snackbar
-        backgroundColor: backgroundColor, // Background color
-        colorText: Colors.white, // Text color
-        duration: const Duration(seconds: 2));
+      title, // Title of the Snackbar
+      message, // Message
+      snackPosition: SnackPosition.BOTTOM, // Adjust the position as needed
+      backgroundColor: backgroundColor, // Background color
+      colorText: Colors.white, // Text color
+      margin: const EdgeInsets.symmetric(vertical: 20 ,horizontal: 20), // Margin around the Snackbar
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Padding inside the Snackbar
+      borderRadius: 8, // Optional: Rounds the corners of the Snackbar
+      duration: const Duration(seconds: 1),
+    );
   }
 
 

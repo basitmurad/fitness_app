@@ -9,9 +9,9 @@ class AppStrings{
  static String pic3TextHeader = "Personalized Plans";
  static String pic3TextDetail = "Receive workout and diet plans tailored to your fitness level and goals.";
 
-
-
 static String done = "Done";
+static String forgetPassword = "Forget Password";
+static String createAccountText = "Create an Account";
 static String menu = "Menu";
 
 static String dashboard = "Dashboard";

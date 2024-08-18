@@ -13,11 +13,12 @@ class OnboardingPages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(50),
+      padding: const EdgeInsets.all(8),
       child: Column(
         children: [
 
-          SizedBox(height: 70,),
+          SizedBox(height: 40,),
+
 
           Image(
               height: AppDevicesUtils.screenWidth() * 0.8,

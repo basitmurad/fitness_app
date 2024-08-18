@@ -1,5 +1,3 @@
-import 'package:fitness/screens/authentications/dashboard/Dashboard.dart';
-import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';
 import 'package:flutter/material.dart';

@@ -19,8 +19,12 @@ class OnboardingScreen extends StatelessWidget {
 
     return Scaffold(
       body: Stack(
-        // alignment: Alignment.center,
+        alignment: Alignment.center,
         children: [
+
+          SizedBox(
+            height: 60,
+          ),
           PageView(
             controller: controller.pageController,
             onPageChanged: controller.updatePage,
@@ -44,7 +48,10 @@ class OnboardingScreen extends StatelessWidget {
           ),
           const OnboardingSkip(),
           const OnboardingDot(),
-          const OnboardingNext()
+          const OnboardingNext(),
+
+
+
         ],
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/SocialButton.dart';
-import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
@@ -32,6 +31,9 @@ class LoginScreen extends StatelessWidget {
                     color: Colors.blueAccent,
                   ),
                 ),
+
+
+
                 const SizedBox(height: AppSizes.spaceBtwSections),
                 Text(
                   AppStrings.accountText,
@@ -43,18 +45,27 @@ class LoginScreen extends StatelessWidget {
                   ),
                   textAlign: TextAlign.start,
                 ),
+
+
                 const SizedBox(height: AppSizes.spaceBtwSections),
                 const LoginWidget(),
+
+
                 const SizedBox(height: AppSizes.spaceBtwSections),
-                const LoginDividerWidget(),
+                 LoginDividerWidget(dark: dark),
+
+
                 const SizedBox(height: AppSizes.spaceBtwSections - 10),
                 const SocialButton(),
 
+                const SizedBox(height: 20,)
 
+
+
+                
               ],
             ),
-          ),
-
+          )
         )
 
     );

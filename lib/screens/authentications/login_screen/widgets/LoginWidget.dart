@@ -24,6 +24,7 @@ class LoginWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
+        vertical: 10
       ),
       child: Form(
           child: Column(
@@ -58,24 +59,21 @@ class LoginWidget extends StatelessWidget {
           }),
 
 
-          const SizedBox(
-            height: AppSizes.spaceBtwInputFields,
-          ),
 
-          Container(
-            margin: const EdgeInsets.only(right: 0),
-            alignment: Alignment.bottomRight,
-            child: TextButton(
-                onPressed: () {
-                  Get.to(() => ForgetPassword());
-                },
-                child: Text(AppStrings.forgetPassword,
-                    textAlign: TextAlign.end,
+          SizedBox(height: AppSizes.inputFieldRadius,),
+          SizedBox(
 
-                    style: Theme.of(context).textTheme.labelMedium )),
-          ),
+            width: AppDevicesUtils.getScreenWidth(context)*0.9,
+            child: GestureDetector(
 
-          const SizedBox(
+                onTap: controller.navigateToForgetPassword,
+              child: const Text('Forget Password' ,
+              textAlign: TextAlign.end,),
+
+            ),
+          )
+
+          ,const SizedBox(
             height: AppSizes.spaceBtwSections,
           ),
 
@@ -98,11 +96,13 @@ class LoginWidget extends StatelessWidget {
             height: AppSizes.spaceBtwInputFields,
           ),
           SizedBox(
-              width: double.infinity,
+              width: AppDevicesUtils.getScreenWidth(context)*0.8,
 
               child: OutlinedButton(
                   onPressed: () =>Get.to(() => const SignUpScreen()),
                   child:  Text(AppStrings.createAccountText))),
+
+          SizedBox(height: AppSizes.inputFieldRadius,)
         ],
       )),
     );

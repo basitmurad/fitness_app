@@ -36,13 +36,9 @@ class LoginScreen extends StatelessWidget {
 
                 const SizedBox(height: AppSizes.spaceBtwSections),
                 Text(
+
                   AppStrings.accountText,
-                  style:  TextStyle(
-                    color: dark ? Colors.white : Colors.black,
-                    fontSize: 18,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.start,
                 ),
 

@@ -13,33 +13,37 @@ class OnboardingPages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
+      padding: const EdgeInsets.all(50),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+        
+            SizedBox(height: 40,),
+        
 
-          SizedBox(height: 40,),
 
 
-          Image(
-              height: AppDevicesUtils.screenWidth() * 0.8,
-              width: AppDevicesUtils.screenWidth() * 0.6,
-              image: AssetImage(imagePath)),
-
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headlineMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: AppSizes.spaceBtwItems,
-          ),
-          Text(
-            subtitle,
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          )
-
-        ],
+            Image(
+                height: AppDevicesUtils.screenWidth() * 1.1,
+                width: AppDevicesUtils.screenWidth() * 0.6,
+                image: AssetImage(imagePath)),
+        
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headlineMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: AppSizes.spaceBtwItems,
+            ),
+            Text(
+              subtitle,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            )
+        
+          ],
+        ),
       ),
     );
   }

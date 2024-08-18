@@ -1,10 +1,9 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../../../../navigation_menu.dart';
+import '../../forget_password/ForgetPassword.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
@@ -99,4 +98,10 @@ class LoginController extends GetxController {
     passwordController.dispose();
     super.onClose();
   }
+
+  void navigateToForgetPassword() {
+    Get.to(() => ForgetPassword());
+  }
+
+
 }

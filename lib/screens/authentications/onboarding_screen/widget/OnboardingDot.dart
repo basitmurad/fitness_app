@@ -15,7 +15,7 @@ class OnboardingDot extends StatelessWidget {
     final controller = OnboardingController.instance;
     return Positioned(
 
-        bottom: AppDevicesUtils.getBottomNavigationHeight(),
+        bottom: AppDevicesUtils.getBottomNavigationHeight()+25,
         left: AppSizes.defaultSpace,
         child: SmoothPageIndicator(
           onDotClicked: controller.dotNavigatorClick,

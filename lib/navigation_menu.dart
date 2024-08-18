@@ -46,3 +46,4 @@ class NavigationController extends GetxController {
     const UserProfileScreen(),
   ];
 }
+

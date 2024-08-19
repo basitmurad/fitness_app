@@ -1,10 +1,14 @@
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/SocialButton.dart';
+import 'package:fitness/screens/authentications/signup_screen/SignUpScreen.dart';
+import 'package:fitness/utils/constants/AppColor.dart';
+import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class LoginScreen extends StatelessWidget {
@@ -18,44 +22,59 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: AppSizes.spaceBtwSections + 10),
-                const Align(
-                  alignment: Alignment.topLeft,
-                  child: Icon(
-                    Icons.fitness_center,
-                    size: 100,
-                    color: Colors.blueAccent,
-                  ),
-                ),
+                 SizedBox(height: AppDevicesUtils.getAppBarHeight() +50),
 
 
 
-                const SizedBox(height: AppSizes.spaceBtwSections),
                 Text(
 
-                  AppStrings.accountText,
-                  style: Theme.of(context).textTheme.bodyLarge,
+
+                  AppStrings.hello,
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 32 ,fontWeight: FontWeight.w700 ,color: dark ? AppColor.white :AppColor.textColor ),
                   textAlign: TextAlign.start,
                 ),
 
 
+                Text(
+
+
+                  AppStrings.fitnessTitan,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 20 , fontWeight: FontWeight.w400,color: dark ?AppColor.white : AppColor.textColor),
+                  textAlign: TextAlign.start,
+                ),
                 const SizedBox(height: AppSizes.spaceBtwSections),
-                const LoginWidget(),
+                 LoginWidget(dark: dark,),
 
 
-                const SizedBox(height: AppSizes.spaceBtwSections),
-                 LoginDividerWidget(dark: dark),
+                const SizedBox(height: AppSizes.spaceBtwSections +15),
+                LoginDividerWidget(dark: dark),
 
 
-                const SizedBox(height: AppSizes.spaceBtwSections - 10),
+                const SizedBox(height: AppSizes.spaceBtwSections  +10),
                 const SocialButton(),
 
-                const SizedBox(height: 20,)
-
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center, // Center horizontally
+                  crossAxisAlignment: CrossAxisAlignment.center, // Center vertically
+                  children: [
+                    Text(
+                      AppStrings.donothave,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14 ,fontWeight: FontWeight.w400), // Customize text style as needed
+                    ),
+                    const SizedBox(width: 10), // Space between text and button
+                    TextButton(
+                      onPressed: () => Get.to(const SignUpScreen()), // Handle button press
+                      child: Text(
+                        AppStrings.signUP,
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14,fontWeight: FontWeight.w900 ,color: dark ? AppColor.white : AppColor.lightBlue), // Customize button text style as needed
+                      ),
+                    ),
+                  ],
+                )
 
 
                 

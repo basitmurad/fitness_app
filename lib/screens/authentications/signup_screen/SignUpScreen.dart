@@ -15,7 +15,6 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SignUpController genderController = Get.put(SignUpController());
     final dark = MyAppHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
@@ -74,30 +73,30 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(
                     height: AppSizes.spaceBtwInputFields,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Obx(() => Radio<String>(
-                            value: AppStrings.male,
-                            groupValue: genderController.selectedGender.value,
-                            onChanged: (value) {
-                              genderController.setGender(value!);
-                            },
-                          )),
-                      Text(AppStrings.male),
-                      const SizedBox(
-                        width: 70,
-                      ),
-                      Obx(() => Radio<String>(
-                            value: AppStrings.female,
-                            groupValue: genderController.selectedGender.value,
-                            onChanged: (value) {
-                              genderController.setGender(value!);
-                            },
-                          )),
-                      Text(AppStrings.female),
-                    ],
-                  ),
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     Obx(() => Radio<String>(
+                  //           value: AppStrings.male,
+                  //           groupValue: genderController.selectedGender.value,
+                  //           onChanged: (value) {
+                  //             genderController.setGender(value!);
+                  //           },
+                  //         )),
+                  //     Text(AppStrings.male),
+                  //     const SizedBox(
+                  //       width: 70,
+                  //     ),
+                  //     Obx(() => Radio<String>(
+                  //           value: AppStrings.female,
+                  //           groupValue: genderController.selectedGender.value,
+                  //           onChanged: (value) {
+                  //             genderController.setGender(value!);
+                  //           },
+                  //         )),
+                  //     Text(AppStrings.female),
+                  //   ],
+                  // ),
                   const SizedBox(
                     height: AppSizes.spaceBtwSections + 30,
                   ),

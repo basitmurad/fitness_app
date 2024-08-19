@@ -54,8 +54,9 @@ class AppColor{
   static const Color grey = Color(0xFFE0E0E0);
   static const Color softGrey = Color(0xFFF4F4F4);
   static const Color lightGrey = Color(0xFFF9F9F9);
-  static const Color lightBlue = Color(0x0068FF66);
+  static const Color lightBlue = Color(0xFF0068FF);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color textColor = Color(0xFF4A4650);
 
 
 }

@@ -1,110 +1,86 @@
-
-import 'package:fitness/screens/authentications/signup_screen/SignUpScreen.dart';
+import 'package:fitness/common/widgets/TextInputWidget.dart';
+import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
+import 'package:fitness/utils/constants/AppColor.dart';
+import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:iconsax/iconsax.dart';
-
-import '../../../../utils/constants/AppDevicesUtils.dart';
-import '../../../../utils/constants/AppSizes.dart';
-import '../../forget_password/ForgetPassword.dart';
+import '../../../../common/widgets/ButtonWidget.dart';
 import '../controller/LoginController.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({
     super.key,
+    this.dark,
   });
+
+  final dark;
 
   @override
   Widget build(BuildContext context) {
     final LoginController controller = Get.put(LoginController());
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 10
-      ),
-      child: Form(
-          child: Column(
+    return Form(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-
-
-          TextFormField(
-            controller: controller.emailController,
-            decoration: InputDecoration(
-                suffixIcon: Icon(Iconsax.direct),
-                labelText: AppStrings.emailText),
+          Text(
+            AppStrings.emailText,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: dark ? AppColor.white : AppColor.textColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Manrope'),
           ),
-          SizedBox(
-            height: AppSizes.inputFieldRadius,
-          ),
-
-          Obx(() {
-            return TextFormField(
-              controller: controller.passwordController,
-              decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      color: Colors.grey,
-                      controller.isPasswordVisible.value
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                    ),
-                    onPressed: controller.togglePasswordVisibility,
-                  ),
-                  labelText: AppStrings.password),
-            );
-          }),
-
-
-
-          SizedBox(height: AppSizes.inputFieldRadius,),
-          SizedBox(
-
-            width: AppDevicesUtils.getScreenWidth(context)*0.9,
-            child: GestureDetector(
-
-                onTap: controller.navigateToForgetPassword,
-              child: const Text('Forget Password' ,
-              textAlign: TextAlign.end,),
-
-            ),
-          )
-
-          ,const SizedBox(
-            height: AppSizes.spaceBtwSections,
-          ),
-
-          SizedBox(
-              width: AppDevicesUtils.getScreenWidth(context) * 0.8,
-              child: ElevatedButton(
-                  onPressed: () {
-                    AppDevicesUtils.hideKeyboard(context);
-                    controller.login();
-                  },
-                  child: Text(
-                    'Login',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(color: Colors.black),
-                  ))),
-
           const SizedBox(
-            height: AppSizes.spaceBtwInputFields,
+            height: AppSizes.inputFieldRadius - 9,
           ),
-          SizedBox(
-              width: AppDevicesUtils.getScreenWidth(context)*0.8,
+          TextInputWidget(
+            controller: controller.emailController,
+            prefixIcon: const Icon(Icons.email),
+            isPassword: false, // Not a password field
+          ),
+          const SizedBox(height: AppSizes.inputFieldRadius + 3),
+          Text(
+            AppStrings.emailText,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: dark ? AppColor.white : AppColor.textColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Manrope'),
+          ),
+          const SizedBox(height: AppSizes.inputFieldRadius - 9),
+          Obx(() => TextInputWidget(
+                controller: controller.passwordController,
+                prefixIcon: const Icon(Icons.lock),
+                isPassword: true,
+                // Password field
+                obscureText: controller.isPasswordVisible.value,
+                onObscureTextChanged: controller.togglePasswordVisibility,
+              )),
+          const SizedBox(height: AppSizes.inputFieldRadius),
+          Container(
+            alignment: Alignment.bottomRight,
+            child: Text(
+              AppStrings.forgetPassword,
+              textAlign: TextAlign
+                  .right, // Align text to the right within the container
+            ),
+          ),
+          const SizedBox(
+            height: AppSizes.spaceBtwSections + 10,
+          ),
 
-              child: OutlinedButton(
-                  onPressed: () =>Get.to(() => const SignUpScreen()),
-                  child:  Text(AppStrings.createAccountText))),
+          Padding(
 
-          SizedBox(height: AppSizes.inputFieldRadius,)
+            padding: const EdgeInsets.symmetric(horizontal: 0 ,),
+            child: ButtonWidget(dark: dark, onPressed: () {  }, buttonText: AppStrings.sigIn,),
+          ),
+          
         ],
-      )),
+      ),
     );
   }
 }

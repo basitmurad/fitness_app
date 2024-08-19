@@ -5,6 +5,7 @@ class AppImagePaths{
   static const String pic1 = "assets/illustration/pic1.jpg";
   static const String pic11 = "assets/illustration/pic1.jpg";
   static const String gymPic = "assets/images/gympic.jpg";
+  static const String google = "assets/logos/google.png";
   static const String onboardingImage = "assets/images/onboardingimage.png";
 
 }

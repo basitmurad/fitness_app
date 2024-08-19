@@ -10,20 +10,26 @@ class AppStrings{
  static String pic3TextDetail = "Receive workout and diet plans tailored to your fitness level and goals.";
 
 static String done = "Done";
+static String donothave = "Don't have an account?";
 static String forgetPassword = "Forget Password";
 static String createAccountText = "Create an Account";
 static String menu = "Menu";
 
 static String dashboard = "Dashboard";
+static String welcomeText = "Welcome to Fitness";
 static String logout = "Logout";
 static String male = "Male";
 static String setting = "Settings";
 static String home = "Home";
 static String password = "Password";
+static String startfitess = "Start Your Fitness Journey";
 static String female = "Female";
-static String connectCompelete = "Connect, Compete,and Conquer Your Fitness Goals Together";
+static String connectComplete = "Connect, Compete, and Conquer your fitness goals together. Let’s make every workout count!";
 static String name = "Name";
+static String hello = "Hello.";
+static String fitnessTitan = "Fitness Titan.";
 static String signUP = "Sign up";
+static String sigIn = "Sign In";
 static String nameText = "basit murad";
 static String unlockBest = "Unlock Your Best Self—Join Us Today!";
 static String submit = "Submit";

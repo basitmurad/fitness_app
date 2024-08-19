@@ -1,3 +1,4 @@
+import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class LoginDividerWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
               'Or Sign In With',
-              style: Theme.of(context).textTheme.labelMedium,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: dark ? AppColor.white :AppColor.textColor ,fontWeight: FontWeight.w700),
             ),
           ),
           const Expanded(

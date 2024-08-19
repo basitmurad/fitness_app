@@ -9,22 +9,24 @@ class SocialButton extends StatelessWidget {
     return GestureDetector(
 
       onTap: (){
-        Fluttertoast.showToast(msg: "Are you want to contiune with google");
+        Fluttertoast.showToast(msg: "Are you want to continue with google");
       },
-      child: Row(
+      child: Column(
+
 
 
 
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-              height: 28
-              ,
-              width: 28,
-              AppImagePaths.googleIcon),
 
-          const SizedBox(width: 4,),
-          const Text('Continue with google'),
+          Image.asset(
+              height: 36
+              ,
+              width: 36,
+              AppImagePaths.google),
+
+          const SizedBox(height: 6,),
+           Text('Google' ,style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14 ,fontWeight: FontWeight.w400),),
           const SizedBox(width: 40), // Adjust horizontal spacing
         ],
       ),

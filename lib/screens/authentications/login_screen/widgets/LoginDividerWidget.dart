@@ -11,31 +11,17 @@ class LoginDividerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-      padding: const EdgeInsets.only(left: 20,right: 20),
-      child: Row(
-        children: [
-          const Expanded(
-            child: Divider(
-              color: Colors.grey,
-              thickness: 2.0,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Or Sign In With',
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: dark ? AppColor.white :AppColor.textColor ,fontWeight: FontWeight.w700),
-            ),
-          ),
-          const Expanded(
-            child: Divider(
-              color: Colors.grey,
-              thickness: 2.0,
-            ),
-          ),
-        ],
-      ),
+    return  Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+
+        Text(
+          'OR CONTINUE WITH',
+          style: Theme.of(context).textTheme.bodySmall!.copyWith( fontFamily: 'Poppins' , color: dark ? AppColor.white :AppColor.textColor ,fontWeight: FontWeight.w700),
+        ),
+
+      ],
     );
   }
 }

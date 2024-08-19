@@ -10,10 +10,16 @@ class AppStrings{
  static String pic3TextDetail = "Receive workout and diet plans tailored to your fitness level and goals.";
 
 static String done = "Done";
+static String send = "Send";
+static String verify = "Verify";
+static String verification = "Verification";
+static String enterEmail = "Enter your Email address";
+static String forgotPassword = "Forgot Password";
 static String donothave = "Don't have an account?";
-static String forgetPassword = "Forget Password";
+static String forgetPassword = "Forget Password?";
 static String createAccountText = "Create an Account";
 static String menu = "Menu";
+static String enterVerification = "Enter verification code";
 
 static String dashboard = "Dashboard";
 static String welcomeText = "Welcome to Fitness";

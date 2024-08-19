@@ -1,3 +1,4 @@
+import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +19,14 @@ class ButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed, // Use the passed callback
       style: ElevatedButton.styleFrom(
+        backgroundColor: AppColor.lightBlue,
         fixedSize: const Size(double.infinity, 48), // Full width of its parent
         padding: const EdgeInsets.all(10), // Padding inside the button
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6), // Radius: 6px
+
+          borderRadius: BorderRadius.circular(6),
+
+          // Radius: 6px
         ),
       ),
       child: Text(

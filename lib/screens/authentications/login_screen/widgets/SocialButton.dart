@@ -14,9 +14,9 @@ class SocialButton extends StatelessWidget {
       child: Column(
 
 
-
-
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
 
           Image.asset(
@@ -27,7 +27,6 @@ class SocialButton extends StatelessWidget {
 
           const SizedBox(height: 6,),
            Text('Google' ,style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14 ,fontWeight: FontWeight.w400),),
-          const SizedBox(width: 40), // Adjust horizontal spacing
         ],
       ),
     );

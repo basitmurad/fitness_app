@@ -1,8 +1,10 @@
 import 'package:fitness/common/widgets/TextInputWidget.dart';
+import 'package:fitness/screens/authentications/forget_password/ForgetPassword.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
+import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,7 +46,7 @@ class LoginWidget extends StatelessWidget {
           ),
           const SizedBox(height: AppSizes.inputFieldRadius + 3),
           Text(
-            AppStrings.emailText,
+            AppStrings.password,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: dark ? AppColor.white : AppColor.textColor,
                 fontSize: 14,
@@ -61,12 +63,22 @@ class LoginWidget extends StatelessWidget {
                 onObscureTextChanged: controller.togglePasswordVisibility,
               )),
           const SizedBox(height: AppSizes.inputFieldRadius),
-          Container(
-            alignment: Alignment.bottomRight,
-            child: Text(
-              AppStrings.forgetPassword,
-              textAlign: TextAlign
-                  .right, // Align text to the right within the container
+
+
+          GestureDetector(
+            onTap: (){
+
+              Get.to(ForgetPassword());
+              KeyboardController.instance.hideKeyboard(); // Hide keyboard before navigation
+
+            },
+            child: Container(
+              alignment: Alignment.bottomRight,
+              child: Text(
+                AppStrings.forgetPassword,
+                textAlign: TextAlign
+                    .right, // Align text to the right within the container
+              ),
             ),
           ),
           const SizedBox(

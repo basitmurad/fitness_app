@@ -1,5 +1,10 @@
+import 'package:fitness/common/widgets/ButtonWidget.dart';
+import 'package:fitness/common/widgets/TextInputWidget.dart';
 import 'package:fitness/screens/authentications/forget_password/ResetPassword.dart';
 import 'package:fitness/screens/authentications/forget_password/controller/ForgetController.dart';
+import 'package:fitness/screens/authentications/login_screen/widgets/LoginBottom.dart';
+import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
+import 'package:fitness/screens/authentications/login_screen/widgets/SocialButton.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
@@ -9,55 +14,78 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../utils/constants/AppImagePaths.dart';
+import '../../../utils/helpers/MyAppHelper.dart';
 
 class ForgetPassword extends StatelessWidget {
-   ForgetPassword({super.key});
+  ForgetPassword({super.key});
 
   ForgetController forgetController = Get.put(ForgetController());
 
   @override
   Widget build(BuildContext context) {
+    final dark = MyAppHelperFunctions.isDarkMode(context);
+    ForgetController forgetController = Get.put(ForgetController());
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16 ,vertical: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: AppDevicesUtils.getScreenWidth(context) * 0.4,
-              width: AppDevicesUtils.getScreenWidth(context) * 0.4,
-              child: Image.asset(AppImagePaths.forgetillustration),
-            ),
-            const SizedBox(
-              height: AppSizes.spaceBtwSections,
-            ),
-            TextFormField(
-              decoration:  InputDecoration(
-                label: Text(AppStrings.emailText),
-                border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                    borderSide: BorderSide(color: Colors.black)),
-                hintText: AppStrings.email,
-                suffixIcon: const Icon(Iconsax.direct),
-              ),
-            ),
-            const SizedBox(
-              height: AppSizes.spaceBtwSections,
-            ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          child: Form(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+        
+              children: [
+                const SizedBox(
+                  height: AppSizes.appBarHeight + 20,
+                ),
+                Text(
+                  textAlign: TextAlign.center,
+                  AppStrings.forgotPassword,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
+                ),
+                SizedBox(
+                  height: AppDevicesUtils.getScreenWidth(context) * 0.6,
+                  width: AppDevicesUtils.getScreenWidth(context) * 0.4,
+                ),
+        
+                Container(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(AppStrings.enterEmail)),
+                const SizedBox( height:  AppSizes.inputFieldRadius +2,),
+        
+        
+                TextInputWidget(controller: forgetController.emailController ,prefixIcon: const Icon(Iconsax.direct), ),
+        
+        
+               const SizedBox( height:  AppSizes.spaceBtwSections,),
+               Padding(
+        
+                  padding: const EdgeInsets.symmetric(horizontal: 48 ,),
+                  child: ButtonWidget(dark: dark,  onPressed: () {
+                    forgetController.forgetPassword();
+                  }, buttonText: AppStrings.send,),
+                ),    
+              
+                SizedBox(height: AppSizes.appBarHeight -10,),
+                LoginDividerWidget(dark: dark),
 
-            SizedBox(
-              width: AppDevicesUtils.getScreenWidth(context) * 0.8,
-              child: ElevatedButton(onPressed: (){
+                SizedBox(height: AppSizes.spaceBtwInputFields -8 ,),
+                SocialButton(),
 
-                Get.to(() => const ResetPassword());
+                SizedBox(height: AppSizes.inputFieldRadius+ 60,),
+                LoginBottom(dark: dark, buttonText: AppStrings.signUP, )
 
-              }, child:  Text(AppStrings.submit),),
-            )
+              ],
 
-          ],
+
+
+
+
+              
+            ),
+          ),
         ),
       ),
     );

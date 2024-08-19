@@ -26,11 +26,17 @@ class TextInputWidget extends StatelessWidget {
       controller: controller,
       obscureText: isPassword == true ? obscureText ?? true : false, // Toggle obscuring based on isPassword and obscureText
       decoration: InputDecoration(
-        prefixIcon: prefixIcon,
-        suffixIcon: isPassword == true
+        prefixIcon: prefixIcon != null
+            ? SizedBox(
+          width: 24, // Set the width of the prefix icon
+          height: 24, // Set the height of the prefix icon
+          child: prefixIcon,
+        )
+            : null,        suffixIcon: isPassword == true
             ? GestureDetector(
           onTap: onObscureTextChanged, // Handle suffix icon click
           child: Icon(
+            size: 24,
             obscureText ?? true ? Icons.visibility_off : Icons.visibility,
           ),
         )

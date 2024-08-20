@@ -10,7 +10,9 @@ class AppStrings{
  static String pic3TextDetail = "Receive workout and diet plans tailored to your fitness level and goals.";
 
 static String done = "Done";
+static String resend = "Resend";
 static String send = "Send";
+static String donotReceive = "Didn’t receive a code. ";
 static String verify = "Verify";
 static String verification = "Verification";
 static String enterEmail = "Enter your Email address";

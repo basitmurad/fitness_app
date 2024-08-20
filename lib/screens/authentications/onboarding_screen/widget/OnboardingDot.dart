@@ -1,4 +1,4 @@
-import 'package:fitness/screens/authentications/onboarding_screen/controller/OnboardingController.dart';
+import 'package:fitness/screens/authentications/controller/OnboardingScreenController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../utils/constants/AppColor.dart';

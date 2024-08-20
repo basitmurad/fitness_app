@@ -1,4 +1,4 @@
-import 'package:fitness/screens/authentications/signup_screen/controller/SignUpController.dart';
+import 'package:fitness/screens/authentications/controller/SignUpScreenController.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';

@@ -1,4 +1,4 @@
-import 'package:fitness/screens/authentications/onboarding_screen/controller/OnboardingController.dart';
+import 'package:fitness/screens/authentications/controller/OnboardingScreenController.dart';
 import 'package:flutter/material.dart';
 import '../../../../utils/constants/AppDevicesUtils.dart';
 import '../../../../utils/constants/AppSizes.dart';

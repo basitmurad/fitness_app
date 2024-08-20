@@ -57,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(height: AppSizes.spaceBtwSections+25,),
 
 
-                LoginBottom(dark: dark, buttonText: AppStrings.signUP,)
+                LoginBottom(dark: dark, buttonText: AppStrings.signUP, textMain: AppStrings.donothave,)
 
 
                 

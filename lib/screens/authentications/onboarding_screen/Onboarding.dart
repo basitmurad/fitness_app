@@ -1,7 +1,7 @@
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:fitness/screens/authentications/onboarding_screen/controller/OnboardingController.dart';
+import 'package:fitness/screens/authentications/controller/OnboardingScreenController.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../navigation_menu.dart';
-import '../../forget_password/ForgetPassword.dart';
+import '../../../navigation_menu.dart';
+import '../forget_password/ForgetPassword.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();

@@ -1,7 +1,6 @@
 import 'package:fitness/common/widgets/ButtonWidget.dart';
 import 'package:fitness/common/widgets/TextInputWidget.dart';
-import 'package:fitness/screens/authentications/forget_password/ResetPassword.dart';
-import 'package:fitness/screens/authentications/forget_password/controller/ForgetController.dart';
+import 'package:fitness/screens/authentications/controller/ForgetScreenController.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginBottom.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/SocialButton.dart';
@@ -12,8 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
-import '../../../utils/constants/AppImagePaths.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
 
 class ForgetPassword extends StatelessWidget {
@@ -75,7 +72,7 @@ class ForgetPassword extends StatelessWidget {
                 SocialButton(),
 
                 SizedBox(height: AppSizes.inputFieldRadius+ 60,),
-                LoginBottom(dark: dark, buttonText: AppStrings.signUP, )
+                LoginBottom(dark: dark, buttonText: AppStrings.signUP, textMain: AppStrings.donothave, )
 
               ],
 

@@ -1,14 +1,15 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   final textGender = TextEditingController();
   var selectedGender = ''.obs;
   var isPasswordVisible = true.obs;
+  var isConfirmPasswordVisible = true.obs;
 
   void setGender(String value) {
     selectedGender.value = value;
@@ -17,56 +18,61 @@ class SignUpController extends GetxController {
   void checkValidation() {
     final email = emailController.text;
     final password = passwordController.text;
+    final confirmPassword = confirmPasswordController.text;
 
-    if (email.isEmpty || password.isEmpty) {
-      setMessage('Failed', 'Check all field',Colors.redAccent);
-    }
-
-    if(!EmailValidator.validate(email)){
-      setMessage('Failed', 'Enter a valid email',Colors.redAccent);
+    // Check if fields are empty
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      setMessage('Failed', 'Please fill in all fields', Colors.redAccent);
       return;
     }
 
-
-    final result = validatePassword(password);
-    if(result !=null){
-
-      setMessage('Failed', result ,Colors.redAccent);
-
+    // Validate email
+    if (!EmailValidator.validate(email)) {
+      setMessage('Failed', 'Enter a valid email', Colors.redAccent);
+      return;
     }
 
+    // Validate password
+    final result = validatePassword(password);
+    if (result != null) {
+      setMessage('Failed', result, Colors.redAccent);
+      return;
+    }
 
+    // Check if passwords match
+    if (password != confirmPassword) {
+      setMessage('Failed', 'Passwords do not match', Colors.redAccent);
+      return;
+    }
 
-
-
+    // If everything is valid, proceed to sign up
     signUp();
-
-
   }
 
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
+  void toggleConfirmPasswordVisibility() {
+    isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
+  }
+
   void signUp() {
-
-    setMessage('Success', 'Successfully creating account' ,Colors.blue);
-
+    // Implement your sign-up logic here
+    setMessage('Success', 'Account successfully created', Colors.blue);
   }
 
-  void withEmailPPassword() {}
-
-  void withGoogle() {}
-
-  void setMessage(String title, String message , Color backgroundColor ) {
+  void setMessage(String title, String message, Color backgroundColor) {
     Get.snackbar(
-        title, // Title of the Snackbar
-        message, // Message
-        snackPosition: SnackPosition.BOTTOM, // Position of the Snackbar
-        backgroundColor: backgroundColor, // Background color
-        colorText: Colors.white, // Text color
-        duration: const Duration(seconds: 2));
-  }
+      title,
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: backgroundColor,
+      colorText: Colors.white,
+      duration: const Duration(seconds: 1),
+      margin: const EdgeInsets.all(16), // Adjust the margin as needed
 
+    );
+  }
 
   String? validatePassword(String password) {
     if (password.length < 8) {
@@ -84,13 +90,11 @@ class SignUpController extends GetxController {
     return null; // Password is valid
   }
 
-
   @override
   void dispose() {
-
-    super.dispose();
     emailController.dispose();
     passwordController.dispose();
-
+    confirmPasswordController.dispose();
+    super.dispose();
   }
 }

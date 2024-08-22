@@ -58,6 +58,7 @@ class AppColor{
   static const Color lightBlue = Color(0xFF0068FF);
   static const Color white = Color(0xFFFFFFFF);
   static const Color textColor = Color(0xFF4A4650);
+  static const Color textColor1 = Color(0xFF524E5A);
 
 
 }

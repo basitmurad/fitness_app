@@ -52,9 +52,12 @@ class ForgetPassword extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Text(AppStrings.enterEmail ,style: Theme.of(context).textTheme.bodySmall?.copyWith(color: dark ? AppColor.white : AppColor.textColor ,fontWeight: FontWeight.w600 , fontFamily: "Poppins"),)),
                 const SizedBox( height:  AppSizes.inputFieldRadius +2,),
+
         
-        
-                TextInputWidget(controller: forgetController.emailController ,prefixIcon: const Icon(Iconsax.direct) ,hintText: AppStrings.emailText, ),
+                TextInputWidget(controller: forgetController.emailController ,prefixIcon: const Icon(Iconsax.direct) ,hintText: AppStrings.emailText, dark: dark,
+
+              headerFontFamily: 'Poppins',
+                headerFontWeight: FontWeight.w600,),
         
         
                const SizedBox( height:  AppSizes.spaceBtwSections,),

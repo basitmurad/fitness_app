@@ -32,12 +32,12 @@ class OtpScreen extends StatelessWidget {
               ),
               Text(
                 textAlign: TextAlign.center,
-                AppStrings.verification,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
-              ),
+          AppStrings.verification,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
+        ),
               SizedBox(
                 height: AppDevicesUtils.getScreenWidth(context) * 0.6,
                 width: AppDevicesUtils.getScreenWidth(context) * 0.4,

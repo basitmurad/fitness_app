@@ -25,6 +25,7 @@ static String donothave = "Don't have an account?";
 static String forgetPassword = "Forget Password?";
 static String createAccountText = "Create an Account";
 static String menu = "Menu";
+static String alreadyHaveAccount = "Already have an account?";
 static String enterVerification = "Enter verification code";
 
 static String dashboard = "Dashboard";

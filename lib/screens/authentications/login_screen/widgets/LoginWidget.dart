@@ -28,14 +28,7 @@ class LoginWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            AppStrings.emailText,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: dark ? AppColor.white : AppColor.textColor,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Manrope'),
-          ),
+
           const SizedBox(
             height: AppSizes.inputFieldRadius - 9,
           ),
@@ -43,17 +36,12 @@ class LoginWidget extends StatelessWidget {
             controller: controller.emailController,
             prefixIcon: const Icon(Icons.email),
             isPassword: false,
-            hintText: AppStrings.enterEmail1,// Not a password field
+            headerFontWeight: FontWeight.w700,
+            headerFontFamily: 'Manrope',
+            hintText: AppStrings.enterEmail1, dark: dark, headerText: AppStrings.password,// Not a password field
           ),
           const SizedBox(height: AppSizes.inputFieldRadius + 3),
-          Text(
-            AppStrings.password,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: dark ? AppColor.white : AppColor.textColor,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Manrope'),
-          ),
+
           const SizedBox(height: AppSizes.inputFieldRadius - 9),
           Obx(() => TextInputWidget(
                 controller: controller.passwordController,
@@ -61,8 +49,10 @@ class LoginWidget extends StatelessWidget {
                 isPassword: true,
                 hintText: AppStrings.entrePassword,
                 // Password field
+            headerFontWeight: FontWeight.w700,
+                headerFontFamily: 'Manrope',
                 obscureText: controller.isPasswordVisible.value,
-                onObscureTextChanged: controller.togglePasswordVisibility,
+                onObscureTextChanged: controller.togglePasswordVisibility, dark: dark, headerText: AppStrings.passwordNew,
               )),
           const SizedBox(height: AppSizes.inputFieldRadius),
 

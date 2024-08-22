@@ -5,6 +5,7 @@ class ChangePasswordScreenController extends GetxController{
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   var isPasswordVisible = true.obs;
+  var isPasswordVisible1 = true.obs;
 
   String? validatePassword(String password) {
     if (password.length < 8) {
@@ -23,6 +24,10 @@ class ChangePasswordScreenController extends GetxController{
   }
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
+  void togglePasswordVisibility1() {
+    isPasswordVisible1.value = !isPasswordVisible1.value;
   }
 }
 

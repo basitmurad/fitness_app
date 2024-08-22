@@ -49,14 +49,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
 
 
-                Text(
-                  AppStrings.password,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: dark ? AppColor.white : AppColor.textColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins'),
-                ),
+
             const SizedBox(height: AppSizes.inputFieldRadius - 9),
 
 
@@ -65,6 +58,11 @@ class ChangePasswordScreen extends StatelessWidget {
                   prefixIcon: const Icon(Icons.lock),
                   isPassword: true,
                   // Password field
+                  dark: dark,
+
+                  headerText: AppStrings.password,
+                  headerFontWeight: FontWeight.w700,
+                  headerFontFamily: 'Poppins',
                   hintText: AppStrings.entrePassword,
                   obscureText: changePasswordScreenController.isPasswordVisible.value,
                   onObscureTextChanged: changePasswordScreenController.togglePasswordVisibility,
@@ -72,14 +70,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
 
                 SizedBox(height: AppSizes.inputFieldRadius+8,),
-                Text(
-                  AppStrings.passwordConfirm,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: dark ? AppColor.white : AppColor.textColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins'),
-                ),
+
                 const SizedBox(height: AppSizes.inputFieldRadius - 9),
 
                 Obx(() => TextInputWidget(
@@ -87,10 +78,13 @@ class ChangePasswordScreen extends StatelessWidget {
                   prefixIcon: const Icon(Icons.lock),
                   isPassword: true,
                   hintText: AppStrings.entrePassword,
-
+                  dark: dark, headerText: AppStrings.passwordConfirm
+,headerFontFamily: 'Poppins'
+                  ,
+                  headerFontWeight: FontWeight.w700,
                   // Password field
-                  obscureText: changePasswordScreenController.isPasswordVisible.value,
-                  onObscureTextChanged: changePasswordScreenController.togglePasswordVisibility,
+                  obscureText: changePasswordScreenController.isPasswordVisible1.value,
+                  onObscureTextChanged: changePasswordScreenController.togglePasswordVisibility1,
                 )),
 
                 SizedBox(height: AppSizes.appBarHeight-20,),

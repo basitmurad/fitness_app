@@ -42,7 +42,8 @@ class LoginWidget extends StatelessWidget {
           TextInputWidget(
             controller: controller.emailController,
             prefixIcon: const Icon(Icons.email),
-            isPassword: false, // Not a password field
+            isPassword: false,
+            hintText: AppStrings.enterEmail1,// Not a password field
           ),
           const SizedBox(height: AppSizes.inputFieldRadius + 3),
           Text(
@@ -58,6 +59,7 @@ class LoginWidget extends StatelessWidget {
                 controller: controller.passwordController,
                 prefixIcon: const Icon(Icons.lock),
                 isPassword: true,
+                hintText: AppStrings.entrePassword,
                 // Password field
                 obscureText: controller.isPasswordVisible.value,
                 onObscureTextChanged: controller.togglePasswordVisibility,

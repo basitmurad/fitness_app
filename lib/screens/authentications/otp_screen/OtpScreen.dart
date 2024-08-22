@@ -12,6 +12,7 @@ import 'package:otpview/sunil/otpview.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
+import '../change_password_screen/ChangePasswordScreen.dart';
 
 class OtpScreen extends StatelessWidget {
   const OtpScreen({super.key});
@@ -27,7 +28,7 @@ class OtpScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: AppSizes.appBarHeight + 20,
+                height: AppSizes.appBarHeight ,
               ),
               Text(
                 textAlign: TextAlign.center,
@@ -38,25 +39,25 @@ class OtpScreen extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
               ),
               SizedBox(
-                height: AppDevicesUtils.getScreenWidth(context) * 0.5,
+                height: AppDevicesUtils.getScreenWidth(context) * 0.6,
                 width: AppDevicesUtils.getScreenWidth(context) * 0.4,
               ),
               Container(
                   alignment: Alignment.center,
                   child: Text(AppStrings.enterVerification)),
               const SizedBox(
-                height: AppSizes.appBarHeight + 20,
+                height: AppSizes.appBarHeight -20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(4, (index) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Obx(() {
                       return Container(
                         alignment: Alignment.center,
-                        width: 60.0,
-                        height: 60.0,
+                        width: 55.0,
+                        height: 55.0,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: otpScreenController.isFilled[index]
@@ -74,7 +75,7 @@ class OtpScreen extends StatelessWidget {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             counterText: '', // Hides the counter text
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
@@ -86,7 +87,7 @@ class OtpScreen extends StatelessWidget {
                 }),
               ),
               const SizedBox(
-                height: AppSizes.appBarHeight,
+                height: AppSizes.appBarHeight ,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -94,12 +95,12 @@ class OtpScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ButtonWidget(
                       dark: dark,
-                      onPressed: () {},
+                      onPressed: ()=>Get.to(const ChangePasswordScreen()),
                       buttonText: AppStrings.verify,
                     )),
               ),
               const SizedBox(
-                height: AppSizes.appBarHeight,
+                height: AppSizes.appBarHeight-10,
               ),
               LoginBottom(
                 dark: dark,

@@ -9,7 +9,7 @@ class TextInputWidget extends StatelessWidget {
     this.onSuffixIconPressed,
     this.isPassword,
     this.obscureText,
-    this.onObscureTextChanged,
+    this.onObscureTextChanged, this.hintText,
   });
 
   final TextEditingController controller;
@@ -19,13 +19,19 @@ class TextInputWidget extends StatelessWidget {
   final bool? isPassword;
   final bool? obscureText;
   final VoidCallback? onObscureTextChanged;
+  final String? hintText ;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       obscureText: isPassword == true ? obscureText ?? true : false, // Toggle obscuring based on isPassword and obscureText
+
+
+
       decoration: InputDecoration(
+        hintText: hintText, // Set the hintText here
+
         prefixIcon: prefixIcon != null
             ? SizedBox(
           width: 24, // Set the width of the prefix icon

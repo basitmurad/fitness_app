@@ -32,7 +32,7 @@ class ForgetController extends GetxController{
     // Show the Snackbar message
     setMessage("Success", "Code sent successfully to $email", AppColor.lightBlue.withOpacity(0.7));
 
-    Get.to(() => const OtpScreen());
+    Get.to(() =>  OtpScreen());
 
 
     // Delay navigation to ensure Snackbar is shown before navigating

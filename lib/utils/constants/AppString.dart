@@ -10,12 +10,16 @@ class AppStrings{
  static String pic3TextDetail = "Receive workout and diet plans tailored to your fitness level and goals.";
 
 static String done = "Done";
+static String passwordChangeText = "Your password has been updated!";
+static String createNewPassword = "Create New Password";
 static String resend = "Resend";
+static String updatedPassword = "Password Updated";
 static String send = "Send";
 static String donotReceive = "Didn’t receive a code. ";
 static String verify = "Verify";
 static String verification = "Verification";
 static String enterEmail = "Enter your Email address";
+static String enterEmail1 = "Enter your Email ";
 static String forgotPassword = "Forgot Password";
 static String donothave = "Don't have an account?";
 static String forgetPassword = "Forget Password?";
@@ -24,12 +28,15 @@ static String menu = "Menu";
 static String enterVerification = "Enter verification code";
 
 static String dashboard = "Dashboard";
+static String entrePassword = "Enter Password";
 static String welcomeText = "Welcome to Fitness";
 static String logout = "Logout";
 static String male = "Male";
 static String setting = "Settings";
 static String home = "Home";
 static String password = "Password";
+static String passwordNew = "New Password";
+static String passwordConfirm = "Confirm Password";
 static String startfitess = "Start Your Fitness Journey";
 static String female = "Female";
 static String connectComplete = "Connect, Compete, and Conquer your fitness goals together. Let’s make every workout count!";

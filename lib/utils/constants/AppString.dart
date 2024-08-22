@@ -32,14 +32,12 @@ static String dashboard = "Dashboard";
 static String entrePassword = "Enter Password";
 static String welcomeText = "Welcome to Fitness";
 static String logout = "Logout";
-static String male = "Male";
 static String setting = "Settings";
 static String home = "Home";
 static String password = "Password";
 static String passwordNew = "New Password";
 static String passwordConfirm = "Confirm Password";
 static String startfitess = "Start Your Fitness Journey";
-static String female = "Female";
 static String connectComplete = "Connect, Compete, and Conquer your fitness goals together. Let’s make every workout count!";
 static String name = "Name";
 static String hello = "Hello.";
@@ -53,4 +51,9 @@ static String accountText = "Your Account Security is Our Priority! We ve Sent Y
 static String email = "basitmurad@gmail.com";
 static String emailText = "Email";
 static String passwordResetEmail = "Password Reset Email Sent";
+
+
+////
+ static String male = "Male";
+ static String female = "Female";
 }

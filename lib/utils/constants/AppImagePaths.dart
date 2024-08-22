@@ -9,4 +9,11 @@ class AppImagePaths{
   static const String successImage = "assets/images/successImage.png";
   static const String onboardingImage = "assets/images/onboardingimage.png";
 
+
+  //// sign up image
+  static const String male = "assets/images/male.png";
+  static const String female = "assets/images/female.png";
+  static const String uncheck = "assets/myicons/uncheck.png";
+  static const String check = "assets/myicons/check.png";
+
 }

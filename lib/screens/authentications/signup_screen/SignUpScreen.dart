@@ -1,18 +1,16 @@
-import 'package:fitness/screens/authentications/controller/SignUpScreenController.dart';
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
-import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../common/widgets/ButtonWidget.dart';
 import '../../../common/widgets/TextInputWidget.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/helpers/KeyboardController.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
+import '../../controller/SignUpScreenController.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -92,12 +90,12 @@ class SignUpScreen extends StatelessWidget {
                 onObscureTextChanged: signUpController.toggleConfirmPasswordVisibility,
               )),
 
-              SizedBox(height: AppSizes.sm,),
+              const SizedBox(height: AppSizes.sm,),
 
               GestureDetector(
                 onTap: (){
 
-                  Get.to(LoginScreen());
+                  Get.to(const LoginScreen());
                   KeyboardController.instance.hideKeyboard(); // Hide keyboard before navigation
 
                 },

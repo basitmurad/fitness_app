@@ -1,4 +1,5 @@
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
+import 'package:fitness/screens/authentications/name_screen/NameScreen.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
 import 'package:fitness/screens/authentications/select_gender_screen/SelectGenderScreen.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:  const SelectGenderScreen());
+        home:  const NameScreen());
 
   }
 }

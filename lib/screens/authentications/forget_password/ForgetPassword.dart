@@ -1,6 +1,5 @@
 import 'package:fitness/common/widgets/ButtonWidget.dart';
 import 'package:fitness/common/widgets/TextInputWidget.dart';
-import 'package:fitness/screens/authentications/controller/ForgetScreenController.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginBottom.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/SocialButton.dart';
@@ -13,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
+import '../../controller/ForgetScreenController.dart';
 
 class ForgetPassword extends StatelessWidget {
   ForgetPassword({super.key});

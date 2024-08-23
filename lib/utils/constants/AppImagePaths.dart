@@ -8,6 +8,7 @@ class AppImagePaths{
   static const String google = "assets/logos/google.png";
   static const String successImage = "assets/images/successImage.png";
   static const String onboardingImage = "assets/myicons/check_dark.png";
+  static const String onboardingImage1 = "assets/images/onboardingimage.png";
 
 
   //// sign up image

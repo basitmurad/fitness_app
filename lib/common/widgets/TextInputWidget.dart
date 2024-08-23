@@ -19,7 +19,7 @@ class TextInputWidget extends StatelessWidget {
     this.headerStyle,
     this.headerFontWeight,
     this.headerFontFamily,
-    this.hintTextColor, // New parameter for hint text color
+    this.hintTextColor, this.focusNode, // New parameter for hint text color
   });
 
   final TextEditingController controller;
@@ -35,7 +35,8 @@ class TextInputWidget extends StatelessWidget {
   final TextStyle? headerStyle;
   final FontWeight? headerFontWeight;
   final String? headerFontFamily;
-  final Color? hintTextColor; // New parameter for hint text color
+  final Color? hintTextColor;
+  final FocusNode? focusNode ;// New parameter for hint text color
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,7 @@ class TextInputWidget extends StatelessWidget {
           const SizedBox(height: AppSizes.inputFieldRadius - 6),
         ],
         TextFormField(
+          focusNode: focusNode,
           controller: controller,
           obscureText: isPassword == true ? obscureText ?? true : false, // Toggle obscuring based on isPassword and obscureText
           decoration: InputDecoration(

@@ -10,6 +10,9 @@ class AppStrings{
  static String pic3TextDetail = "Receive workout and diet plans tailored to your fitness level and goals.";
 
 static String done = "Done";
+static String birthdaytext = "What's your birth year?";
+static String textName = "What is your good name, please?";
+static String next = "Next";
 static String passwordChangeText = "Your password has been updated!";
 static String createNewPassword = "Create New Password";
 static String resend = "Resend";

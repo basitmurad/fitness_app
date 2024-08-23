@@ -36,7 +36,7 @@ class ImageWidget extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: AppColor.infoq,
                   image: DecorationImage(
-                    image: AssetImage(AppImagePaths.onboardingImage),
+                    image: AssetImage(AppImagePaths.onboardingImage1),
                   ),
                 ),
               ),

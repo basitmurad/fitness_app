@@ -1,5 +1,4 @@
 import 'package:fitness/common/widgets/ButtonWidget.dart';
-import 'package:fitness/screens/authentications/controller/OtpScreenController.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginBottom.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
@@ -8,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:otpview/sunil/otpview.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
+import '../../controller/OtpScreenController.dart';
 import '../change_password_screen/ChangePasswordScreen.dart';
 
 class OtpScreen extends StatelessWidget {

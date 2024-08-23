@@ -1,7 +1,5 @@
 import 'package:fitness/common/widgets/TextInputWidget.dart';
 import 'package:fitness/screens/authentications/forget_password/ForgetPassword.dart';
-import 'package:fitness/screens/authentications/login_screen/widgets/LoginDividerWidget.dart';
-import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
@@ -10,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../../../common/widgets/ButtonWidget.dart';
-import '../../controller/LoginScreenController.dart';
+import '../../../controller/LoginScreenController.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({

@@ -1,4 +1,6 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:fitness/screens/authentications/select_gender_screen/SelectGenderScreen.dart';
+import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -59,6 +61,8 @@ class SignUpController extends GetxController {
   void signUp() {
     // Implement your sign-up logic here
     setMessage('Success', 'Account successfully created', Colors.blue);
+    Get.to(SelectGenderScreen());
+    KeyboardController.instance.hideKeyboard();
   }
 
   void setMessage(String title, String message, Color backgroundColor) {

@@ -1,15 +1,14 @@
 import 'package:fitness/common/widgets/TextInputWidget.dart';
-import 'package:fitness/screens/authentications/controller/ChangePasswordScreenController.dart';
 import 'package:fitness/screens/authentications/password_success_screen/PasswordSuccessScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common/widgets/ButtonWidget.dart';
-import '../../../utils/constants/AppColor.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
+import '../../controller/ChangePasswordScreenController.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({super.key});
@@ -69,7 +68,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 )),
 
 
-                SizedBox(height: AppSizes.inputFieldRadius+8,),
+                const SizedBox(height: AppSizes.inputFieldRadius+8,),
 
                 const SizedBox(height: AppSizes.inputFieldRadius - 9),
 
@@ -87,7 +86,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   onObscureTextChanged: changePasswordScreenController.togglePasswordVisibility1,
                 )),
 
-                SizedBox(height: AppSizes.appBarHeight-20,),
+                const SizedBox(height: AppSizes.appBarHeight-20,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 52),
                   child: SizedBox(

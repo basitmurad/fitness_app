@@ -7,13 +7,25 @@ class AppImagePaths{
   static const String gymPic = "assets/images/gympic.jpg";
   static const String google = "assets/logos/google.png";
   static const String successImage = "assets/images/successImage.png";
-  static const String onboardingImage = "assets/images/onboardingimage.png";
+  static const String onboardingImage = "assets/myicons/check_dark.png";
 
 
   //// sign up image
   static const String male = "assets/images/male.png";
   static const String female = "assets/images/female.png";
-  static const String uncheck = "assets/myicons/uncheck.png";
-  static const String check = "assets/myicons/check.png";
+
+
+
+
+
+  static const String  uncheckDark= "assets/myicons/iconblack.png";
+  static const String  checkDark= "assets/myicons/checkdark.png";
+  static const String unCheckLight  = "assets/myicons/iconwhite.png";
+  static const String uncheckme  = "assets/myicons/uncheckme.png";
+  static const String checkLight  = "assets/myicons/checklight.png";
+
+
+
+
 
 }

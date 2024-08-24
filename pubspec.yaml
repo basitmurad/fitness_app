@@ -25,6 +25,8 @@ dependencies:
   firebase_core: ^2.24.2
   otpview: ^0.0.2
   direct_select: ^2.0.0
+  animated_custom_dropdown: ^3.1.1
+  fading_edge_scrollview: ^4.1.1
 
 dev_dependencies:
   flutter_test:

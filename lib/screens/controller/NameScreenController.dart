@@ -38,7 +38,6 @@ class NameScreenController extends GetxController {
     final String name = nameController.text;
 
     if (name.isEmpty) {
-      KeyboardController.instance.hideKeyboard();
       ShowSnackbar.showMessage(title: 'Error', message: 'Enter your name', backgroundColor: AppColor.error);
     }
 

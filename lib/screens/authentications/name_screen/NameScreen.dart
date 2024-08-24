@@ -18,69 +18,77 @@ class NameScreen extends StatelessWidget {
 
     NameScreenController nameScreenController = Get.put(NameScreenController());
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(
-                height: AppSizes.appBarHeight,
-              ),
-              Text(
-                textAlign: TextAlign.center,
-                AppStrings.signUP,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
-              ),
-              SizedBox(height: AppDevicesUtils.getScreenWidth(context) * 0.45,),
+      resizeToAvoidBottomInset: true,  // Helps resize the screen when the keyboard is displayed
 
-              const SizedBox(height: AppSizes.appBarHeight,),
-              Text(
-                textAlign: TextAlign.center,
-                AppStrings.textName,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16),
-              ),
+      body: SafeArea(
 
-              const SizedBox(height: AppSizes.spaceBtwInputFields,),
-              // Opacity for TextInputWidget
-              Obx(() => Opacity(
-                opacity: nameScreenController.isNameEntered.value ? 1.0 : 0.4,
-                child: TextInputWidget(
-                    focusNode: nameScreenController.focusNode, // Pass focus node
-
-                    controller: nameScreenController.nameController,
-                    dark: dark
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                 const SizedBox(
+                   height: AppSizes.appBarHeight,
                 ),
-              )),
+                Text(
+                  textAlign: TextAlign.center,
+                  AppStrings.signUP,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
+                ),
+                // SizedBox(height: AppDevicesUtils.getScreenWidth(context) * 0.45,),
+                const SizedBox(
+                  height: 79,
+                ),
+                Text(
+                  textAlign: TextAlign.center,
+                  AppStrings.textName,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16),
+                ),
 
-              const SizedBox(height: AppSizes.spaceBtwInputFields +20,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
 
-                // Opacity for ButtonWidget
-                child: Obx(() => Opacity(
+                SizedBox(height: AppSizes.appBarHeight,),
+                // Opacity for TextInputWidget
+                Obx(() => Opacity(
                   opacity: nameScreenController.isNameEntered.value ? 1.0 : 0.4,
-                  child: ButtonWidget(
-                    dark: dark,
-                    onPressed: () {
+                  child: TextInputWidget(
+                    hintText: 'First Name',
+                      focusNode: nameScreenController.focusNode, // Pass focus node
 
-
-                      nameScreenController.getName();
-                    },
-                    buttonText: AppStrings.next,
+                      controller: nameScreenController.nameController,
+                      dark: dark
                   ),
                 )),
-              ),
-            ],
+
+                const SizedBox(height: AppSizes.appBarHeight-20,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+
+                  // Opacity for ButtonWidget
+                  child: Obx(() => Opacity(
+                    opacity: nameScreenController.isNameEntered.value ? 1.0 : 0.4,
+                    child: ButtonWidget(
+                      dark: dark,
+                      onPressed: () {
+
+
+                        nameScreenController.getName();
+                      },
+                      buttonText: AppStrings.next,
+                    ),
+                  )),
+                ),
+              ],
+            ),
           ),
         ),
       ),

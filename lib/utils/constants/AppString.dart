@@ -10,6 +10,8 @@ class AppStrings{
  static String pic3TextDetail = "Receive workout and diet plans tailored to your fitness level and goals.";
 
 static String done = "Done";
+static String textTargetWeight = "What's your target weight?";
+static String textCurrentWeight = "What's your current weight?";
 static String textHeight = "What's your height?";
 static String birthdaytext = "What's your birth year?";
 static String textName = "What is your good name, please?";
@@ -47,7 +49,8 @@ static String name = "Name";
 static String hello = "Hello.";
 static String fitnessTitan = "Fitness Titan.";
 static String signUP = "Sign up";
-static String sigIn = "Sign In";
+static String sigIn = "Sign up";
+static String textGoal = "What's your main goal?";
 static String nameText = "basit murad";
 static String unlockBest = "Unlock Your Best Self—Join Us Today!";
 static String submit = "Submit";

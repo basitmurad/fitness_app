@@ -1,3 +1,4 @@
+import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:flutter/material.dart';
 import 'customTheme/AppBarTheme.dart';
 import 'customTheme/AppBottomSheetTheme.dart';
@@ -32,7 +33,7 @@ class MyAppTheme {
       primaryColor: Colors.blue,
       textTheme: AppTextTheme.darkTextTheme,
       chipTheme: AppChipTheme.darkTheme,
-      scaffoldBackgroundColor: Colors.black,
+      scaffoldBackgroundColor: AppColor.dark4,
       appBarTheme: MyAppBarTheme.darkTheme,
       elevatedButtonTheme: AppElevatedButtonTheme.darkTheme,
       outlinedButtonTheme: AppOutlinedButtonTheme.darkTheme,

@@ -18,34 +18,46 @@ class NameScreen extends StatelessWidget {
 
     NameScreenController nameScreenController = Get.put(NameScreenController());
     return Scaffold(
-      resizeToAvoidBottomInset: true,  // Helps resize the screen when the keyboard is displayed
-
+      bottomNavigationBar: BottomAppBar(
+        height: 110,
+        padding: const EdgeInsets.only(bottom: 40),
+        color: Colors.transparent,
+        child: Obx(() => Opacity(
+          opacity: nameScreenController.isNameEntered.value ? 1.0 : 0.4,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 28),
+            child: ButtonWidget(
+              dark: dark,
+              onPressed: () {
+                nameScreenController.getName();
+              },
+              buttonText: AppStrings.next,
+            ),
+          ),
+        )),
+      ),
+      resizeToAvoidBottomInset: true, // Helps resize the screen when the keyboard is displayed
       body: SafeArea(
-
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                 const SizedBox(
-                   height: AppSizes.appBarHeight,
-                ),
+                const SizedBox(height: AppSizes.appBarHeight),
                 Text(
-                  textAlign: TextAlign.center,
                   AppStrings.signUP,
+                  textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
                       .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
                 ),
-                // SizedBox(height: AppDevicesUtils.getScreenWidth(context) * 0.45,),
-                const SizedBox(
-                  height: 79,
-                ),
+                const SizedBox(height: 79),
                 Text(
-                  textAlign: TextAlign.center,
                   AppStrings.textName,
+                  textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
@@ -54,39 +66,17 @@ class NameScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       fontSize: 16),
                 ),
-
-
-                SizedBox(height: AppSizes.appBarHeight,),
-                // Opacity for TextInputWidget
+                SizedBox(height: AppDevicesUtils.getScreenWidth(context) * 0.5),
                 Obx(() => Opacity(
                   opacity: nameScreenController.isNameEntered.value ? 1.0 : 0.4,
                   child: TextInputWidget(
-                    hintText: 'First Name',
+                      hintText: 'First Name',
                       focusNode: nameScreenController.focusNode, // Pass focus node
-
                       controller: nameScreenController.nameController,
                       dark: dark
                   ),
                 )),
-
-                const SizedBox(height: AppSizes.appBarHeight-20,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-
-                  // Opacity for ButtonWidget
-                  child: Obx(() => Opacity(
-                    opacity: nameScreenController.isNameEntered.value ? 1.0 : 0.4,
-                    child: ButtonWidget(
-                      dark: dark,
-                      onPressed: () {
-
-
-                        nameScreenController.getName();
-                      },
-                      buttonText: AppStrings.next,
-                    ),
-                  )),
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

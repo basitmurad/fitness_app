@@ -1,4 +1,5 @@
 import 'package:fitness/common/widgets/ButtonWidget.dart';
+import 'package:fitness/screens/authentications/name_screen/NameScreen.dart';
 import 'package:fitness/screens/authentications/select_gender_screen/widgets/GenderWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,36 @@ class SelectGenderScreen extends StatelessWidget {
     SelectGenderController selectGenderController =
         Get.put(SelectGenderController());
     return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        height: 110,
+        padding: EdgeInsets.only(bottom: 40),
+        color: Colors.transparent,
+        child: Obx(() => Opacity(
+              opacity: selectGenderController.selectedGender.value.isEmpty
+                  ? 0.4
+                  : 1.0,
+              child: Padding(
+                padding: EdgeInsets.only(left: 40, right: 40 ,
+                top: 11,bottom: 11
+                ),
+                // Systematic padding
+                child: ButtonWidget(
+                  dark: dark,
+                  onPressed: () {
+                    if (selectGenderController
+                        .selectedGender.value.isNotEmpty) {
+                      Get.to(NameScreen());
+                    } else
+                      (MyAppHelperFunctions.showSnackBar(
+                          'Please Select Your Gender'));
+                    selectGenderController.selectedGender.value;
+                    // Define your onPressed logic here
+                  },
+                  buttonText: AppStrings.next,
+                ),
+              ),
+            )),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -57,7 +88,6 @@ class SelectGenderScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: Container(
-
                         child: GenderWidget(
                           imagePath: AppImagePaths.female,
                           checkBoxText: AppStrings.female,
@@ -68,25 +98,23 @@ class SelectGenderScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: AppSizes.appBarHeight + 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: Obx(() => Opacity(
-                      opacity:
-                          selectGenderController.selectedGender.value.isEmpty
-                              ? 0.4
-                              : 1.0,
-                      child: ButtonWidget(
-                        dark: dark,
-                        onPressed: () {},
-                        buttonText: AppStrings.next,
-                      ),
-                    )),
-              ),
+
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 10,
+              //   ),
+              //   child: Obx(() => Opacity(
+              //         opacity:
+              //             selectGenderController.selectedGender.value.isEmpty
+              //                 ? 0.4
+              //                 : 1.0,
+              //         child: ButtonWidget(
+              //           dark: dark,
+              //           onPressed: () {},
+              //           buttonText: AppStrings.next,
+              //         ),
+              //       )),
+              // ),
             ],
           ),
         ),

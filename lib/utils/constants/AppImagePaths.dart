@@ -14,6 +14,9 @@ class AppImagePaths{
   //// sign up image
   static const String male = "assets/images/male.png";
   static const String female = "assets/images/female.png";
+  static const String chdkkdd = "assets/images/imagesss.png";
+  static const String dar = "assets/images/dark.png";
+  static const String lig = "assets/images/light.png";
 
 
 

@@ -67,7 +67,7 @@ class GenderWidget extends StatelessWidget {
             children: [
               Image.asset(
                 imagePath,
-                height: AppDevicesUtils.getScreenWidth(context) * 1,
+                height: AppDevicesUtils.getScreenWidth(context) * 1.2,
                 width: AppDevicesUtils.getScreenWidth(context) * 0.3,
               ),
               SizedBox(height: 16),
@@ -104,6 +104,8 @@ class GenderWidget extends StatelessWidget {
                           : AppImagePaths.checkLight, // Selected icon path
                     ),
                   ),
+                  SizedBox(width: 16),
+
                 ],
               ),
             ],

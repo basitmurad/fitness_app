@@ -37,24 +37,45 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
     final dark = MyAppHelperFunctions.isDarkMode(context);
 
     return Scaffold(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 40),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 30),
+          child: ButtonWidget(
+            dark: dark,
+            onPressed: () {
+              Get.to(HeightScreen());
+              // Handle the button press
+            },
+            buttonText: AppStrings.next,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 28),
             child: Column(
               children: [
+                // Center the "Sign Up" text just below the app bar
                 const SizedBox(height: AppSizes.appBarHeight),
-                Text(
-                  AppStrings.signUP,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    AppStrings.signUP,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 110),
+                const SizedBox(height: 79), // Space between the text and the rest of the content
+
+                // Center the rest of the content in the middle of the screen
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       textAlign: TextAlign.center,
@@ -66,6 +87,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
+
                     // Constrain the height of the ListView.builder
                     SizedBox(
                       width: 160,
@@ -91,7 +113,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                                   style: TextStyle(
                                     color: isSelected
                                         ? Colors.white
-                                        : Colors.black,
+                                        : Theme.of(context).textTheme.bodyMedium!.color,
                                   ),
                                 ),
                               ),
@@ -101,21 +123,6 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       ),
                     ),
                     const SizedBox(height: AppSizes.appBarHeight),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ButtonWidget(
-                          dark: dark,
-                          onPressed: () {
-
-                            Get.to(HeightScreen());
-                            // Handle the button press
-                          },
-                          buttonText: AppStrings.next,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ],

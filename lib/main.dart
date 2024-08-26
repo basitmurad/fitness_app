@@ -1,7 +1,11 @@
+import 'package:fitness/screens/authentications/body_goal_screen/BodyGoalScreen.dart';
+import 'package:fitness/screens/authentications/height_screen/HeightScreen.dart';
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/screens/authentications/name_screen/NameScreen.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
 import 'package:fitness/screens/authentications/select_gender_screen/SelectGenderScreen.dart';
+import 'package:fitness/screens/authentications/target_weight_screen/TargetWeightScreen.dart';
+import 'package:fitness/screens/authentications/weight_screen/WeightScreen.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
@@ -33,7 +37,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:   NameScreen());
+        home:   BodyGoalScreen());
 
   }
 }

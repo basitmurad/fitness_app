@@ -283,10 +283,12 @@ class HeightScreen extends StatelessWidget {
                             ),
                           )),
                         ),
+                        
                         Container(
+                          margin: EdgeInsets.all(2),
                           height: 35,
-                          width: 1,
-                          color: AppColor.grey,
+                          width: 1  ,
+                          color: dark ? AppColor.white : AppColor.black.withOpacity(0.2),
                         ),
                         GestureDetector(
                           onTap: () => heightScreenController.selectUnit('Ft'),

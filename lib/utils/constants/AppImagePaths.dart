@@ -29,6 +29,12 @@ class AppImagePaths{
   static const String checkLight  = "assets/myicons/checklight.png";
 
 
+  static const String buildMuscle  = "assets/images/buildmuscles.png";
+  static const String keepFit  = "assets/images/keepfit.png";
+  static const String lossWeight  = "assets/images/lossweight.png";
+  static const String maleBody  = "assets/images/body.png";
+  static const String femaleBody  = "assets/images/femalebody.png";
+  static const String glowImage  = "assets/images/glowimage.png";
 
 
 

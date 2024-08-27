@@ -1,5 +1,4 @@
 import 'package:fitness/common/widgets/TextInputWidget.dart';
-import 'package:fitness/screens/controller/NameScreenController.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../common/widgets/ButtonWidget.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
+import '../../authentication_controllers/NameScreenController.dart';
 
 class NameScreen extends StatelessWidget {
   const NameScreen({super.key});
@@ -29,6 +29,7 @@ class NameScreen extends StatelessWidget {
             child: ButtonWidget(
               dark: dark,
               onPressed: () {
+
                 nameScreenController.getName();
               },
               buttonText: AppStrings.next,
@@ -41,11 +42,11 @@ class NameScreen extends StatelessWidget {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: AppSizes.appBarHeight),
+                const SizedBox(height: AppSizes.appBarHeight -20),
                 Text(
                   AppStrings.signUP,
                   textAlign: TextAlign.center,

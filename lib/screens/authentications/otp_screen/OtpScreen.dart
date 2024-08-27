@@ -10,7 +10,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
-import '../../controller/OtpScreenController.dart';
+import '../../authentication_controllers/OtpScreenController.dart';
 import '../change_password_screen/ChangePasswordScreen.dart';
 
 class OtpScreen extends StatelessWidget {

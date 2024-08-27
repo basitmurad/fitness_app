@@ -1,4 +1,4 @@
-import 'package:fitness/screens/controller/TargetWeightScreenController.dart';
+import 'package:fitness/screens/authentications/body_goal_screen/BodyGoalScreen.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,7 @@ import '../../../common/widgets/ButtonWidget.dart';
 import '../../../utils/constants/AppColor.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
+import '../../authentication_controllers/TargetWeightScreenController.dart';
 import '../height_screen/widgets/InputWidget.dart';
 import '../height_screen/widgets/UnitWidget.dart';
 
@@ -33,7 +34,7 @@ class TargetWeightScreen extends StatelessWidget {
                 dark: dark,
                 onPressed: () {
 
-                  Get.to(TargetWeightScreen());
+                  Get.to(BodyGoalScreen());
                   // Handle further actions here
                 },
                 buttonText: AppStrings.next,
@@ -45,11 +46,11 @@ class TargetWeightScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Center(
               child: Column(
                 children: [
-                  const SizedBox(height: AppSizes.appBarHeight),
+                  const SizedBox(height: AppSizes.appBarHeight -20),
                   Text(
                     textAlign: TextAlign.center,
                     AppStrings.signUP,

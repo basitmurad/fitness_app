@@ -8,4 +8,6 @@ class BodyGoalScreenController extends GetxController {
     selectedIndex.value = index; // Update the selected card index
     isSelected.value = true; // Mark that a card is selected
   }
+
+
 }

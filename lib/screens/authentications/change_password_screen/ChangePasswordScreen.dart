@@ -8,7 +8,7 @@ import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
-import '../../controller/ChangePasswordScreenController.dart';
+import '../../authentication_controllers/ChangePasswordScreenController.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({super.key});

@@ -1,6 +1,8 @@
+import 'package:fitness/common/snackbar/ShowSnackbar.dart';
 import 'package:fitness/common/widgets/ButtonWidget.dart';
 import 'package:fitness/screens/authentications/name_screen/NameScreen.dart';
 import 'package:fitness/screens/authentications/select_gender_screen/widgets/GenderWidget.dart';
+import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
@@ -8,7 +10,7 @@ import '../../../utils/constants/AppImagePaths.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
-import '../../controller/SelectGenderController.dart';
+import '../../authentication_controllers/SelectGenderController.dart';
 
 class SelectGenderScreen extends StatelessWidget {
   const SelectGenderScreen({super.key});
@@ -22,14 +24,14 @@ class SelectGenderScreen extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         height: 110,
-        padding: EdgeInsets.only(bottom: 40),
+        padding: const EdgeInsets.only(bottom: 40),
         color: Colors.transparent,
         child: Obx(() => Opacity(
               opacity: selectGenderController.selectedGender.value.isEmpty
                   ? 0.4
                   : 1.0,
               child: Padding(
-                padding: EdgeInsets.only(left: 40, right: 40 ,
+                padding: const EdgeInsets.only(left: 40, right: 40 ,
                 top: 11,bottom: 11
                 ),
                 // Systematic padding
@@ -38,10 +40,10 @@ class SelectGenderScreen extends StatelessWidget {
                   onPressed: () {
                     if (selectGenderController
                         .selectedGender.value.isNotEmpty) {
-                      Get.to(NameScreen());
-                    } else
-                      (MyAppHelperFunctions.showSnackBar(
-                          'Please Select Your Gender'));
+                      Get.to(const NameScreen());
+                    } else {
+                      ShowSnackbar.showMessage(title: 'Failed', message: 'Please select you gender', backgroundColor: AppColor.error);
+                    }
                     selectGenderController.selectedGender.value;
                     // Define your onPressed logic here
                   },
@@ -51,71 +53,58 @@ class SelectGenderScreen extends StatelessWidget {
             )),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(
-                height: AppSizes.appBarHeight,
-              ),
-              Text(
-                AppStrings.signUP,
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
-              ),
-              const SizedBox(
-                height: AppSizes.spaceBtwItems + 30,
-              ),
-              Container(
-                height: AppDevicesUtils.getScreenWidth(context) * 1.4,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        child: GenderWidget(
-                          imagePath: AppImagePaths.male,
-                          checkBoxText: AppStrings.male,
-                          isMaleWidget: true,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: GenderWidget(
-                          imagePath: AppImagePaths.female,
-                          checkBoxText: AppStrings.female,
-                          isMaleWidget: false,
-                        ),
-                      ),
-                    ),
-                  ],
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(
+                  height: AppSizes.appBarHeight -20,
                 ),
-              ),
-
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(
-              //     horizontal: 10,
-              //   ),
-              //   child: Obx(() => Opacity(
-              //         opacity:
-              //             selectGenderController.selectedGender.value.isEmpty
-              //                 ? 0.4
-              //                 : 1.0,
-              //         child: ButtonWidget(
-              //           dark: dark,
-              //           onPressed: () {},
-              //           buttonText: AppStrings.next,
-              //         ),
-              //       )),
-              // ),
-            ],
+                Text(
+                  AppStrings.signUP,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
+                ),
+                const SizedBox(
+                  height: AppSizes.spaceBtwItems + 30,
+                ),
+                Container(
+                  height: AppDevicesUtils.getScreenWidth(context) * 1.4,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          child: GenderWidget(
+                            imagePath: AppImagePaths.male,
+                            checkBoxText: AppStrings.male,
+                            isMaleWidget: true,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Container(
+                          child: GenderWidget(
+                            imagePath: AppImagePaths.female,
+                            checkBoxText: AppStrings.female,
+                            isMaleWidget: false,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+          
+          
+              ],
+            ),
           ),
         ),
       ),

@@ -1,7 +1,5 @@
-
-import 'package:fitness/screens/authentications/body_goal_screen/BodyGoalScreen.dart';
+import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
 import 'package:fitness/screens/authentications/select_gender_screen/SelectGenderScreen.dart';
-import 'package:fitness/screens/authentications/weight_screen/WeightScreen.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+
 
 void main() {
   Get.put(KeyboardController());
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:   BodyGoalScreen());
+        home:   OnboardingScreen());
 
   }
 }

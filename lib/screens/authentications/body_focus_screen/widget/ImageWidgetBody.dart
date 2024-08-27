@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class ImageWidgetBody extends StatelessWidget {
-  const ImageWidgetBody({
+   ImageWidgetBody({
     super.key,
     required this.imageUrl,
   });
@@ -17,6 +17,7 @@ class ImageWidgetBody extends StatelessWidget {
           child: Image(
             fit: BoxFit.cover,
             image: AssetImage(imageUrl),
+
           ),
         ),
 

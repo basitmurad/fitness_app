@@ -37,5 +37,10 @@ class AppImagePaths{
   static const String glowImage  = "assets/images/glowimage.png";
 
 
+  static const String noequipmentImage  = "assets/myicons/noequipment.png";
+  static const String nojummping  = "assets/myicons/nojummping.png";
+  static const String none  = "assets/myicons/none.png";
+
+
 
 }

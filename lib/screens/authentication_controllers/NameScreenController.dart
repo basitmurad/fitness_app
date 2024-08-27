@@ -1,7 +1,6 @@
 import 'package:fitness/common/snackbar/ShowSnackbar.dart';
 import 'package:fitness/screens/authentications/date_birth_screen/DateOfBirthScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
-import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -40,8 +39,11 @@ class NameScreenController extends GetxController {
     if (name.isEmpty) {
       ShowSnackbar.showMessage(title: 'Error', message: 'Enter your name', backgroundColor: AppColor.error);
     }
+    else{
+      Get.to(DateOfBirthScreen());
 
-    Get.to(DateOfBirthScreen());
+    }
+
 
 
   }

@@ -10,7 +10,7 @@ import '../../../common/widgets/TextInputWidget.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/helpers/KeyboardController.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
-import '../../controller/SignUpScreenController.dart';
+import '../../authentication_controllers/SignUpScreenController.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

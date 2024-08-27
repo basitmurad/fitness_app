@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../../../common/widgets/ButtonWidget.dart';
-import '../../../controller/LoginScreenController.dart';
+import '../../../authentication_controllers/LoginScreenController.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({

@@ -1,5 +1,6 @@
 import 'package:fitness/screens/authentications/body_focus_screen/widget/ImageWidgetBody.dart';
 import 'package:fitness/screens/authentications/body_focus_screen/widget/SelectableCard.dart';
+import 'package:fitness/screens/authentications/select_exercise_screen/SelectExerciseScreen.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ import '../../../utils/constants/AppImagePaths.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
-import '../../controller/BodyFocusScreenController.dart';
+import '../../authentication_controllers/BodyFocusScreenController.dart';
 
 class BodyFocusScreen extends StatelessWidget {
   const BodyFocusScreen({super.key});
@@ -42,6 +43,8 @@ class BodyFocusScreen extends StatelessWidget {
               child: ButtonWidget(
                 dark: dark,
                 onPressed: () {
+
+                  Get.to(SelectExerciseScreen());
                   // Handle button press
                 },
                 buttonText: AppStrings.next,
@@ -49,7 +52,8 @@ class BodyFocusScreen extends StatelessWidget {
             ),
           ),
         );
-      }),      body: SafeArea(
+      }),
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
           child: Column(
@@ -90,8 +94,8 @@ class BodyFocusScreen extends StatelessWidget {
                       }),
                     ),
                     const SizedBox(width: 1),
-                    const Expanded(
-                      child: ImageWidgetBody(imageUrl: AppImagePaths.maleBody),
+                     Expanded(
+                      child: ImageWidgetBody(imageUrl: AppImagePaths.femaleBody),
                     ),
                   ],
                 ),

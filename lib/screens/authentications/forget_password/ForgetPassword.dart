@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
-import '../../controller/ForgetScreenController.dart';
+import '../../authentication_controllers/ForgetScreenController.dart';
 
 class ForgetPassword extends StatelessWidget {
   ForgetPassword({super.key});

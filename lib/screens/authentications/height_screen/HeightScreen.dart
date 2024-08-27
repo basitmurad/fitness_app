@@ -1,186 +1,16 @@
-// import 'package:fitness/screens/authentications/height_screen/widgets/InputWidget.dart';
-// import 'package:fitness/screens/authentications/height_screen/widgets/UnitWidget.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:fitness/common/widgets/ButtonWidget.dart';
-// import 'package:fitness/screens/controller/HeightScreenController.dart';
-// import 'package:fitness/utils/constants/AppColor.dart';
-// import 'package:fitness/utils/constants/AppSizes.dart';
-// import 'package:fitness/utils/helpers/MyAppHelper.dart';
-//
-// import '../../../utils/constants/AppString.dart';
-//
-// class HeightScreen extends StatelessWidget {
-//   const HeightScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final dark = MyAppHelperFunctions.isDarkMode(context);
-//     final HeightScreenController heightScreenController =
-//         Get.put(HeightScreenController());
-//
-//     return Scaffold(
-//       resizeToAvoidBottomInset: true,
-//       bottomNavigationBar: Obx(
-//             () => Padding(
-//           padding: const EdgeInsets.only(bottom: 40),
-//           child: Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-//             child: Opacity(
-//               opacity: heightScreenController.opacity.value,
-//               child: ButtonWidget(
-//                 dark: dark,
-//                 onPressed: () {
-//                   // Handle the button press
-//                 },
-//                 buttonText: AppStrings.next,
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//
-//       body: SafeArea(
-//         child: SingleChildScrollView(
-//           child: Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-//             child: Center(
-//               child: Column(
-//                 children: [
-//                   const SizedBox(height: AppSizes.appBarHeight),
-//                   Text(
-//                     textAlign: TextAlign.center,
-//                     AppStrings.signUP,
-//                     style: Theme.of(context)
-//                         .textTheme
-//                         .bodyMedium!
-//                         .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
-//                   ),
-//                   const SizedBox(height: 79),
-//                   Text(
-//                     textAlign: TextAlign.center,
-//                     AppStrings.textHeight,
-//                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-//                         fontFamily: 'Poppins',
-//                         fontWeight: FontWeight.w500,
-//                         fontSize: 16),
-//                   ),
-//                   const SizedBox(height: AppSizes.appBarHeight - 20),
-//                   Container(
-//                     alignment: Alignment.center,
-//                     width: 110,
-//                     height: 45,
-//                     decoration: BoxDecoration(
-//                         borderRadius: BorderRadius.circular(20),
-//                         border:
-//                             Border.all(width: 1, color: Colors.transparent)),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         GestureDetector(
-//                           onTap: () => heightScreenController.selectUnit('Cm'),
-//                           child: Obx(() => Opacity(
-//                               opacity: heightScreenController.opacity.value,
-//
-//                             child: UnitWidget(
-//                                   dark: dark,
-//                                   unitText: 'Cm',
-//                                   rotationAngle: 3.15,
-//                                   color: heightScreenController.isSelected('Cm')
-//                                       ? AppColor.lightBlue // Color when selected
-//                                       : Colors.white,
-//                                   textColor: heightScreenController
-//                                           .isSelected('Cm')
-//                                       ? Colors.white // Text color when selected
-//                                       : Colors.black, //// Default color
-//                                 ),
-//                           )),
-//                         ),
-//                         Container(
-//                           height: 35,
-//                           width: 1,
-//                           color: AppColor.grey,
-//                         ),
-//                         GestureDetector(
-//                           onTap: () => heightScreenController.selectUnit('Ft'),
-//                           child: Obx(() => UnitWidget(
-//                                 unitText: 'Ft',
-//                                 dark: dark,
-//                                 rotationAngle: 0,
-//                                 color: heightScreenController.isSelected('Ft')
-//                                     ? AppColor.lightBlue // Color when selected
-//                                     : Colors.white,
-//                                 textColor: heightScreenController
-//                                         .isSelected('Ft')
-//                                     ? Colors.white // Text color when selected
-//                                     : Colors.black, //// Default color
-//                               )),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   const SizedBox(height: AppSizes.appBarHeight),
-//                   Obx(() {
-//                     if (heightScreenController.isSelected('Cm')) {
-//                       return InputWidget(
-//                         dark: dark,
-//                         focusNode: FocusNode(),
-//                         editingController: TextEditingController(),
-//                         opacity: 1.0,
-//                         ft: 'cm', onChanged: (String ) {  }, // Full opacity for selected unit
-//                       );
-//                     } else if (heightScreenController.isSelected('Ft')) {
-//                       return Row(
-//                         mainAxisAlignment: MainAxisAlignment.center,
-//                         children: [
-//                           InputWidget(
-//                             dark: dark,
-//                             focusNode: FocusNode(),
-//                             editingController: TextEditingController(),
-//                             opacity: 1.0,
-//                             ft: 'ft', onChanged: (String ) {  }, // Full opacity for feet
-//                           ),
-//                           const SizedBox(width: 10),
-//                           InputWidget(
-//                             dark: dark,
-//                             focusNode: FocusNode(),
-//                             editingController: TextEditingController(),
-//                             opacity: 1.0,
-//                             ft: 'inch', onChanged: (String ) {  },// Full opacity for inches
-//                           ),
-//                         ],
-//                       );
-//                     } else {
-//                       return Container();
-//                     }
-//                   }),
-//
-//                   const SizedBox(height: AppSizes.appBarHeight + 30),
-//
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-//
-//
+import 'package:fitness/common/snackbar/ShowSnackbar.dart';
 import 'package:fitness/screens/authentications/height_screen/widgets/InputWidget.dart';
 import 'package:fitness/screens/authentications/height_screen/widgets/UnitWidget.dart';
 import 'package:fitness/screens/authentications/weight_screen/WeightScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitness/common/widgets/ButtonWidget.dart';
-import 'package:fitness/screens/controller/HeightScreenController.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 
 import '../../../utils/constants/AppString.dart';
+import '../../authentication_controllers/HeightScreenController.dart';
 
 class HeightScreen extends StatelessWidget {
   const HeightScreen({super.key});
@@ -208,7 +38,9 @@ class HeightScreen extends StatelessWidget {
                   if (heightScreenController.isSelected('Cm')) {
                     if (heightScreenController.cmController.text.isNotEmpty) {
                       message = "Your height: ${heightScreenController.cmController.text} cm";
-                      MyAppHelperFunctions.showSnackBar(message);
+
+
+                      ShowSnackbar.showMessage(title: 'Not Valid', message: 'Please select your height', backgroundColor: AppColor.error);
                       Get.to(WeightScreen());
                     } else {
                       MyAppHelperFunctions.showSnackBar("Please enter your height in cm");
@@ -232,11 +64,11 @@ class HeightScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Center(
               child: Column(
                 children: [
-                  const SizedBox(height: AppSizes.appBarHeight),
+                  const SizedBox(height: AppSizes.appBarHeight -20),
                   Text(
                     textAlign: TextAlign.center,
                     AppStrings.signUP,

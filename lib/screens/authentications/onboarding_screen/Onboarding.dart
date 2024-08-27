@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import '../../../common/widgets/ButtonWidget.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
-import '../../controller/OnboardingScreenController.dart';
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 

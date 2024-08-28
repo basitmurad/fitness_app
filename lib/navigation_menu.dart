@@ -27,6 +27,8 @@ class NavigationMenu extends StatelessWidget {
               controller.selectedIndex.value = index,
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
+            NavigationDestination(
+                icon: Icon(Iconsax.search_favorite), label: 'Search'),
             NavigationDestination(icon: Icon(Iconsax.shop), label: 'Social'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
           ],
@@ -42,8 +44,12 @@ class NavigationController extends GetxController {
 
   final screens = [
     const Dashboard(),
-    Container(color: Colors.blue,),
+    Container(
+      color: Colors.blue,
+    ),
+    Container(
+      color: Colors.green,
+    ),
     const UserProfileScreen(),
   ];
 }
-

@@ -1,7 +1,9 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:fitness/common/snackbar/ShowSnackbar.dart';
 import 'package:fitness/screens/authentications/otp_screen/OtpScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
+import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,11 +19,12 @@ class ForgetController extends GetxController{
   void forgetPassword(){
     final email = emailController.text;
     if (email.isEmpty) {
-      Fluttertoast.showToast(msg: "Please fill in all fields.");
+
+      ShowSnackbar.showMessage(title: 'Invalid Email', message: 'Please enter a correct email', backgroundColor: AppColor.error);
       return;
     }
       if (!EmailValidator.validate(email)) {
-      Fluttertoast.showToast(msg: "Please enter a valid email address.");
+        ShowSnackbar.showMessage(title: 'Invalid Email', message: 'Please enter a correct email', backgroundColor: AppColor.error);
       return;
     }
 
@@ -32,7 +35,7 @@ class ForgetController extends GetxController{
     // Show the Snackbar message
     setMessage("Success", "Code sent successfully to $email", AppColor.lightBlue.withOpacity(0.7));
 
-    Get.to(() =>  OtpScreen());
+    Get.to(() =>  const OtpScreen());
 
 
     // Delay navigation to ensure Snackbar is shown before navigating

@@ -10,11 +10,11 @@ class WeightScreenController extends GetxController{
   // Controllers for text fields
   final TextEditingController kgController = TextEditingController();
   final TextEditingController lbsController = TextEditingController();
-  var opacity = 0.1.obs; // Initial opacity set to 0.1
+  var opacity = 0.5.obs; // Initial opacity set to 0.1
 
 
   // Reactive variable for opacity
-  var unitOpacity = 0.1.obs;
+  var unitOpacity = 0.5.obs;
 
   void selectUnit(String unit) {
     selectedUnit.value = unit;
@@ -33,23 +33,6 @@ class WeightScreenController extends GetxController{
     return selectedUnit.value == unit;
   }
 
-  // bool validateWeight(   String email ,String password , String gender ,String name ,String height
-  //  ,int year) {
-  //   if (isSelected('Kg')) {
-  //     final weight = double.tryParse(kgController.text);
-  //     if (weight == null || weight <= 0) {
-  //       MyAppHelperFunctions.showSnackBar("Please enter a valid weight in kg.");
-  //       return false;
-  //     }
-  //   } else if (isSelected('Lbs')) {
-  //     final weight = double.tryParse(lbsController.text);
-  //     if (weight == null || weight <= 0) {
-  //       MyAppHelperFunctions.showSnackBar("Please enter a valid weight in lbs.");
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  // }
 
   bool validateWeight(String email, String password, String gender, String name, String height, int year) {
     if (isSelected('Kg')) {

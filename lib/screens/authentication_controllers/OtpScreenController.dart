@@ -36,4 +36,10 @@ class OtpScreenController extends GetxController {
     focusNodes.forEach((focusNode) => focusNode.dispose());
     super.onClose();
   }
+
+  var pin = ''.obs;
+
+  void updatePin(String value) {
+    pin.value = value;
+  }
 }

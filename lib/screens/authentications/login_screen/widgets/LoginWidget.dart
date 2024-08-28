@@ -1,5 +1,7 @@
 import 'package:fitness/common/widgets/TextInputWidget.dart';
+import 'package:fitness/navigation_menu.dart';
 import 'package:fitness/screens/authentications/forget_password/ForgetPassword.dart';
+import 'package:fitness/screens/home/dashboard/Dashboard.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
@@ -78,7 +80,9 @@ class LoginWidget extends StatelessWidget {
           Padding(
 
             padding: const EdgeInsets.symmetric(horizontal: 0 ,),
-            child: ButtonWidget(dark: dark, onPressed: () {  }, buttonText: AppStrings.sigIn,),
+            child: ButtonWidget(dark: dark, onPressed: () {
+              Get.to(NavigationMenu());
+            }, buttonText: AppStrings.sigIn,),
           ),
           
         ],

@@ -41,7 +41,7 @@ class MyAppHelperFunctions {
 
   static void showSnackBar(String message) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
-      SnackBar(content: Text(message),
+      SnackBar(content: Text(message ,),
       backgroundColor: AppColor.error,),
     );
   }

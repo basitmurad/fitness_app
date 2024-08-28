@@ -36,76 +36,89 @@ class HeightScreen extends StatelessWidget {
               child: ButtonWidget(
                 dark: dark,
                 onPressed: () async {
-                  String message;
 
-                  // Validate the input and show a Snackbar with the value
-                  if (heightScreenController.isSelected('Cm')) {
-                    final cmText = heightScreenController.cmController.text;
 
-                    // Check if cmText is empty or not a valid number
-                    if (cmText.isNotEmpty && double.tryParse(cmText) != null) {
-                      message = "Your height: $cmText cm";
-                      MyAppHelperFunctions.showSnackBar(message);
-                      await UserPreferences.saveUserData(
-                        email: email,
-                        password: password,
-                        gender: gender,
-                        name: name,
-                        age: year, // Set age based on the selected year
-                        height: cmText+ "cm", // To be filled later
-                        weight: '', // To be filled later
-                        targetWeight: '', // To be filled later
-                        mainGoal: '',
-                      );
-
-                      Get.to(WeightScreen(
-                        email: email,
-                        password: password,
-                        gender: gender,
-                        name: name,
-                        year: year, height: cmText +"ft",
-                      ));
-                    } else {
-                      MyAppHelperFunctions.showSnackBar("Please enter a valid height in cm");
-                    }
-                  } else if (heightScreenController.isSelected('Ft')) {
-                    final ftText = heightScreenController.ftController.text;
-                    final inchText = heightScreenController.inchController.text;
-
-                    // Check if ftText and inchText are not empty and are valid numbers
-                    if (ftText.isNotEmpty &&
-                        inchText.isNotEmpty &&
-                        double.tryParse(ftText) != null &&
-                        double.tryParse(inchText) != null) {
-                      message = "Your height: $ftText ft $inchText inch";
-                      MyAppHelperFunctions.showSnackBar(message);
-                      await UserPreferences.saveUserData(
-                        email: email,
-                        password: password,
-                        gender: gender,
-                        name: name,
-                        age: year, // Set age based on the selected year
-                        height: ftText +"ft"  +" "+ inchText +"inch", // To be filled later
-                        weight: '', // To be filled later
-                        targetWeight: '', // To be filled later
-                        mainGoal: '',
-                      );
-                      Get.to(WeightScreen(
-                        email: email,
-                        password: password,
-                        gender: gender,
-                        name: name,
-                        year: year, height: ftText +"ft"+ inchText +"inch",
-                      ));
-                    } else {
-                      MyAppHelperFunctions.showSnackBar("Please enter valid height in feet and inches");
-                    }
+                  if(heightScreenController.opacity.value<0.9){
+                    MyAppHelperFunctions.showSnackBar('Click on Cm');
+                    return;
                   }
-                  // Handle further actions after showing the Snackbar
-                },
+                  else
+                    {
+                      String message;
+
+                      // Validate the input and show a Snackbar with the value
+                      if (heightScreenController.isSelected('Cm')) {
+                        final cmText = heightScreenController.cmController.text;
+
+                        // Check if cmText is empty or not a valid number
+                        if (cmText.isNotEmpty && double.tryParse(cmText) != null) {
+                          message = "Your height: $cmText cm";
+                          MyAppHelperFunctions.showSnackBar(message);
+                          await UserPreferences.saveUserData(
+                            email: email,
+                            password: password,
+                            gender: gender,
+                            name: name,
+                            age: year, // Set age based on the selected year
+                            height: cmText+ "cm", // To be filled later
+                            weight: '', // To be filled later
+                            targetWeight: '', // To be filled later
+                            mainGoal: '',
+                          );
+
+                          Get.to(WeightScreen(
+                            email: email,
+                            password: password,
+                            gender: gender,
+                            name: name,
+                            year: year, height: cmText +"ft",
+                          ));
+                        } else {
+                          MyAppHelperFunctions.showSnackBar("Please enter a valid height in cm");
+                        }
+                      } else if (heightScreenController.isSelected('Ft')) {
+                        final ftText = heightScreenController.ftController.text;
+                        final inchText = heightScreenController.inchController.text;
+
+                        // Check if ftText and inchText are not empty and are valid numbers
+                        if (ftText.isNotEmpty &&
+                            inchText.isNotEmpty &&
+                            double.tryParse(ftText) != null &&
+                            double.tryParse(inchText) != null) {
+                          message = "Your height: $ftText ft $inchText inch";
+                          MyAppHelperFunctions.showSnackBar(message);
+                          await UserPreferences.saveUserData(
+                            email: email,
+                            password: password,
+                            gender: gender,
+                            name: name,
+                            age: year, // Set age based on the selected year
+                            height: ftText +"ft"  +" "+ inchText +"inch", // To be filled later
+                            weight: '', // To be filled later
+                            targetWeight: '', // To be filled later
+                            mainGoal: '',
+                          );
+                          Get.to(WeightScreen(
+                            email: email,
+                            password: password,
+                            gender: gender,
+                            name: name,
+                            year: year, height: ftText +"ft"+ inchText +"inch",
+                          ));
+                        } else {
+                          MyAppHelperFunctions.showSnackBar("Please enter valid height in feet and inches");
+                        }
+                      }
+                    }
+
+
+
+
+
+                } ,
 
                 buttonText: AppStrings.next,
-              ),
+              ) ,
             ),
           ),
         ),

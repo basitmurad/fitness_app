@@ -4,6 +4,8 @@ import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../shared_preferences/UserPreferences.dart';
+
 class SignUpController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -58,11 +60,32 @@ class SignUpController extends GetxController {
     isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
   }
 
-  void signUp() {
-    // Implement your sign-up logic here
-    setMessage('Success', 'Account successfully created', Colors.blue);
-    Get.to(SelectGenderScreen());
-    KeyboardController.instance.hideKeyboard();
+  Future<void> signUp() async {
+    print('data is saved');
+
+    try{
+      await UserPreferences.saveUserData(
+        email: emailController.text,
+        password: passwordController.text,
+        gender: '',
+        name: '', // To be filled later
+        age: 0, // To be filled later
+        height: '', // To be filled later
+        weight: '', // To be filled later
+        targetWeight: '', // To be filled later
+        mainGoal: '',
+
+        // To be filled later
+      );
+
+      setMessage('Success', 'Account successfully created', Colors.blue);
+      Get.to( SelectGenderScreen(email: emailController.text, password: passwordController.text,));
+      KeyboardController.instance.hideKeyboard();
+    }
+    catch(e){
+      print('Error ${e.toString()}' );
+    }
+
   }
 
   void setMessage(String title, String message, Color backgroundColor) {

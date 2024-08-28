@@ -1,4 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+
+import '../shared_preferences/UserPreferences.dart';
+
+import '../shared_preferences/UserPreferences.dart';
 
 class SelectGenderController extends GetxController {
   var isMaleChecked = false.obs;
@@ -29,5 +34,6 @@ class SelectGenderController extends GetxController {
     isMaleSelected.value = false;
     isFemaleSelected.value = true;
   }
+
 
 }

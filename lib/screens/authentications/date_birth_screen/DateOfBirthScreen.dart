@@ -1,190 +1,44 @@
-// import 'package:fitness/screens/authentications/height_screen/HeightScreen.dart';
-// import 'package:flutter/material.dart';
-// import 'package:fitness/utils/helpers/MyAppHelper.dart';
-// import 'package:get/get.dart';
-// import '../../../common/widgets/ButtonWidget.dart';
-// import '../../../utils/constants/AppSizes.dart';
-// import '../../../utils/constants/AppString.dart';
-//
-// class DateOfBirthScreen extends StatefulWidget {
-//   const DateOfBirthScreen({super.key});
-//
-//   @override
-//   _DateOfBirthScreenState createState() => _DateOfBirthScreenState();
-// }
-//
-// class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
-//   int? _selectedIndex;
-//
-//   List<String> _generateYears() {
-//     final currentYear = DateTime.now().year;
-//     return List<String>.generate(
-//       currentYear - 1950 + 1,
-//           (index) => (1950 + index).toString(),
-//     );
-//   }
-//
-//   void _onItemTap(int index) {
-//     setState(() {
-//       _selectedIndex = _selectedIndex == index ? null : index;
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final years = _generateYears();
-//     final dark = MyAppHelperFunctions.isDarkMode(context);
-//
-//     return Scaffold(
-//       bottomNavigationBar: Padding(
-//         padding: const EdgeInsets.only(bottom: 40),
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 30),
-//           child: ButtonWidget(
-//             dark: dark,
-//             onPressed: () {
-//
-//
-//               Get.to(HeightScreen());
-//               // Handle the button press
-//             },
-//             buttonText: AppStrings.next,
-//           ),
-//         ),
-//       ),
-//       body: SafeArea(
-//         child: SingleChildScrollView(
-//           child: Padding(
-//             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-//             child: Column(
-//               children: [
-//                 // Center the "Sign Up" text just below the app bar
-//                 const SizedBox(height: AppSizes.appBarHeight-20),
-//                 Align(
-//                   alignment: Alignment.center,
-//                   child: Text(
-//                     AppStrings.signUP,
-//                     textAlign: TextAlign.center,
-//                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-//                       fontWeight: FontWeight.w700,
-//                       fontSize: 16,
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 79), // Space between the text and the rest of the content
-//
-//                 // Center the rest of the content in the middle of the screen
-//                 Column(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   crossAxisAlignment: CrossAxisAlignment.center,
-//                   children: [
-//                     Text(
-//                       textAlign: TextAlign.center,
-//                       AppStrings.birthdaytext,
-//                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-//                         fontFamily: 'Poppins',
-//                         fontWeight: FontWeight.w500,
-//                         fontSize: 16,
-//                       ),
-//                     ),
-//                     const SizedBox(height: AppSizes.appBarHeight),
-//
-//                     // Constrain the height of the ListView.builder
-//                     SizedBox(
-//                       width: 160,
-//                       height: 200, // Adjust this value as needed
-//                       child: ListView.builder(
-//                         itemCount: years.length,
-//                         itemBuilder: (context, index) {
-//                           bool isSelected = _selectedIndex == index;
-//                           return GestureDetector(
-//                             onTap: () => _onItemTap(index),
-//                             child: Container(
-//                               margin: const EdgeInsets.symmetric(horizontal: 0),
-//                               decoration: BoxDecoration(
-//                                 color: isSelected
-//                                     ? Colors.blue
-//                                     : Colors.transparent,
-//                                 borderRadius: BorderRadius.circular(12),
-//                               ),
-//                               child: ListTile(
-//                                 title: Text(
-//                                   years[index],
-//                                   textAlign: TextAlign.center,
-//                                   style: TextStyle(
-//                                     color: isSelected
-//                                         ? Colors.white
-//                                         : Theme.of(context).textTheme.bodyMedium!.color,
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-//                           );
-//                         },
-//                       ),
-//                     ),
-//                     const SizedBox(height: AppSizes.appBarHeight),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:fitness/common/snackbar/ShowSnackbar.dart';
-import 'package:fitness/screens/authentications/height_screen/HeightScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
+import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
-import 'package:get/get.dart';
 import '../../../common/widgets/ButtonWidget.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
+import '../../shared_preferences/UserPreferences.dart';
+import '../height_screen/HeightScreen.dart';
 
 class DateOfBirthScreen extends StatefulWidget {
-  const DateOfBirthScreen({super.key});
+  const DateOfBirthScreen({super.key, required this.email, required this.password, required this.gender, required this.name});
+
+  final String email;
+  final String password;
+  final String gender;
+  final String name;
 
   @override
   _DateOfBirthScreenState createState() => _DateOfBirthScreenState();
 }
 
 class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
-  int? _selectedIndex;
+  final currentYear = DateTime.now().year;
 
-  List<String> _generateYears() {
-    final currentYear = DateTime.now().year;
-    return List<String>.generate(
-      currentYear - 1950 + 1,
-          (index) => (1950 + index).toString(),
+  late FixedExtentScrollController _scrollController;
+  int _selectedYear = DateTime.now().year;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = FixedExtentScrollController(
+      initialItem: DateTime.now().year - 1900,
     );
-  }
-
-  void _onItemTap(int index) {
-    setState(() {
-      _selectedIndex = _selectedIndex == index ? null : index;
-    });
-  }
-
-  void _handleNextButtonPress() {
-    if (_selectedIndex != null) {
-      // Pass the selected year to the next screen or handle it as needed
-      final selectedYear = _generateYears()[_selectedIndex!];
-      Get.to(HeightScreen()); // Navigate to the next screen
-    } else {
-      // Show a message or handle the case where no item is selected
-
-
-      ShowSnackbar.showMessage(title: 'Empty', message: 'Please Select Your Birth Year', backgroundColor: AppColor.error);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final years = _generateYears();
     final dark = MyAppHelperFunctions.isDarkMode(context);
+    _checkStoredData();
 
     return Scaffold(
       bottomNavigationBar: Padding(
@@ -193,7 +47,37 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
           padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 30),
           child: ButtonWidget(
             dark: dark,
-            onPressed: _handleNextButtonPress, // Use the new method here
+            onPressed: () async {
+              if (_selectedYear.toString().isNotEmpty) {
+                await UserPreferences.saveUserData(
+                  email: widget.email,
+                  password: widget.password,
+                  gender: widget.gender,
+                  name: widget.name,
+                  age: _selectedYear - DateTime.now().year + 2024, // Set age based on the selected year
+                  height: '', // To be filled later
+                  weight: '', // To be filled later
+                  targetWeight: '', // To be filled later
+                  mainGoal: '',
+                );
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HeightScreen(
+                      email: widget.email,
+                      password: widget.password,
+                      gender: widget.gender,
+                      name: widget.name, year: _selectedYear,
+                    ),
+                  ),
+                );
+              } else {
+
+                ShowSnackbar.showMessage(title: "Failed", message: 'Enter valid birth year', backgroundColor: AppColor.error);
+                // Handle the case where _selectedYear is empty if needed
+              }
+            },
             buttonText: AppStrings.next,
           ),
         ),
@@ -203,8 +87,8 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Center the "Sign Up" text just below the app bar
                 const SizedBox(height: AppSizes.appBarHeight - 20),
                 Align(
                   alignment: Alignment.center,
@@ -217,60 +101,57 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 79), // Space between the text and the rest of the content
-
-                // Center the rest of the content in the middle of the screen
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      textAlign: TextAlign.center,
-                      AppStrings.birthdaytext,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
+                const SizedBox(height: 79),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    AppStrings.birthdaytext,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
                     ),
-                    const SizedBox(height: AppSizes.appBarHeight),
+                  ),
+                ),
+                SizedBox(height: AppSizes.appBarHeight + 40),
+                SizedBox(
+                  height: AppDevicesUtils.getScreenHeight() * 0.3,
+                  child: ListWheelScrollView.useDelegate(
+                    controller: _scrollController,
+                    itemExtent: 50,
+                    onSelectedItemChanged: (index) {
+                      setState(() {
+                        _selectedYear = 1900 + index;
+                      });
+                    },
+                    childDelegate: ListWheelChildBuilderDelegate(
+                      builder: (context, index) {
+                        final year = 1900 + index;
+                        final isSelected = _selectedYear == year;
 
-                    // Constrain the height of the ListView.builder
-                    SizedBox(
-                      width: 160,
-                      height: 200, // Adjust this value as needed
-                      child: ListView.builder(
-                        itemCount: years.length,
-                        itemBuilder: (context, index) {
-                          bool isSelected = _selectedIndex == index;
-                          return GestureDetector(
-                            onTap: () => _onItemTap(index),
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 0),
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? Colors.blue
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  years[index],
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: isSelected
-                                        ? Colors.white
-                                        : Theme.of(context).textTheme.bodyMedium!.color,
-                                  ),
-                                ),
-                              ),
+                        return Container(
+                          width: 150,
+                          decoration: BoxDecoration(
+                            color: isSelected ? Colors.blue : Colors.transparent,
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            year.toString(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                              color: isSelected
+                                  ? (dark ? Colors.white : Colors.white)
+                                  : (dark ? Colors.white.withOpacity(0.5) : Colors.black54),
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
+                      childCount: 200,
                     ),
-                    const SizedBox(height: AppSizes.appBarHeight),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -278,5 +159,28 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
         ),
       ),
     );
+  }
+
+  void _checkStoredData() async {
+    try {
+      final userData = await UserPreferences.getUserData();
+
+      if (userData.isEmpty) {
+        debugPrint('No user data found.');
+      } else {
+        debugPrint('User data found:');
+        debugPrint('Email: ${userData[UserPreferences.emailKey]}');
+        debugPrint('Password: ${userData[UserPreferences.passwordKey]}');
+        debugPrint('Gender: ${userData[UserPreferences.genderKey]}');
+        debugPrint('Name: ${userData[UserPreferences.nameKey]}');
+        debugPrint('Age: ${userData[UserPreferences.ageKey]}');
+        debugPrint('Height: ${userData[UserPreferences.heightKey]}');
+        debugPrint('Weight: ${userData[UserPreferences.weightKey]}');
+        debugPrint('Target Weight: ${userData[UserPreferences.targetWeightKey]}');
+        debugPrint('Main Goal: ${userData[UserPreferences.mainGoalKey]}');
+      }
+    } catch (e) {
+      debugPrint('Error retrieving user data: ${e.toString()}');
+    }
   }
 }

@@ -4,6 +4,8 @@ import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../shared_preferences/UserPreferences.dart';
+
 class NameScreenController extends GetxController {
   final nameController = TextEditingController();
   final focusNode = FocusNode(); // Added focus node
@@ -33,14 +35,33 @@ class NameScreenController extends GetxController {
     super.onClose();
   }
 
-  void getName() {
-    final String name = nameController.text;
+  Future<void> getName( String gender , String password  ,String email) async {
+    final String name = nameController.value.text;
 
     if (name.isEmpty) {
       ShowSnackbar.showMessage(title: 'Error', message: 'Enter your name', backgroundColor: AppColor.error);
     }
     else{
-      Get.to(DateOfBirthScreen());
+
+      print('Navigating to DateOfBirthScreen with email: $email, gender: $gender');
+
+      await UserPreferences.saveUserData(
+        gender: gender,
+        email: email,
+        password: password,
+        name: name, // To be filled later
+        age: 0, // To be filled later
+        height: '', // To be filled later
+        weight: '', // To be filled later
+        targetWeight: '', // To be filled later
+        mainGoal: '',
+      );
+      Get.to(()=>DateOfBirthScreen(
+        email: email,
+        password: password,
+        gender: gender,
+        name: name,
+      ));
 
     }
 

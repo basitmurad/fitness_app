@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../utils/helpers/MyAppHelper.dart';
+
 class WeightScreenController extends GetxController{
   var isKgSelected = false.obs;
   var isLbsSelected = false.obs;
@@ -31,7 +33,39 @@ class WeightScreenController extends GetxController{
     return selectedUnit.value == unit;
   }
 
+  // bool validateWeight(   String email ,String password , String gender ,String name ,String height
+  //  ,int year) {
+  //   if (isSelected('Kg')) {
+  //     final weight = double.tryParse(kgController.text);
+  //     if (weight == null || weight <= 0) {
+  //       MyAppHelperFunctions.showSnackBar("Please enter a valid weight in kg.");
+  //       return false;
+  //     }
+  //   } else if (isSelected('Lbs')) {
+  //     final weight = double.tryParse(lbsController.text);
+  //     if (weight == null || weight <= 0) {
+  //       MyAppHelperFunctions.showSnackBar("Please enter a valid weight in lbs.");
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // }
 
-
+  bool validateWeight(String email, String password, String gender, String name, String height, int year) {
+    if (isSelected('Kg')) {
+      final weight = double.tryParse(kgController.text);
+      if (weight == null || weight <= 0) {
+        MyAppHelperFunctions.showSnackBar("Please enter a valid weight in kg.");
+        return false;
+      }
+    } else if (isSelected('Lbs')) {
+      final weight = double.tryParse(lbsController.text);
+      if (weight == null || weight <= 0) {
+        MyAppHelperFunctions.showSnackBar("Please enter a valid weight in lbs.");
+        return false;
+      }
+    }
+    return true;
+  }
 
 }

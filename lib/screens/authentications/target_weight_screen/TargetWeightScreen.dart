@@ -11,16 +11,20 @@ import '../../../utils/constants/AppColor.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../authentication_controllers/TargetWeightScreenController.dart';
+import '../../shared_preferences/UserPreferences.dart';
 import '../height_screen/widgets/InputWidget.dart';
 import '../height_screen/widgets/UnitWidget.dart';
 
 class TargetWeightScreen extends StatelessWidget {
-   TargetWeightScreen({super.key});
+   TargetWeightScreen({super.key, required this.email, required this.password, required this.gender, required this.name, required this.height, required this.year, required this.currentWeight});
   TargetWeightScreenController targetWeightScreenController  =Get.put(TargetWeightScreenController());
-
+   final String email , password , gender , name , height  ,currentWeight;
+   final int year;
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
+    _checkStoredData();
+
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 40),
@@ -32,9 +36,75 @@ class TargetWeightScreen extends StatelessWidget {
               opacity: targetWeightScreenController.opacity.value,
               child: ButtonWidget(
                 dark: dark,
-                onPressed: () {
+                onPressed: () async {
 
-                  Get.to(BodyGoalScreen());
+                  String message;
+
+
+
+                  // Validate the input and show a Snackbar with the value
+                  if (targetWeightScreenController.isSelected('Kg')) {
+                    final targetWeightKg = targetWeightScreenController.kgController.text;
+
+                    // Check if cmText is empty or not a valid number
+                    if (targetWeightKg.isNotEmpty ) {
+                      // message = "Your height: $targetWeightKg kg";
+                      // MyAppHelperFunctions.showSnackBar(message);
+                      await UserPreferences.saveUserData(
+                        email: email,
+                        password: password,
+                        gender: gender,
+                        name: name,
+                        age: year, // Set age based on the selected year
+                        height: height, // To be filled later
+                        weight: currentWeight, // To be filled later
+                        targetWeight: targetWeightKg, // To be filled later
+                        mainGoal: '',
+                      );
+
+
+                      Get.to(BodyGoalScreen(
+                        email: email,
+                        password: password,
+                        gender: gender,
+                        name: name,
+                        year: year,
+                        height: height,
+                        currentWeight: currentWeight, targetWeight: targetWeightKg,
+                      ));
+                    } else {
+                      MyAppHelperFunctions.showSnackBar("Please enter a valid Weight");
+                    }
+                  } else if (targetWeightScreenController.isSelected('Lbs')) {
+                    final targetWeightLbs = targetWeightScreenController.lbsController.text;
+
+                    // Check if ftText and inchText are not empty and are valid numbers
+                    if (targetWeightLbs.isNotEmpty) {
+                      // message = "Your height: $targetWeightLbs ";
+                      // MyAppHelperFunctions.showSnackBar(message);
+                      await UserPreferences.saveUserData(
+                        email: email,
+                        password: password,
+                        gender: gender,
+                        name: name,
+                        age: year, // Set age based on the selected year
+                        height: height, // To be filled later
+                        weight: currentWeight, // To be filled later
+                        targetWeight: targetWeightLbs, // To be filled later
+                        mainGoal: '',
+                      );
+                      Get.to(BodyGoalScreen(
+                        email: email,
+                        password: password,
+                        gender: gender,
+                        name: name,
+                        year: year, height: height, currentWeight: currentWeight, targetWeight: targetWeightLbs,
+                      ));
+                    } else {
+                      MyAppHelperFunctions.showSnackBar("Please enter valid weight");
+                    }
+                  }
+
                   // Handle further actions here
                 },
                 buttonText: AppStrings.next,
@@ -175,3 +245,27 @@ class TargetWeightScreen extends StatelessWidget {
 
   }
 }
+
+void _checkStoredData() async {
+  try {
+    final userData = await UserPreferences.getUserData();
+
+    if (userData.isEmpty) {
+      debugPrint('No user data found.');
+    } else {
+      debugPrint('User data found:');
+      debugPrint('Email: ${userData[UserPreferences.emailKey]}');
+      debugPrint('Password: ${userData[UserPreferences.passwordKey]}');
+      debugPrint('Gender: ${userData[UserPreferences.genderKey]}');
+      debugPrint('Name: ${userData[UserPreferences.nameKey]}');
+      debugPrint('Age: ${userData[UserPreferences.ageKey]}');
+      debugPrint('Height: ${userData[UserPreferences.heightKey]}');
+      debugPrint('Weight: ${userData[UserPreferences.weightKey]}');
+      debugPrint('Target Weight: ${userData[UserPreferences.targetWeightKey]}');
+      debugPrint('Main Goal: ${userData[UserPreferences.mainGoalKey]}');
+    }
+  } catch (e) {
+    debugPrint('Error retrieving user data: ${e.toString()}');
+  }
+}
+

@@ -35,7 +35,7 @@ class SelectExerciseScreen extends StatelessWidget {
                 dark: dark,
                 onPressed: () {
 
-                  Get.to(BodyFocusScreen());
+                  // Get.to(BodyFocusScreen());
                   // Get.to(BodyFocusScreen());
                   // Handle button press
                 },

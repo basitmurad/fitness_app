@@ -8,13 +8,17 @@ import '../../../common/widgets/ButtonWidget.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../authentication_controllers/NameScreenController.dart';
+import '../../shared_preferences/UserPreferences.dart';
 
 class NameScreen extends StatelessWidget {
-  const NameScreen({super.key});
+  const NameScreen({super.key, required this.email, required this.password, required this.gender});
+
+  final String email , password , gender;
 
   @override
   Widget build(BuildContext context) {
     final dark = MyAppHelperFunctions.isDarkMode(context);
+    _checkStoredData();
 
     NameScreenController nameScreenController = Get.put(NameScreenController());
     return Scaffold(
@@ -30,7 +34,7 @@ class NameScreen extends StatelessWidget {
               dark: dark,
               onPressed: () {
 
-                nameScreenController.getName();
+                nameScreenController.getName(gender ,password ,email);
               },
               buttonText: AppStrings.next,
             ),
@@ -86,3 +90,27 @@ class NameScreen extends StatelessWidget {
     );
   }
 }
+
+void _checkStoredData() async {
+  try {
+    final userData = await UserPreferences.getUserData();
+
+    if (userData.isEmpty) {
+      debugPrint('No user data found.');
+    } else {
+      debugPrint('User data found:');
+      debugPrint('Email: ${userData[UserPreferences.emailKey]}');
+      debugPrint('Password: ${userData[UserPreferences.passwordKey]}');
+      debugPrint('Gender: ${userData[UserPreferences.genderKey]}');
+      debugPrint('Name: ${userData[UserPreferences.nameKey]}');
+      debugPrint('Age: ${userData[UserPreferences.ageKey]}');
+      debugPrint('Height: ${userData[UserPreferences.heightKey]}');
+      debugPrint('Weight: ${userData[UserPreferences.weightKey]}');
+      debugPrint('Target Weight: ${userData[UserPreferences.targetWeightKey]}');
+      debugPrint('Main Goal: ${userData[UserPreferences.mainGoalKey]}');
+    }
+  } catch (e) {
+    debugPrint('Error retrieving user data: ${e.toString()}');
+  }
+}
+

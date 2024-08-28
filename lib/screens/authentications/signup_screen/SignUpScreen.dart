@@ -55,7 +55,7 @@ class SignUpScreen extends StatelessWidget {
                 isPassword: false,
                 headerFontFamily: 'Poppins',
                 headerFontWeight: FontWeight.w700,
-                hintText: AppStrings.enterEmail1, dark: dark, headerText: AppStrings.emailText,// Not a password field
+                hintText: AppStrings.emailText, dark: dark, headerText: AppStrings.enterEmail,// Not a password field
               ),
 
               const SizedBox(height: AppSizes.inputFieldRadius + 3),
@@ -71,7 +71,7 @@ class SignUpScreen extends StatelessWidget {
                   headerFontWeight: FontWeight.w700,
                 obscureText: signUpController.isPasswordVisible.value,
                 onObscureTextChanged: signUpController.togglePasswordVisibility,
-                  dark: dark, headerText: AppStrings.password
+                  dark: dark, headerText: AppStrings.passwordNew
               )),
 
               const SizedBox(height: AppSizes.inputFieldRadius + 3),

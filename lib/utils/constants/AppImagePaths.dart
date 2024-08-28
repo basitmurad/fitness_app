@@ -9,6 +9,7 @@ class AppImagePaths{
   static const String successImage = "assets/images/successImage.png";
   static const String onboardingImage = "assets/myicons/check_dark.png";
   static const String onboardingImage1 = "assets/images/onboardingimage.png";
+  static const String placeholder = 'assets/images/placeholder.png'; // Add this line
 
 
   //// sign up image

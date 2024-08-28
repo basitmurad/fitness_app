@@ -11,13 +11,20 @@ import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
 import '../../authentication_controllers/SelectGenderController.dart';
+import '../../shared_preferences/UserPreferences.dart';
 
 class SelectGenderScreen extends StatelessWidget {
-  const SelectGenderScreen({super.key});
+  const SelectGenderScreen(
+      {super.key, required this.email, required this.password});
+
+  final String email;
+
+  final String password;
 
   @override
   Widget build(BuildContext context) {
     final dark = MyAppHelperFunctions.isDarkMode(context);
+    _checkStoredData();
 
     SelectGenderController selectGenderController =
         Get.put(SelectGenderController());
@@ -31,18 +38,41 @@ class SelectGenderScreen extends StatelessWidget {
                   ? 0.4
                   : 1.0,
               child: Padding(
-                padding: const EdgeInsets.only(left: 40, right: 40 ,
-                top: 11,bottom: 11
-                ),
+                padding: const EdgeInsets.only(
+                    left: 40, right: 40, top: 11, bottom: 11),
                 // Systematic padding
                 child: ButtonWidget(
                   dark: dark,
-                  onPressed: () {
+                  onPressed: () async {
                     if (selectGenderController
                         .selectedGender.value.isNotEmpty) {
-                      Get.to(const NameScreen());
+                      await UserPreferences.saveUserData(
+                        gender: selectGenderController.selectedGender.value,
+                        email: email,
+                        password: password,
+                        name: '',
+                        // To be filled later
+                        age: 0,
+                        // To be filled later
+                        height: '',
+                        // To be filled later
+                        weight: '',
+                        // To be filled later
+                        targetWeight: '',
+                        // To be filled later
+                        mainGoal: '',
+                      );
+
+                      Get.to(NameScreen(
+                        email: email,
+                        password: password,
+                        gender: selectGenderController.selectedGender.value,
+                      ));
                     } else {
-                      ShowSnackbar.showMessage(title: 'Failed', message: 'Please select you gender', backgroundColor: AppColor.error);
+                      ShowSnackbar.showMessage(
+                          title: 'Failed',
+                          message: 'Please select you gender',
+                          backgroundColor: AppColor.error);
                     }
                     selectGenderController.selectedGender.value;
                     // Define your onPressed logic here
@@ -60,7 +90,7 @@ class SelectGenderScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(
-                  height: AppSizes.appBarHeight -20,
+                  height: AppSizes.appBarHeight - 20,
                 ),
                 Text(
                   AppStrings.signUP,
@@ -101,13 +131,34 @@ class SelectGenderScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-          
-          
               ],
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+void _checkStoredData() async {
+  try {
+    final userData = await UserPreferences.getUserData();
+
+    if (userData.isEmpty) {
+      debugPrint('No user data found.');
+    } else {
+      debugPrint('User data found:');
+      debugPrint('Email: ${userData[UserPreferences.emailKey]}');
+      debugPrint('Password: ${userData[UserPreferences.passwordKey]}');
+      debugPrint('Gender: ${userData[UserPreferences.genderKey]}');
+      debugPrint('Name: ${userData[UserPreferences.nameKey]}');
+      debugPrint('Age: ${userData[UserPreferences.ageKey]}');
+      debugPrint('Height: ${userData[UserPreferences.heightKey]}');
+      debugPrint('Weight: ${userData[UserPreferences.weightKey]}');
+      debugPrint('Target Weight: ${userData[UserPreferences.targetWeightKey]}');
+      debugPrint('Main Goal: ${userData[UserPreferences.mainGoalKey]}');
+    }
+  } catch (e) {
+    debugPrint('Error retrieving user data: ${e.toString()}');
   }
 }

@@ -1,16 +1,14 @@
-import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../../common/widgets/ButtonWidget.dart';
 import '../../../common/widgets/TextInputWidget.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/helpers/KeyboardController.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
 import '../../authentication_controllers/SignUpScreenController.dart';
+import '../login_screen/LoginScreen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

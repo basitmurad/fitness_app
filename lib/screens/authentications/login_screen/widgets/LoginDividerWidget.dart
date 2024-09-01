@@ -1,5 +1,4 @@
 import 'package:fitness/utils/constants/AppColor.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginDividerWidget extends StatelessWidget {

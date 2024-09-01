@@ -7,7 +7,6 @@ import 'package:fitness/common/widgets/ButtonWidget.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
-
 import '../../../utils/constants/AppString.dart';
 import '../../authentication_controllers/HeightScreenController.dart';
 import '../../shared_preferences/UserPreferences.dart';

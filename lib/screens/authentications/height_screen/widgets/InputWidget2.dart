@@ -58,9 +58,9 @@ class InputWidget2 extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(color: Colors.white),
                     controller: inchController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'inch',
-                      hintStyle: const TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
                       filled: true,
                       fillColor: AppColor.lightBlue,
                       border: InputBorder.none, // No border to match rounded container

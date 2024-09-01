@@ -1,190 +1,195 @@
+import 'package:fitness/screens/home/dashboard/widgets/ExerciseWidget.dart';
+import 'package:fitness/screens/home/dashboard/widgets/TextTitleWidget.dart';
+import 'package:fitness/screens/home/exercise_detail_screen/ExerciseDetailScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
-import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:fitness/utils/constants/AppString.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../utils/constants/AppDevicesUtils.dart';
+import '../../../utils/constants/AppSizes.dart';
+import '../controller/DashboardController.dart';
+
+List<String> fitnessSliderTexts = [
+  "Push Beyond Your Limits.Your Strongest Self Awaits!",
+  "Elevate Your Fitness Journey. Every Step Counts.",
+  "Unlock Your Potential. Transform Your Body, Transform Your Life.",
+  "Strive for Progress, Not Perfection. Your Best is Yet to Come.",
+  "Embrace the Challenge. Strength and Success Start Here.",
+  "Reimagine Your Limits. Discover What You’re Capable Of.",
+  "Stay Committed, Stay Strong. Your Journey, Your Rules.",
+  "Rise and Grind. Every Workout is a Step Closer to Greatness.",
+  "Ignite Your Passion. Fitness is a Lifestyle, Not a Fad.",
+  "Challenge Yourself Today for a Better Tomorrow. Keep Moving Forward."
+];
+
+List<Map<String, String>> exercises = [
+  {
+    'imagePath': AppImagePaths.femaleArm,
+    'exerciseName': 'Arm w',
+    'exerciseRepetition': '09 www 19 reps',
+  },
+  {
+    'imagePath': AppImagePaths.femaleAbs,
+    'exerciseName': 'Abs w',
+    'exerciseRepetition': '12 min ww reps',
+  },
+
+
+];
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    DashboardController dashboardController = Get.put(DashboardController());
+    final bool dark = MyAppHelperFunctions.isDarkMode(context);
+
     return Scaffold(
       appBar: AppBar(
-        title:  Text(AppStrings.dashboard),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-             DrawerHeader(
-              decoration: const BoxDecoration(
-                color: AppColor.black,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  ClipOval(
-
-                    child: Image.asset(
-                      fit: BoxFit.fill,
-                        height: 55,
-                        width: 55,
-                        AppImagePaths.gymPic),
-                  ),
-
-                   Text(
-                    AppStrings.menu,
-                    style: const TextStyle(
-                      color: AppColor.buttonDisabled,
-                      fontSize: 24,
-                    ),
-                  ),
-                   Text(
-                    AppStrings.menu,
-                    style: const TextStyle(
-                      color: AppColor.buttonDisabled,
-                      fontSize: 24,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title:  Text(AppStrings.home),
-              onTap: () {
-                // Handle navigation to Home
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title:  Text(AppStrings.setting),
-              onTap: () {
-                // Handle navigation to Settings
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title:  Text(AppStrings.logout),
-              onTap: () {
-                // Handle logout
-              },
-            ),
-          ],
-        ),
+        automaticallyImplyLeading: false,
+        title: Text(AppStrings.dashboard),
+        actions: [
+          Image(
+            width: 20,
+            height: 20,
+            color: dark ? AppColor.white : AppColor.black,
+            image: const AssetImage(AppImagePaths.messages),
+          ),
+          const SizedBox(width: 8),
+          Image(
+            width: 20,
+            height: 20,
+            color: dark ? AppColor.white : AppColor.black,
+            image: const AssetImage(AppImagePaths.notification),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: AppDevicesUtils.getScreenWidth(context) * 0.5,
-              width: AppDevicesUtils.getScreenWidth(context) * 0.5,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
 
-        Container(
-          width: double.infinity,
-          height: AppDevicesUtils.getScreenWidth(context) * 0.5,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 2),
-          ),
-          child:
-          Stack(
+        child: Padding(
 
-            alignment: Alignment.center, // Center both horizontally and vertically
+          padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Positioned.fill(
-                child: Image.asset(
-                  AppImagePaths.gymPic, // Replace with your image path
-                  fit: BoxFit.cover,
-                ),
-              ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.check, // Replace with your desired icon
-                  color: CupertinoDynamicColor.withBrightness(
-                    color: Colors.white,
-                    darkColor: Colors.redAccent,
-                  ),
-                ),
-                label: Text(
-                  "Check",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const CupertinoDynamicColor.withBrightness(
-                      color: Colors.white,
-                      darkColor: Colors.redAccent,
+              Container(
+                width: double.infinity,
+                height: AppDevicesUtils.getScreenHeight() * 0.22,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: dark ? AppColor.white : AppColor.dark3,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
                     ),
-                  ),
+                  ],
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: 0.3 * MediaQuery.of(context).size.width,
+                      child: const ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                        child: Image(
+                          fit: BoxFit.cover,
+                          image: AssetImage(AppImagePaths.gymPic),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      right: 105,
+                      // Allow the text container to span the remaining width
+                      child: Container(
+                        width: AppDevicesUtils.getScreenWidth(context) * 0.7,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
+                        alignment: Alignment.center,
+                        child: Text(
+                          fitnessSliderTexts[5],
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(
+                                color: dark ? AppColor.black : AppColor.white,
+                                fontSize: 15,
+                              ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        bottom: 10,
+                        child: Container(
+                          height: 20,
+                          alignment: Alignment.center,
+                          width:
+                              AppDevicesUtils.getScreenWidth(context) * 0.6,
+                          child: SmoothPageIndicator(
+                            controller: dashboardController.pageController,
+                            count: 9,
+                            effect: WormEffect(
+                              activeDotColor:
+                                  dark ? AppColor.lightBlue : AppColor.white,
+                              dotColor: dark ? Colors.black : AppColor.white,
+                              dotHeight: 10,
+                              dotWidth: 10,
+                              spacing: 8,
+                            ),
+                          ),
+                        ))
+                  ],
                 ),
               ),
+              const SizedBox(height: AppSizes.inputFieldRadius,),
+
+              TextTitleWidget(dark: dark),
+              const SizedBox(height: AppSizes.inputFieldRadius, ),
+
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: exercises.length, itemBuilder: (context ,index){
+                  return  Padding(padding:EdgeInsets.zero,
+                  child: GestureDetector(
+                      onTap: (){
+
+                        Get.to(const ExerciseDetailScreen(
+
+
+                        ));
+                      },
+                      child: ExerciseWidget(
+                        dark: dark,
+                        imagePath: exercises[index]['imagePath']!,
+                        exerciseName: exercises[index]['exerciseName']!,
+                        exerciseRepeation: exercises[index]['exerciseRepetition']!,
+                      )),);
+              },)
+
             ],
-          )
-
-        )
-
-            ,
-
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: Stack(
-            //         children: [
-            //           // Background image
-            //           Positioned.fill(
-            //             child: Image.asset(
-            //               AppImagePaths.gymPic, // Replace with your image path
-            //               fit: BoxFit.cover,
-            //             ),
-            //           ),
-            //           // Widgets on top of the image
-            //           Positioned(
-            //             top: 10,
-            //             left: 10,
-            //             child: Text(
-            //               'Your Text Here',
-            //               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            //                 color: Colors.white,
-            //               ),
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //     const VerticalDivider(
-            //       color: Colors.black,
-            //       width: 2,
-            //     ),
-            //     Expanded(
-            //       child: Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           Text(
-            //             'What is your weight?',
-            //             style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            //               color: AppColor.black,
-            //             ),
-            //           ),
-            //           const SizedBox(height: 5),
-            //           const Text('What is your age?'),
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // ),
-
-
-
-          ],
+          ),
         ),
       ),
     );
   }
 }
+
+
+
+

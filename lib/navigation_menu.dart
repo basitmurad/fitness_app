@@ -1,5 +1,4 @@
 import 'package:fitness/screens/home/dashboard/Dashboard.dart';
-import 'package:fitness/screens/home/profile/UserProfileScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +49,5 @@ class NavigationController extends GetxController {
     Container(
       color: Colors.green,
     ),
-    const UserProfileScreen(),
   ];
 }

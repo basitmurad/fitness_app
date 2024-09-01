@@ -25,3 +25,4 @@ class MyAppBarTheme{
       titleTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600,color: Colors.white)
   );
 }
+

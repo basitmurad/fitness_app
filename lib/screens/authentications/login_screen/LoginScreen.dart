@@ -3,7 +3,6 @@ import 'package:fitness/screens/authentications/login_screen/widgets/LoginDivide
 import 'package:fitness/screens/authentications/login_screen/widgets/LoginWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/SocialButton.dart';
 import 'package:fitness/screens/authentications/login_screen/widgets/TitleTextWidget.dart';
-import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';

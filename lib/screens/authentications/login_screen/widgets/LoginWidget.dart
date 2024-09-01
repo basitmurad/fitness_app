@@ -1,14 +1,11 @@
 import 'package:fitness/common/widgets/TextInputWidget.dart';
 import 'package:fitness/navigation_menu.dart';
 import 'package:fitness/screens/authentications/forget_password/ForgetPassword.dart';
-import 'package:fitness/screens/home/dashboard/Dashboard.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../../../common/widgets/ButtonWidget.dart';
 import '../../../authentication_controllers/LoginScreenController.dart';
 

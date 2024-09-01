@@ -14,10 +14,12 @@ class AppImagePaths{
 
   //// sign up image
   static const String male = "assets/images/male.png";
-  static const String female = "assets/images/female.png";
+  static const String female = "assets/images/femaleArm.png";
   static const String chdkkdd = "assets/images/imagesss.png";
   static const String dar = "assets/images/dark.png";
   static const String lig = "assets/images/light.png";
+  static const String messages = "assets/myicons/messages.png";
+  static const String notification = "assets/myicons/notification.png";
 
 
 
@@ -43,5 +45,9 @@ class AppImagePaths{
   static const String none  = "assets/myicons/none.png";
 
 
+  /////female image
+
+  static const String femaleAbs  = "assets/female/femaleAbs.png";
+  static const String femaleArm  = "assets/female/femaleArm.png";
 
 }

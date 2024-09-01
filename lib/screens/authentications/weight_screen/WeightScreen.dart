@@ -12,10 +12,20 @@ import '../height_screen/widgets/InputWidget.dart';
 import '../height_screen/widgets/UnitWidget.dart';
 
 class WeightScreen extends StatelessWidget {
-  WeightScreen({super.key, required this.email, required this.password, required this.gender, required this.name, required this.year, required this.height});
-  final String email , password , gender , name , height ;
+  WeightScreen(
+      {super.key,
+      required this.email,
+      required this.password,
+      required this.gender,
+      required this.name,
+      required this.year,
+      required this.height});
+
+  final String email, password, gender, name, height;
+
   final int year;
-  final WeightScreenController weightController = Get.put(WeightScreenController());
+  final WeightScreenController weightController =
+      Get.put(WeightScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,28 +45,31 @@ class WeightScreen extends StatelessWidget {
                 onPressed: () async {
                   String message;
 
-                  if(weightController.opacity.value<0.9){
+                  if (weightController.opacity.value < 0.9) {
                     MyAppHelperFunctions.showSnackBar('Click on Kg');
                     return;
-                  }
-
-              else{
+                  } else {
                     // Validate the input and show a Snackbar with the value
                     if (weightController.isSelected('Kg')) {
-                      final currentWeightKg = weightController.kgController.text;
+                      final currentWeightKg =
+                          weightController.kgController.text;
 
                       // Check if cmText is empty or not a valid number
-                      if (currentWeightKg.isNotEmpty ) {
+                      if (currentWeightKg.isNotEmpty) {
                         message = "Your height: $currentWeightKg kg";
                         await UserPreferences.saveUserData(
                           email: email,
                           password: password,
                           gender: gender,
                           name: name,
-                          age: year, // Set age based on the selected year
-                          height: height, // To be filled later
-                          weight: currentWeightKg, // To be filled later
-                          targetWeight: '', // To be filled later
+                          age: year,
+                          // Set age based on the selected year
+                          height: height,
+                          // To be filled later
+                          weight: currentWeightKg,
+                          // To be filled later
+                          targetWeight: '',
+                          // To be filled later
                           mainGoal: '',
                         );
 
@@ -67,14 +80,15 @@ class WeightScreen extends StatelessWidget {
                           name: name,
                           year: year,
                           height: height,
-                          currentWeight: currentWeightKg ,
-
+                          currentWeight: currentWeightKg,
                         ));
                       } else {
-                        MyAppHelperFunctions.showSnackBar("Please enter a valid Weight");
+                        MyAppHelperFunctions.showSnackBar(
+                            "Please enter a valid Weight");
                       }
                     } else if (weightController.isSelected('Lbs')) {
-                      final currentWeightLbs = weightController.lbsController.text;
+                      final currentWeightLbs =
+                          weightController.lbsController.text;
 
                       // Check if ftText and inchText are not empty and are valid numbers
                       if (currentWeightLbs.isNotEmpty) {
@@ -84,10 +98,14 @@ class WeightScreen extends StatelessWidget {
                           password: password,
                           gender: gender,
                           name: name,
-                          age: year, // Set age based on the selected year
-                          height: height, // To be filled later
-                          weight: currentWeightLbs, // To be filled later
-                          targetWeight: '', // To be filled later
+                          age: year,
+                          // Set age based on the selected year
+                          height: height,
+                          // To be filled later
+                          weight: currentWeightLbs,
+                          // To be filled later
+                          targetWeight: '',
+                          // To be filled later
                           mainGoal: '',
                         );
                         Get.to(TargetWeightScreen(
@@ -95,21 +113,17 @@ class WeightScreen extends StatelessWidget {
                           password: password,
                           gender: gender,
                           name: name,
-                          year: year, height: height,
+                          year: year,
+                          height: height,
                           currentWeight: currentWeightLbs,
                         ));
                       } else {
-                        MyAppHelperFunctions.showSnackBar("Please enter valid weight");
+                        MyAppHelperFunctions.showSnackBar(
+                            "Please enter valid weight");
                       }
                     }
                   }
-
-
-
-
-
-
-                } ,
+                },
                 buttonText: AppStrings.next,
               ),
             );
@@ -123,7 +137,7 @@ class WeightScreen extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  const SizedBox(height: AppSizes.appBarHeight -20),
+                  const SizedBox(height: AppSizes.appBarHeight - 20),
                   Text(
                     textAlign: TextAlign.center,
                     AppStrings.signUP,
@@ -141,7 +155,7 @@ class WeightScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: 16),
                   ),
-                  const SizedBox(height: AppSizes.appBarHeight +15),
+                  const SizedBox(height: AppSizes.appBarHeight + 15),
                   Container(
                     alignment: Alignment.center,
                     width: 110,
@@ -201,7 +215,7 @@ class WeightScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: AppSizes.appBarHeight +35),
+                  const SizedBox(height: AppSizes.appBarHeight + 35),
                   Obx(() {
                     if (weightController.isSelected('Kg')) {
                       return Opacity(
@@ -246,6 +260,7 @@ class WeightScreen extends StatelessWidget {
       ),
     );
   }
+
   void _checkStoredData() async {
     try {
       final userData = await UserPreferences.getUserData();
@@ -261,12 +276,12 @@ class WeightScreen extends StatelessWidget {
         debugPrint('Age: ${userData[UserPreferences.ageKey]}');
         debugPrint('Height: ${userData[UserPreferences.heightKey]}');
         debugPrint('Weight: ${userData[UserPreferences.weightKey]}');
-        debugPrint('Target Weight: ${userData[UserPreferences.targetWeightKey]}');
+        debugPrint(
+            'Target Weight: ${userData[UserPreferences.targetWeightKey]}');
         debugPrint('Main Goal: ${userData[UserPreferences.mainGoalKey]}');
       }
     } catch (e) {
       debugPrint('Error retrieving user data: ${e.toString()}');
     }
   }
-
 }

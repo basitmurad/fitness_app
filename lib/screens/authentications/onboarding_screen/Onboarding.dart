@@ -2,7 +2,6 @@ import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/widget/ImageWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:fitness/utils/constants/AppString.dart';
 import '../../../common/widgets/ButtonWidget.dart';
 import '../../../utils/helpers/MyAppHelper.dart';

@@ -1,20 +1,15 @@
-import 'package:fitness/screens/authentications/date_birth_screen/DateOfBirthScreen.dart';
-import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
-import 'package:fitness/screens/authentications/select_gender_screen/SelectGenderScreen.dart';
-import 'package:fitness/utils/BuiltYearChoice.dart';
+import 'package:fitness/navigation_menu.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 
 void main() {
   Get.put(KeyboardController());
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.white, // Set your desired color
     statusBarIconBrightness: Brightness.light, // Set the icon color (light or dark)
   ));
@@ -31,7 +26,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:   OnboardingScreen());
+        home:   const NavigationMenu());
 
   }
 }

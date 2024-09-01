@@ -1,4 +1,3 @@
-import 'package:fitness/screens/authentications/height_screen/HeightScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -20,13 +19,5 @@ class DateOfBirthScreenController extends GetxController {
     selectedYear.value = 1900 + index;
   }
 
-  // void goToNextScreen(String email, String password, String gender, String name) {
-  //   Get.to(() => HeightScreen(
-  //     email: email,
-  //     password: password,
-  //     gender: gender,
-  //     name: name,
-  //     dateOfBirth: selectedYear.value,
-  //   ));
-  // }
+
 }

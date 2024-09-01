@@ -67,4 +67,10 @@ static String passwordResetEmail = "Password Reset Email Sent";
 ////
  static String male = "Male";
  static String female = "Female";
+
+
+ //////dashbaord
+
+ static String male1 = "";
+ static String absWorkout = "ABS WORKOUT";
 }

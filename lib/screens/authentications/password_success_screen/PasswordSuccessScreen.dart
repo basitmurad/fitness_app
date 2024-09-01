@@ -1,10 +1,7 @@
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/utils/constants/AppImagePaths.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../../common/widgets/ButtonWidget.dart';
 import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/constants/AppSizes.dart';

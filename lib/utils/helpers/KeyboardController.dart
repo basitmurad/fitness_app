@@ -6,14 +6,6 @@ class KeyboardController extends GetxController {
 
   final FocusNode focusNode = FocusNode();
 
-  @override
-  void onInit() {
-    super.onInit();
-    // Optionally request focus on initialization if needed
-    // Future.delayed(Duration(milliseconds: 1), () {
-    //   FocusScope.of(Get.context!).requestFocus(focusNode);
-    // });
-  }
 
   void hideKeyboard() {
     FocusScope.of(Get.context!).unfocus();

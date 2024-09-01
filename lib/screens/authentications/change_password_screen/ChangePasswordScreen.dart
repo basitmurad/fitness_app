@@ -1,6 +1,5 @@
 import 'package:fitness/common/widgets/TextInputWidget.dart';
 import 'package:fitness/screens/authentications/password_success_screen/PasswordSuccessScreen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common/widgets/ButtonWidget.dart';
@@ -15,23 +14,19 @@ class ChangePasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final dark = MyAppHelperFunctions.isDarkMode(context);
-    ChangePasswordScreenController changePasswordScreenController = Get.put(ChangePasswordScreenController());
+    ChangePasswordScreenController changePasswordScreenController =
+        Get.put(ChangePasswordScreenController());
     return Scaffold(
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-
           child: Form(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-
               children: [
-
                 const SizedBox(
-                  height: AppSizes.appBarHeight ,
+                  height: AppSizes.appBarHeight,
                 ),
                 Text(
                   textAlign: TextAlign.center,
@@ -45,67 +40,62 @@ class ChangePasswordScreen extends StatelessWidget {
                   height: AppDevicesUtils.getScreenWidth(context) * 0.5,
                   width: AppDevicesUtils.getScreenWidth(context) * 0.4,
                 ),
-
-
-
-
-            const SizedBox(height: AppSizes.inputFieldRadius - 9),
-
-
-                Obx(() => TextInputWidget(
-                  controller: changePasswordScreenController.passwordController,
-                  prefixIcon: const Icon(Icons.lock),
-                  isPassword: true,
-                  // Password field
-                  dark: dark,
-
-                  headerText: AppStrings.password,
-                  headerFontWeight: FontWeight.w700,
-                  headerFontFamily: 'Poppins',
-                  hintText: AppStrings.entrePassword,
-                  obscureText: changePasswordScreenController.isPasswordVisible.value,
-                  onObscureTextChanged: changePasswordScreenController.togglePasswordVisibility,
-                )),
-
-
-                const SizedBox(height: AppSizes.inputFieldRadius+8,),
-
                 const SizedBox(height: AppSizes.inputFieldRadius - 9),
-
                 Obx(() => TextInputWidget(
-                  controller: changePasswordScreenController.confirmPasswordController,
-                  prefixIcon: const Icon(Icons.lock),
-                  isPassword: true,
-                  hintText: AppStrings.entrePassword,
-                  dark: dark, headerText: AppStrings.passwordConfirm
-,headerFontFamily: 'Poppins'
-                  ,
-                  headerFontWeight: FontWeight.w700,
-                  // Password field
-                  obscureText: changePasswordScreenController.isPasswordVisible1.value,
-                  onObscureTextChanged: changePasswordScreenController.togglePasswordVisibility1,
-                )),
+                      controller:
+                          changePasswordScreenController.passwordController,
+                      prefixIcon: const Icon(Icons.lock),
+                      isPassword: true,
+                      // Password field
+                      dark: dark,
 
-                const SizedBox(height: AppSizes.appBarHeight-20,),
+                      headerText: AppStrings.password,
+                      headerFontWeight: FontWeight.w700,
+                      headerFontFamily: 'Poppins',
+                      hintText: AppStrings.entrePassword,
+                      obscureText: changePasswordScreenController
+                          .isPasswordVisible.value,
+                      onObscureTextChanged: changePasswordScreenController
+                          .togglePasswordVisibility,
+                    )),
+                const SizedBox(
+                  height: AppSizes.inputFieldRadius + 8,
+                ),
+                const SizedBox(height: AppSizes.inputFieldRadius - 9),
+                Obx(() => TextInputWidget(
+                      controller: changePasswordScreenController
+                          .confirmPasswordController,
+                      prefixIcon: const Icon(Icons.lock),
+                      isPassword: true,
+                      hintText: AppStrings.entrePassword,
+                      dark: dark,
+                      headerText: AppStrings.passwordConfirm,
+                      headerFontFamily: 'Poppins',
+                      headerFontWeight: FontWeight.w700,
+                      // Password field
+                      obscureText: changePasswordScreenController
+                          .isPasswordVisible1.value,
+                      onObscureTextChanged: changePasswordScreenController
+                          .togglePasswordVisibility1,
+                    )),
+                const SizedBox(
+                  height: AppSizes.appBarHeight - 20,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 52),
                   child: SizedBox(
                       width: double.infinity,
                       child: ButtonWidget(
                         dark: dark,
-                        onPressed: ()=>Get.to(const PasswordSuccessScreen()),
+                        onPressed: () => Get.to(const PasswordSuccessScreen()),
                         buttonText: AppStrings.submit,
                       )),
                 ),
-
               ],
-
             ),
           ),
         ),
       ),
-
-
     );
   }
 }

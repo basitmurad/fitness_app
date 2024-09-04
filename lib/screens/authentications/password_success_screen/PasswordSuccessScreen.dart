@@ -1,4 +1,5 @@
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
+import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class PasswordSuccessScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(
-                height: AppSizes.appBarHeight ,
+                height: AppSizes.appBarHeight +20,
               ),
               Text(
                 textAlign: TextAlign.center,
@@ -44,6 +45,7 @@ class PasswordSuccessScreen extends StatelessWidget {
               const Image(
                   height: 60,
                   width: 60,
+                  color: AppColor.orangeColor,
                   image: AssetImage(AppImagePaths.successImage)),
 
 

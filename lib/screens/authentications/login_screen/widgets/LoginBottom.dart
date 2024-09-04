@@ -29,7 +29,7 @@ class LoginBottom extends StatelessWidget {
           onTap: ()=>Get.to(const SignUpScreen()),
           child: Text(
             buttonText,
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14,fontWeight: FontWeight.w700 ,color: dark ? AppColor.white : AppColor.lightBlue), // Customize button text style as needed
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14,fontWeight: FontWeight.w700 ,color: dark ? AppColor.orangeColor : AppColor.orangeColor), // Customize button text style as needed
           ),
         ),
       ],

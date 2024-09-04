@@ -1,4 +1,5 @@
 import 'package:fitness/navigation_menu.dart';
+import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:   const NavigationMenu());
+        home:   const OnboardingScreen());
 
   }
 }

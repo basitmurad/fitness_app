@@ -34,7 +34,7 @@ class ImageWidget extends StatelessWidget {
                 height: AppDevicesUtils.getScreenWidth(context) * 0.6566,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColor.infoq,
+                  color: AppColor.orangeLight,
                   image: DecorationImage(
                     image: AssetImage(AppImagePaths.onboardingImage1),
                   ),

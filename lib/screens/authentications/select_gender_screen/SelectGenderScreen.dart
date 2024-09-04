@@ -110,7 +110,6 @@ class SelectGenderScreen extends StatelessWidget {
                       Expanded(
                         child: Container(
                           child: GenderWidget(
-                            imagePath: AppImagePaths.male,
                             checkBoxText: AppStrings.male,
                             isMaleWidget: true,
                           ),
@@ -122,7 +121,6 @@ class SelectGenderScreen extends StatelessWidget {
                       Expanded(
                         child: Container(
                           child: GenderWidget(
-                            imagePath: AppImagePaths.female,
                             checkBoxText: AppStrings.female,
                             isMaleWidget: false,
                           ),

@@ -13,12 +13,12 @@ import 'CustomRadioButton.dart';
 class GenderWidget extends StatelessWidget {
   const GenderWidget({
     super.key,
-    required this.imagePath,
+     this.imagePath,
     required this.checkBoxText,
     required this.isMaleWidget,
   });
 
-  final String imagePath;
+  final String? imagePath;
   final String checkBoxText;
   final bool isMaleWidget;
 
@@ -67,11 +67,11 @@ class GenderWidget extends StatelessWidget {
               opacity: otherSelected ? 0.3 : 1.0,
               child: Column(
                 children: [
-                  Image.asset(
-                    imagePath,
-                    height: AppDevicesUtils.getScreenWidth(context) * 1.2,
-                    width: AppDevicesUtils.getScreenWidth(context) * 0.3,
-                  ),
+                  // Image.asset(
+                  //   imagePath!,
+                  //   height: AppDevicesUtils.getScreenWidth(context) * 1.2,
+                  //   width: AppDevicesUtils.getScreenWidth(context) * 0.3,
+                  // ),
                   SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

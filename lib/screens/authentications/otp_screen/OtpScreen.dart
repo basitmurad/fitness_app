@@ -63,7 +63,7 @@ class OtpScreen extends StatelessWidget {
                 color: dark ? AppColor.white :AppColor.white,
               ),
               decoration: BoxDecoration(
-                color: otpScreenController.pinColor == AppColor.black ? Colors.blue : AppColor.lightBlue,
+                color: otpScreenController.pinColor == AppColor.orangeLight ? AppColor.orangeColor :  AppColor.orangeColor,
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -76,7 +76,7 @@ class OtpScreen extends StatelessWidget {
                 color: Colors.black,
               ),
               decoration: BoxDecoration(
-                color: otpScreenController.pinColor == AppColor.lightBlue ? Colors.blue : Colors.blue,
+                color: otpScreenController.pinColor == AppColor.orangeLight ? AppColor.orangeLight :  AppColor.orangeLight,
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(8),
               ),

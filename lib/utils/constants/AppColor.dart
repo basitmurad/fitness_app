@@ -20,6 +20,9 @@ class AppColor{
   // Text colors
   static const Color textPrimary = Color(0xFF333333);
   static const Color textSecondary = Color(0xFF6C757D);
+  static const Color orangeColor = Color(0xFFFE7A03);
+  static const Color blueColor = Color(0xFF0068FF);
+  static const Color orangeLight = Color(0xFFDEA777);
   static const Color textWhite = Colors.white;
 
   // Background colors

@@ -19,7 +19,7 @@ class ButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed, // Use the passed callback
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColor.lightBlue,
+
         fixedSize: const Size(double.infinity, 46), // Full width of its parent
         padding: const EdgeInsets.only(left: 8,right: 8,top: 6 ,bottom: 6), // Padding inside the button
         shape: RoundedRectangleBorder(

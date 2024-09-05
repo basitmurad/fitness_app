@@ -26,7 +26,7 @@ class TitleTextWidget extends StatelessWidget {
           textAlign: TextAlign.start,
         ),
         Text(
-          AppStrings.fitnessTitan,
+          AppStrings.fitnessTitans,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               fontSize: 20,
               fontWeight: FontWeight.w400,

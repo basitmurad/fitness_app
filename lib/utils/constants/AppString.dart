@@ -48,7 +48,6 @@ static String connectComplete = "Connect, Compete, and Conquer your fitness goal
 static String name = "Name";
 static String hello = "Hello.";
 static String textFocus = "What's your focus area?";
-static String fitnessTitan = "Fitness Titan.";
 static String signUP = "Sign up";
 static String buildMuscle = "Build Muscle";
 static String sigIn = "Sign in";
@@ -67,10 +66,14 @@ static String passwordResetEmail = "Password Reset Email Sent";
 ////
  static String male = "Male";
  static String female = "Female";
+ static String challenges = "CHALLENGES";
+ static String boostText = "Boost your fitness with ready-made\nor custom challenges";
 
 
  //////dashbaord
 
  static String male1 = "";
+ static String workouts = "Workouts";
+ static String fitnessTitans = "Fitness Titans";
  static String absWorkout = "ABS WORKOUT";
 }

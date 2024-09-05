@@ -4,10 +4,11 @@ import '../../../../utils/constants/AppColor.dart';
 class TextTitleWidget extends StatelessWidget {
   const TextTitleWidget({
     super.key,
-    required this.dark,
+    required this.dark, required this.title,
   });
 
   final bool dark;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class TextTitleWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Workouts',
+          title,
           style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 12,

@@ -64,7 +64,9 @@ class ForgetPassword extends StatelessWidget {
                Padding(
         
                   padding: const EdgeInsets.symmetric(horizontal: 48 ,),
-                  child: ButtonWidget(dark: dark,  onPressed: () {
+                  child: ButtonWidget(dark: dark,
+
+                    onPressed: () {
                     forgetController.forgetPassword();
                   }, buttonText: AppStrings.send,),
                 ),    

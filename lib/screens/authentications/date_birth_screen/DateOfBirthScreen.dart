@@ -47,6 +47,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
           padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 30),
           child: ButtonWidget(
             dark: dark,
+
             onPressed: () async {
               if (_selectedYear.toString().isNotEmpty) {
                 await UserPreferences.saveUserData(

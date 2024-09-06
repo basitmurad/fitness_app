@@ -15,7 +15,7 @@ class NavigationMenu extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: Obx(
         () => NavigationBar(
-          height: 80,
+          height: 60,
           elevation: 0,
           selectedIndex: controller.selectedIndex.value,
           backgroundColor: darkMode ? AppColor.black : Colors.white,
@@ -25,11 +25,11 @@ class NavigationMenu extends StatelessWidget {
           onDestinationSelected: (index) =>
               controller.selectedIndex.value = index,
           destinations: const [
-            NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
+            NavigationDestination(icon: Icon(Iconsax.home ,size: 20), label: 'Home'),
             NavigationDestination(
-                icon: Icon(Iconsax.search_favorite), label: 'Search'),
-            NavigationDestination(icon: Icon(Iconsax.shop), label: 'Social'),
-            NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
+                icon: Icon(Iconsax.search_favorite ,size: 20,), label: 'Search' ),
+            NavigationDestination(icon: Icon(Iconsax.shop ,size: 20,), label: 'Social'),
+            NavigationDestination(icon: Icon(Iconsax.user ,size: 20,), label: 'Profile'),
           ],
         ),
       ),

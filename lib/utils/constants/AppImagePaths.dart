@@ -53,4 +53,10 @@ class AppImagePaths{
   static const String image11 = "assets/illustration/image11.png";
   static const String upperImage = "assets/illustration/upperImage.png";
 
+
+  ///male
+///
+///
+///
+static const String maleAbs = "assets/male/maleAbss.png";
 }

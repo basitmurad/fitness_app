@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
-import '../../../../utils/constants/AppColor.dart';
 
-class TextTitleWidget extends StatelessWidget {
-  const TextTitleWidget({
+import '../../../../utils/constants/AppColor.dart';
+import '../../../../utils/constants/AppString.dart';
+
+class TextWidget extends StatelessWidget {
+  const TextWidget({
     super.key,
-    required this.dark, required this.title,
+    required this.dark,
   });
 
   final bool dark;
-  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class TextTitleWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          AppStrings.workouts,
           style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 12,

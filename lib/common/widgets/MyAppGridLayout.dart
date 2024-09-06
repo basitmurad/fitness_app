@@ -78,7 +78,7 @@ class MyAppGridLayout extends StatelessWidget {
     required this.itemCount,
     required this.itemBuilder,
     this.mainAxisExtent = 143,
-    this.height = 182, // Add height parameter
+    this.height = 140, // Add height parameter
   });
 
   final int itemCount;
@@ -89,8 +89,10 @@ class MyAppGridLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+
       height: height, // Set the height of the widget
       child: GridView.builder(
+
         scrollDirection: Axis.horizontal, // Set scroll direction to horizontal
         itemCount: itemCount,
         shrinkWrap: true,
@@ -98,7 +100,7 @@ class MyAppGridLayout extends StatelessWidget {
         physics: const BouncingScrollPhysics(), // Allows for smooth scrolling
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1, // Display one item per row, creating a horizontal list
-          mainAxisSpacing: AppSizes.gridViewSpacing -8,
+          mainAxisSpacing: AppSizes.gridViewSpacing -12,
           crossAxisSpacing: AppSizes.gridViewSpacing -8,
           mainAxisExtent: mainAxisExtent, // Controls the width of each item
         ),

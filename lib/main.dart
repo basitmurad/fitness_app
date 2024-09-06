@@ -1,5 +1,6 @@
 import 'package:fitness/navigation_menu.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
+import 'package:fitness/screens/exercise_screen/abs_screen/AbsScreen.dart';
 import 'package:fitness/screens/home/dashboard/Dashboard.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:   const Dashboard());
+        home:   const AbsScreen());
 
   }
 }

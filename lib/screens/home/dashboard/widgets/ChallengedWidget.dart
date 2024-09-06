@@ -86,7 +86,7 @@ class ChallengedWidget extends StatelessWidget {
                 bottom: 10,
                 left: 55,
                 right: 55,
-                child: CustomButton(height1: 30.0, buttontext: 'Start',))
+                child: CustomButton(height1: 30.0, buttontext: 'Start', backColor: AppColor.white, textColor: AppColor.orangeColor,))
           ],
         ));
   }

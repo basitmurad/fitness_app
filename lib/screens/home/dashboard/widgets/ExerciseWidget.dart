@@ -62,7 +62,8 @@ class ExerciseWidget extends StatelessWidget {
               bottom: 10,
               right: 10,
               // Allow the text container to span the remaining width
-              child: Column(
+              child:
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -76,14 +77,14 @@ class ExerciseWidget extends StatelessWidget {
                       color: dark
                           ? AppColor.white
                           : AppColor.white,
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Poppins-SemiBold',
                       fontWeight: FontWeight.w400,
                       letterSpacing: 0.1,
                       fontSize: 20,
                     ),
                   ),
                   const SizedBox(
-                    height: 2,
+                    height: 12,
                   ),
                   Text(
                     exerciseRepeation,

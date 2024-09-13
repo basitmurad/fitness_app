@@ -35,7 +35,7 @@ class FollowUserCard extends StatelessWidget {
               height: 70,
               width: 155,
               fit: BoxFit.fitWidth,
-              image: AssetImage(AppImagePaths.image11),
+              image: AssetImage(AppImagePaths.abs),
             ),
           ),
           const SizedBox(height: 6.0),

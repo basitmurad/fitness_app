@@ -1,22 +1,17 @@
-import 'package:fitness/common/widgets/CustomButtonWithIcon.dart';
 import 'package:fitness/common/widgets/MyAppGridLayout.dart';
+import 'package:fitness/screens/exercise_screen/abs_screen/AbsScreen.dart';
 import 'package:fitness/screens/home/dashboard/widgets/ChallengedWidget.dart';
 import 'package:fitness/screens/home/dashboard/widgets/ExerciseWidget.dart';
 import 'package:fitness/screens/home/dashboard/widgets/FollowUserCard.dart';
 import 'package:fitness/screens/home/dashboard/widgets/TextWidget.dart';
-import 'package:fitness/screens/home/exercise_detail_screen/ExerciseDetailScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import '../../../common/widgets/CustomButton.dart';
-import '../../../utils/constants/AppDevicesUtils.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../controller/DashboardController.dart';
-
 
 List<String> fitnessSliderTexts = [
   "Push Beyond Your Limits.Your Strongest Self Awaits!",
@@ -31,26 +26,68 @@ List<String> fitnessSliderTexts = [
   "Challenge Yourself Today for a Better Tomorrow. Keep Moving Forward."
 ];
 
-List<Map<String, String>> exercises = [
+List<Map<String, String>> maleExercise = [
   {
-    'imagePath': AppImagePaths.femaleArm,
-    'exerciseName': 'Arm w',
-    'exerciseRepetition': '09 www 19 reps',
+    'imagePath': AppImagePaths.maleAbsWorkout,
+    'exerciseName': 'Abs Workout',
+    'exerciseRepetition': '09 Exercise',
   },
   {
-    'imagePath': AppImagePaths.femaleAbs,
-    'exerciseName': 'Abs w',
-    'exerciseRepetition': '12 min ww reps',
+    'imagePath': AppImagePaths.maleChestWorkout,
+    'exerciseName': 'Chest Workout',
+    'exerciseRepetition': '08 Exercise',
   },
   {
-    'imagePath': AppImagePaths.femaleArm,
-    'exerciseName': 'Arm w',
-    'exerciseRepetition': '09 www 19 reps',
+    'imagePath': AppImagePaths.maleArmWorkout,
+    'exerciseName': 'Arm Workout',
+    'exerciseRepetition': '5 Exercise',
   },
   {
-    'imagePath': AppImagePaths.femaleAbs,
-    'exerciseName': 'Abs w',
-    'exerciseRepetition': '12 min ww reps',
+    'imagePath': AppImagePaths.maleLegWorkout,
+    'exerciseName': 'Leg Workout',
+    'exerciseRepetition': '6 Exercise',
+  },
+  {
+    'imagePath': AppImagePaths.maleShoulderWorkout,
+    'exerciseName': 'Shoulder Workout',
+    'exerciseRepetition': '6 Exercise',
+  },
+  {
+    'imagePath': AppImagePaths.maleBackWorkout,
+    'exerciseName': 'Back Workout',
+    'exerciseRepetition': '6',
+  },
+];
+List<Map<String, String>> femaleExercises = [
+  {
+    'imagePath': AppImagePaths.femaleAbsWorkout,
+    'exerciseName': 'Abs Workout',
+    'exerciseRepetition': '09 Exercise',
+  },
+  {
+    'imagePath': AppImagePaths.femaleChestWorkout,
+    'exerciseName': 'Chest Workout',
+    'exerciseRepetition': '08 Exercise',
+  },
+  {
+    'imagePath': AppImagePaths.femaleArmWorkout,
+    'exerciseName': 'Arm Workout',
+    'exerciseRepetition': '5 Exercise',
+  },
+  {
+    'imagePath': AppImagePaths.femaleLegWorkout,
+    'exerciseName': 'Leg Workout',
+    'exerciseRepetition': '6 Exercise',
+  },
+  {
+    'imagePath': AppImagePaths.femaleShoulderWorkout,
+    'exerciseName': 'Shoulder Workout',
+    'exerciseRepetition': '6 Exercise',
+  },
+  {
+    'imagePath': AppImagePaths.femaleBackWorkout,
+    'exerciseName': 'Back Workout',
+    'exerciseRepetition': '6',
   },
 ];
 
@@ -60,10 +97,11 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DashboardController dashboardController = Get.put(DashboardController());
+    String gender ='female';
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
+    final List<Map<String, String>> exercisesList = gender == 'female' ? femaleExercises : maleExercise;
 
     return Scaffold(
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(AppStrings.dashboard),
@@ -95,48 +133,53 @@ class Dashboard extends StatelessWidget {
               ),
               ChallengedWidget(dark: dark),
               const SizedBox(
-                height: AppSizes.inputFieldRadius -5,
+                height: AppSizes.inputFieldRadius - 5,
               ),
-
-              Text(AppStrings.fitnessTitans ,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: dark ? AppColor.white :AppColor.black ,fontFamily: 'Poppins' ,fontWeight: FontWeight.w400),),
+              Text(
+                AppStrings.fitnessTitans,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: dark ? AppColor.white : AppColor.black,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w400),
+              ),
               const SizedBox(
                 height: AppSizes.inputFieldRadius,
               ),
-
-
-
-              MyAppGridLayout(itemCount: 10, itemBuilder: (context, index) {
-                return Card(
-                  child: FollowUserCard(dark: dark),
-                );
-              }),
-
-
-              const SizedBox(height: AppSizes.spaceBtwInputFields,),
-
-          TextWidget(dark: dark),
-
+              MyAppGridLayout(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: FollowUserCard(dark: dark),
+                    );
+                  }),
+              const SizedBox(
+                height: AppSizes.spaceBtwInputFields,
+              ),
+              TextWidget(dark: dark),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: exercises.length,
+                itemCount: exercisesList.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.zero,
                     child: GestureDetector(
-                        onTap: () {
-                          Get.to(const ExerciseDetailScreen());
-                        },
-                        child: ExerciseWidget(
-                          dark: dark,
-                          imagePath: exercises[index]['imagePath']!,
-                          exerciseName: exercises[index]['exerciseName']!,
-                          exerciseRepeation: exercises[index]
-                              ['exerciseRepetition']!,
-                        )),
+                      onTap: () {
+                        // Pass the exercise name when navigating to AbsScreen
+                        Get.to(AbsScreen(exerciseName: exercisesList[index]['exerciseName']!,
+                          exerciseRepititon: exercisesList[index]['exerciseRepetition']!,));
+                      },
+                      child: ExerciseWidget(
+                        dark: dark,
+                        imagePath: exercisesList[index]['imagePath']!,
+                        exerciseName: exercisesList[index]['exerciseName']!,
+                        exerciseRepeation: exercisesList[index]['exerciseRepetition']!,
+                      ),
+                    ),
                   );
                 },
-              )
+              ),
+
             ],
           ),
         ),
@@ -144,8 +187,3 @@ class Dashboard extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

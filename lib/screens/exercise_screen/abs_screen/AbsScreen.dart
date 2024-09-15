@@ -233,10 +233,11 @@ List<Map<String, String>> shoulderExercise = [
 
 
 class AbsScreen extends StatelessWidget {
-  const AbsScreen({super.key, required this.exerciseName, required this.exerciseRepititon});
+  const AbsScreen({super.key, required this.exerciseName, required this.exerciseRepititon, required this.gender});
 
   final String exerciseName;
   final String exerciseRepititon;
+  final String gender;
 
   List<Map<String, String>> _getExerciseList() {
     switch (exerciseName.toLowerCase()) {
@@ -256,11 +257,30 @@ class AbsScreen extends StatelessWidget {
         return [];
     }
   }
+  String _getImagePath() {
+    // Example logic to get the image path based on exercise name and gender
+    if (exerciseName.toLowerCase().contains('Abs Workout')) {
+      return gender == 'female'
+          ? AppImagePaths.abs
+          : AppImagePaths.maleAbs;
+    }
+    if (exerciseName.toLowerCase().contains('Chest Workout')) {
+      return gender == 'female'
+          ? AppImagePaths.maleChest
+          : AppImagePaths.femaleChest;
+    }
+    // Add more conditions for other exercise types and genders
+    return gender == 'female'
+        ? AppImagePaths.male
+        : AppImagePaths.female;
+  }
 
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
     List<Map<String, String>> exerciseList = _getExerciseList();
+    final imagePath = _getImagePath();
+
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -278,9 +298,9 @@ class AbsScreen extends StatelessWidget {
                 height: 200,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  image: const DecorationImage(
+                  image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage(AppImagePaths.maleArmWorkout),
+                    image: AssetImage(imagePath),
                   ),
                   boxShadow: const [
                     BoxShadow(
@@ -291,7 +311,8 @@ class AbsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Stack(
+                child:
+                Stack(
                   children: [
                     Positioned(
                       top: 0,

@@ -178,7 +178,7 @@ class WeightScreen extends StatelessWidget {
                                 dark: dark,
                                 unitText: 'Kg',
                                 color: weightController.isSelected('Kg')
-                                    ? AppColor.lightBlue // Color when selected
+                                    ? AppColor.orangeColor // Color when selected
                                     : Colors.white,
                                 textColor: weightController.isSelected('Kg')
                                     ? Colors.white // Text color when selected
@@ -203,7 +203,7 @@ class WeightScreen extends StatelessWidget {
                                 dark: dark,
                                 unitText: 'Lbs',
                                 color: weightController.isSelected('Lbs')
-                                    ? AppColor.lightBlue // Color when selected
+                                    ? AppColor.orangeColor // Color when selected
                                     : Colors.white,
                                 textColor: weightController.isSelected('Lbs')
                                     ? Colors.white // Text color when selected

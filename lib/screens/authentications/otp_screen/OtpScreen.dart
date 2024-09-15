@@ -51,7 +51,7 @@ class OtpScreen extends StatelessWidget {
 
 
           Pinput(
-            length: 4,
+            length: 6,
             onChanged: (value) {
               otpScreenController.updatePin(value); // Update pin in controller
             },
@@ -64,7 +64,6 @@ class OtpScreen extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 color: otpScreenController.pinColor == AppColor.orangeLight ? AppColor.orangeColor :  AppColor.orangeColor,
-                border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -79,6 +78,7 @@ class OtpScreen extends StatelessWidget {
                 color: otpScreenController.pinColor == AppColor.orangeLight ? AppColor.orangeLight :  AppColor.orangeLight,
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(8),
+                shape: BoxShape.circle
               ),
             ),
           ),

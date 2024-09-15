@@ -26,7 +26,8 @@ class NameScreen extends StatelessWidget {
         height: 110,
         padding: const EdgeInsets.only(bottom: 40),
         color: Colors.transparent,
-        child: Obx(() {
+        child:
+        Obx(() {
           final opacity = nameScreenController.isNameEntered.value ? 0.9 : 0.1;
           return Opacity(
             opacity: opacity,
@@ -66,24 +67,23 @@ class NameScreen extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
                 ),
                 const SizedBox(height: 79),
-                Text(
-                  AppStrings.textName,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16),
-                ),
+
                 SizedBox(height: AppDevicesUtils.getScreenWidth(context) * 0.5),
                 Obx(() => Opacity(
                   opacity: nameScreenController.isNameEntered.value ? 0.9 : 0.1,
                   child: TextInputWidget(
                       hintText: 'First Name',
                       focusNode: nameScreenController.focusNode, // Pass focus node
-                      controller: nameScreenController.nameController,
+                      controller: nameScreenController.firstNameController,
+                      dark: dark),
+                )),
+                SizedBox(height: AppSizes.spaceBtwItems,),
+                Obx(() => Opacity(
+                  opacity: nameScreenController.isNameEntered.value ? 0.9 : 0.1,
+                  child: TextInputWidget(
+                      hintText: 'Last Name',
+                      focusNode: nameScreenController.focusNode, // Pass focus node
+                      controller: nameScreenController.lastNameController,
                       dark: dark),
                 )),
                 const SizedBox(height: 20),

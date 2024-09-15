@@ -18,6 +18,7 @@ class InputWidget extends StatelessWidget {
   final double opacity;
   final String? ft;
   final String? inch;
+
   final Function(String) onChanged; // Add this line
 
   @override
@@ -28,7 +29,7 @@ class InputWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8), // Rounded corners for Container
         child: Container(
           width: ft != null && inch != null ? 160 : 100,
-          color: AppColor.lightBlue,
+          color: AppColor.orangeColor,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -46,7 +47,7 @@ class InputWidget extends StatelessWidget {
                     hintText: ft ?? 'cm',
                     hintStyle: const TextStyle(color: Colors.white),
                     filled: true,
-                    fillColor: AppColor.lightBlue,
+                    fillColor: AppColor.orangeColor,
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
@@ -62,11 +63,11 @@ class InputWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(color: Colors.white),
                     controller: TextEditingController(),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'inch',
-                      hintStyle: const TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
                       filled: true,
-                      fillColor: AppColor.lightBlue,
+                      fillColor: AppColor.orangeColor,
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,

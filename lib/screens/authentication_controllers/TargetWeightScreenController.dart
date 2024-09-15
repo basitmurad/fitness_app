@@ -8,11 +8,11 @@ class TargetWeightScreenController extends GetxController{
   // Controllers for text fields
   final TextEditingController kgController = TextEditingController();
   final TextEditingController lbsController = TextEditingController();
-  var opacity = 0.1.obs; // Initial opacity set to 0.1
+  var opacity = 0.5.obs; // Initial opacity set to 0.1
 
 
   // Reactive variable for opacity
-  var unitOpacity = 0.1.obs;
+  var unitOpacity = 0.5.obs;
 
   void selectUnit(String unit) {
     selectedUnit.value = unit;

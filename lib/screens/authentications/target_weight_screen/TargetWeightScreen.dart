@@ -1,5 +1,3 @@
-import 'package:fitness/screens/authentications/body_goal_screen/BodyGoalScreen.dart';
-import 'package:fitness/screens/home/dashboard/Dashboard.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -177,7 +175,7 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
                                 dark: dark,
                                 unitText: 'Kg',
                                 color: targetWeightScreenController.isSelected('Kg')
-                                    ? AppColor.lightBlue // Color when selected
+                                    ? AppColor.orangeColor // Color when selected
                                     : Colors.white,
                                 textColor: targetWeightScreenController.isSelected('Kg')
                                     ? Colors.white // Text color when selected
@@ -202,7 +200,7 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
                                 dark: dark,
                                 unitText: 'Lbs',
                                 color: targetWeightScreenController.isSelected('Lbs')
-                                    ? AppColor.lightBlue // Color when selected
+                                    ? AppColor.orangeColor // Color when selected
                                     : Colors.white,
                                 textColor: targetWeightScreenController.isSelected('Lbs')
                                     ? Colors.white // Text color when selected

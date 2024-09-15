@@ -43,21 +43,29 @@ class ExerciseDetailScreen extends StatelessWidget {
         return {};
     }
   }
+  final String gender = 'female';
 
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
     Map<String, dynamic> getCategoryX = _getExerciseList();
 
+
+    final imageUrl = gender == 'female'
+        ? getCategoryX['femaleImage']
+        : getCategoryX['imagePaths'];
+    // String imageurl = getCategoryX['imagePaths'];
+    // print('url is $imageurl');
 // Fetch the exercise data
 
     print('<<<<<<<<<<<<<<<<<<data is >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.');
 // Check if the map is not empty and print its values
     if (getCategoryX.isNotEmpty) {
-      // print('Instruction: ${getCategoryX['instruction']}');
-      // print('Common Mistakes: ${getCategoryX['commonMistakes']}');
-      // print('Breathing Tips: ${getCategoryX['breathingTips']}');
-      // print('Items: ${getCategoryX['items']}');
+      print('Instruction: ${getCategoryX['instruction']}');
+      print('Common Mistakes: ${getCategoryX['commonMistakes']}');
+      print('Breathing Tips: ${getCategoryX['breathingTips']}');
+      print('Items: ${getCategoryX['items']}');
+
       print('image ${getCategoryX['imagePaths']}');
     } else {
       print('No data found for the selected exercise.');
@@ -111,7 +119,8 @@ class ExerciseDetailScreen extends StatelessWidget {
                             onPageChanged: controller.onPageChanged,
                             children:  [
                               InstructionWidget(
-                                imageUrl:  getCategoryX['imagePaths'],
+                                imageUrl: imageUrl,
+                                // imageUrl:  getCategoryX['imagePaths'],
                               ),
                               InstructionWidget(
                                 imageUrl: AppImagePaths.femaleAbs,
@@ -360,19 +369,22 @@ class ExerciseDetailScreen extends StatelessWidget {
 }
 
 List<Map<String, dynamic>> getCategoryJson = [
+
   {
     'commonMistakes': jumpingJacksCommonMistakesList,
     'breathingTips': jumpingJacksBreathingTipsL,
     'items': List<String>.of(jumpingJacksItems),
     'instruction': jumpingJacksInstruction,
-    'imagePaths' : imagePath9
+    'imagePaths' : jumpingImageMale,
+    'femaleImage' : jumpingImageFemale
   },
   {
     'commonMistakes': abdominalCrunchesCommonMistakes,
     'breathingTips': abdominalCrunchesBreathingTips,
     'items': List<String>.of(abdominalCrunchesItems),
     'instruction': abdominalCrunchesInstruction,
-    'imagePaths' : imagePath8
+    'imagePaths' : abdominalImageMale,
+    'femaleImage' : jumpingImageFemale
 
   },
   {
@@ -380,58 +392,53 @@ List<Map<String, dynamic>> getCategoryJson = [
     'breathingTips': russianTwistBreathingTips,
     'items': List<String>.of(russianTwistItems),
     'instruction': russianTwistInstruction,
-    'imagePaths' : imagePath7
-
+    'imagePaths' : russianImageMale
   },
   {
     'commonMistakes': heelTouchCommonMistakes,
     'breathingTips': heelTouchBreathingTips,
     'items': List<String>.of(heelTouchItems),
     'instruction': heelTouchInstruction,
-    'imagePaths' : imagePath6
-
+    'imagePaths' : heelTouchMale
   },
   {
     'commonMistakes': legRaisesCommonMistakes,
     'breathingTips': legRaisesBreathingTips,
     'items': List<String>.of(legRaisesItems),
     'instruction': legRaisesInstruction,
-    'imagePaths' : imagePath5
-
+    'imagePaths' : legImageMale
   },
   {
     'commonMistakes': plankRaisesCommonMistakes,
     'breathingTips': plankRaisesBreathingTips,
     'items': List<String>.of(plankRaisesItems),
     'instruction': plankInstruction,
-    'imagePaths' : imagePath3
-
+    'imagePaths' : plankImageMale
   },
   {
     'commonMistakes': cobraStretchCommonMistakes,
     'breathingTips': cobraStretchBreathingTips,
     'items': List<String>.of(cobraStretchItems),
     'instruction': cobraStretchInstruction,
-    'imagePaths' : imagePath2
-
+    'imagePaths' : cobraImageMale
   },
   {
     'commonMistakes': spineLumberTwistRightCommonMistakes,
     'breathingTips': spineLumberTwistRightBreathingTips,
     'items': List<String>.of(spineLumberTwistRightItems),
     'instruction': spineLumberTwistRightInstruction,
-    'imagePaths' : imagePath1
-
+    'imagePaths' : spineImageMale
   },
   {
     'commonMistakes': spineLumberTwistLeftCommonMistakes,
     'breathingTips': spineLumberTwistLeftBreathingTips,
     'items': List<String>.of(spineLumberTwistLeftItems),
     'instruction': spineLumberTwistLeftInstruction,
-    'imagePaths' : imagePath
-
+    'imagePaths' : spineleftFemale
   },
 ];
+
+
 
 /// Jumping Jacks
 List<Map<String, String>> jumpingJacksCommonMistakesList = [
@@ -492,7 +499,8 @@ List<String> jumpingJacksItems = [
 ];
 const String jumpingJacksInstruction =
     "Stand with your feet together and arms by your sides. Jump, spreading your feet apart and raising your arms overhead. Jump again, bringing your feet together and lowering your arms.Repeat, keeping a steady rhythm. Engage your core and land softly.";
-const String imagePath9 = "assets/male/armWorkout.png";
+const String jumpingImageMale = AppImagePaths.maleAbs;
+const String jumpingImageFemale = AppImagePaths.abs;
 
 /// Abdominal Crunches
 
@@ -556,7 +564,8 @@ final List<String> abdominalCrunchesItems = [
 ];
 const String abdominalCrunchesInstruction =
     "Lie on your back with your knees bent and feet flat on the floor. Place your hands behind your head, elbows out to the sides. Engage your core and lift your upper body off the floor, bringing your shoulders towards your knees. Lower your upper body back down with control. Repeat, keeping a steady rhythm and focusing on your core engagement.";
- String imagePath8 = "assets/male/armWorkout.png";
+const String abdominalImageFemale = AppImagePaths.femaleAbs;
+const String abdominalImageMale = AppImagePaths.maleAbs;
 
 /// Russian Twist
 
@@ -621,7 +630,8 @@ final List<String> russianTwistItems = [
 ];
 const String russianTwistInstruction =
     "Sit with knees bent, feet slightly off the ground, and lean back slightly. Hold your hands together or a weight. Twist your torso from side to side, keeping your core engaged. Repeat.";
-  String imagePath7 = "assets/male/armWorkout.png";
+const String russianImageFemale = AppImagePaths.femaleAbs;
+const String russianImageMale = AppImagePaths.maleAbs;
 
 /// Heel Touch
 List<Map<String, String>> heelTouchCommonMistakes = [
@@ -678,8 +688,8 @@ final List<String> heelTouchItems = [
 ];
 const String heelTouchInstruction =
     "Lie on your back with knees bent. Lift your shoulders slightly and reach your right hand to your right heel, then left hand to left heel. Alternate sides, keeping your core tight.";
- String imagePath6 = "assets/male/armWorkout.png";
-
+String legImageMale =  AppImagePaths.maleAbs;
+String legImageFemale =  AppImagePaths.femaleAbs;
 /// Leg Raises
 List<Map<String, String>> legRaisesCommonMistakes = [
   {
@@ -735,7 +745,8 @@ final List<String> legRaisesItems = [
 ];
 const String legRaisesInstruction =
     "Lie on your back with legs straight. Lift your legs toward the ceiling, then lower them slowly without touching the floor. Repeat.";
- String imagePath5 = "assets/male/armWorkout.png";
+ String heelTouchMale =  AppImagePaths.maleAbs;
+ String heelTouchFemale =  AppImagePaths.femaleAbs;
 
 /// Plank
 List<Map<String, String>> plankRaisesCommonMistakes = [
@@ -790,7 +801,8 @@ final List<String> plankRaisesItems = [
 ];
 const String plankInstruction =
     "Start in a push-up position, then shift to your forearms. Keep your body straight from head to heels, engage your core, and hold the position. Keep your back flat and avoid sagging or lifting your hips. Breathe steadily.";
- String imagePath = "assets/male/armWorkout.png";
+ String plankImageMale =  AppImagePaths.maleAbs;
+ String plankImageFemale =  AppImagePaths.femaleAbs;
 
 /// Cobra Stretch
 List<Map<String, String>> cobraStretchCommonMistakes = [
@@ -848,7 +860,8 @@ final List<String> cobraStretchItems = [
 ];
 const String cobraStretchInstruction =
     "Lie face down with your legs extended and hands under your shoulders. Press into your hands to lift your chest off the ground, keeping your face up and shoulders relaxed. Hold the stretch while keeping your hips and legs on the floor. Breathe deeply, then lower back down.";
- String imagePath3 = "assets/male/armWorkout.png";
+ String cobraImageMale =  AppImagePaths.maleAbs;
+ String cobraImageFemale=  AppImagePaths.femaleAbs;
 
 /// Spine Lumber Twist Right
 List<Map<String, String>> spineLumberTwistRightCommonMistakes = [
@@ -909,7 +922,8 @@ final List<String> spineLumberTwistRightItems = [
 ];
 const String spineLumberTwistRightInstruction =
     "Lie on your back with knees bent and arms out to the sides. Drop your knees to the left, turning your head to the right. Hold for 15-30 seconds, then return to the center. Repeat by dropping your knees to the right and turning your head to the left. Hold and return to the center.";
- String imagePath1 = "assets/male/armWorkout.png";
+ String spineImageMale =  AppImagePaths.maleAbs;
+ String spineImageFemale =  AppImagePaths.femaleAbs;
 
 /// Spine Lumber Twist left
 List<Map<String, String>> spineLumberTwistLeftCommonMistakes = [
@@ -970,4 +984,6 @@ final List<String> spineLumberTwistLeftItems = [
 ];
 const String spineLumberTwistLeftInstruction =
     "Lie on your back with knees bent and arms out to the sides. Drop your knees to the left, turning your head to the right. Hold for 15-30 seconds, then return to the center. Repeat by dropping your knees to the right and turning your head to the left. Hold and return to the center.";
- String imagePath2 = "assets/male/armWorkout.png";
+ String spineleftImage = AppImagePaths.maleAbs;
+String spineleftFemale =  AppImagePaths.femaleAbs;
+

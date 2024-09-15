@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../utils/constants/AppColor.dart';
 import '../../../../utils/constants/AppDevicesUtils.dart';
 import '../../../../utils/constants/AppImagePaths.dart';
@@ -34,9 +32,9 @@ class ImageWidget extends StatelessWidget {
                 height: AppDevicesUtils.getScreenWidth(context) * 0.6566,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColor.orangeLight,
+                  color: AppColor.white,
                   image: DecorationImage(
-                    image: AssetImage(AppImagePaths.onboardingImage1),
+                    image: AssetImage(AppImagePaths.logo),
                   ),
                 ),
               ),

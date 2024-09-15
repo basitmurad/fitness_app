@@ -114,7 +114,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: AppSizes.appBarHeight + 40),
+                const SizedBox(height: AppSizes.appBarHeight + 40),
                 SizedBox(
                   height: AppDevicesUtils.getScreenHeight() * 0.3,
                   child: ListWheelScrollView.useDelegate(
@@ -133,8 +133,8 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                         return Container(
                           width: 150,
                           decoration: BoxDecoration(
-                            color: isSelected ? Colors.blue : Colors.transparent,
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                            color: isSelected ? AppColor.orangeColor : Colors.transparent,
+                            borderRadius: const BorderRadius.all(Radius.circular(12)),
                           ),
                           alignment: Alignment.center,
                           child: Text(

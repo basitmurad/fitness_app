@@ -1,12 +1,7 @@
-import 'package:fitness/navigation_menu.dart';
-import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
-import 'package:fitness/screens/exercise_screen/abs_screen/AbsScreen.dart';
-import 'package:fitness/screens/exercise_screen/exercise_detail_screen/ExerciseDetailScreen.dart';
-import 'package:fitness/screens/home/dashboard/Dashboard.dart';
+import 'package:fitness/screens/exercise_screen/exercise_start_screen/ExerciseProgressScreen.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 
@@ -32,7 +27,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:   const NavigationMenu());
+        home:   const ExerciseProgressScreen());
 
   }
 }

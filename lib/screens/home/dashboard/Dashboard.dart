@@ -167,7 +167,7 @@ class Dashboard extends StatelessWidget {
                       onTap: () {
                         // Pass the exercise name when navigating to AbsScreen
                         Get.to(AbsScreen(exerciseName: exercisesList[index]['exerciseName']!,
-                          exerciseRepititon: exercisesList[index]['exerciseRepetition']!,));
+                          exerciseRepititon: exercisesList[index]['exerciseRepetition']!, gender: gender,));
                       },
                       child: ExerciseWidget(
                         dark: dark,

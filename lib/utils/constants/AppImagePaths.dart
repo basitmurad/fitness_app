@@ -7,6 +7,10 @@ class AppImagePaths {
   static const String pic11 = "assets/illustration/pic1.jpg";
   static const String gymPic = "assets/images/gympic.jpg";
   static const String google = "assets/logos/google.png";
+  static const String logo = "assets/logos/logo.png";
+  static const String iconNext = "assets/myicons/next.png";
+  static const String right = "assets/myicons/right.png";
+  static const String left = "assets/myicons/leftq.png";
   static const String successImage = "assets/images/successImage.png";
   static const String onboardingImage = "assets/myicons/check_dark.png";
   static const String onboardingImage1 = "assets/images/onboardingimage.png";
@@ -63,6 +67,8 @@ class AppImagePaths {
 
   static const String femaleBackWorkout = "assets/female/backWorkout.png";
   static const String abs = "assets/female/abs.png";
+  static const String maleChest = "assets/female/maleChest.png";
+  static const String femaleChest = "assets/female/femaleChest.png";
   static const String femaleChestWorkout = "assets/female/chestWorkout.png";
   static const String femaleAbsWorkout = "assets/female/absWorkout.png";
   static const String femaleArmWorkout = "assets/female/armsWorkout.png";

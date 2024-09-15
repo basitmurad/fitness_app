@@ -38,7 +38,7 @@ class AppStrings {
 
   static String dashboard = "Dashboard";
   static String entrePassword = "Enter Password";
-  static String welcomeText = "Welcome to Fitness";
+  static String welcomeText = "Welcome to Chalpro";
   static String logout = "Logout";
   static String setting = "Settings";
   static String home = "Home";

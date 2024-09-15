@@ -168,7 +168,7 @@ class HeightScreen extends StatelessWidget {
                               unitText: 'Cm',
                               rotationAngle: 3.15,
                               color: heightScreenController.isSelected('Cm')
-                                  ? AppColor.lightBlue // Color when selected
+                                  ? AppColor.orangeColor // Color when selected
                                   : Colors.white,
                               textColor: heightScreenController.isSelected('Cm')
                                   ? Colors.white // Text color when selected
@@ -192,7 +192,7 @@ class HeightScreen extends StatelessWidget {
                               dark: dark,
                               rotationAngle: 0,
                               color: heightScreenController.isSelected('Ft')
-                                  ? AppColor.lightBlue // Color when selected
+                                  ? AppColor.orangeColor // Color when selected
                                   : Colors.white,
                               textColor: heightScreenController.isSelected('Ft')
                                   ? Colors.white // Text color when selected

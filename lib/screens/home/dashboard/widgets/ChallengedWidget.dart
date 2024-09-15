@@ -1,7 +1,10 @@
 import 'dart:ffi';
 
+import 'package:fitness/screens/exercise_screen/challenge_screen/ChallengeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../common/widgets/CustomButton.dart';
 import '../../../../utils/constants/AppColor.dart';
@@ -82,11 +85,14 @@ class ChallengedWidget extends StatelessWidget {
                     image: AssetImage(AppImagePaths.bottomImage),
                   ),
                 )),
-            const Positioned(
+             Positioned(
                 bottom: 10,
                 left: 55,
                 right: 55,
-                child: CustomButton(height1: 30.0, buttontext: 'Start', backColor: AppColor.white, textColor: AppColor.orangeColor,))
+                child: GestureDetector(
+
+                    onTap: ()=>Get.to(const ChallengeScreen()),
+                    child: const CustomButton(height1: 30.0, buttontext: 'Start', backColor: AppColor.white, textColor: AppColor.orangeColor,)))
           ],
         ));
   }

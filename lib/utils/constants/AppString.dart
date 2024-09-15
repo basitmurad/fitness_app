@@ -144,4 +144,16 @@ class AppStrings {
 
 
 
+    static String textChallenge = "Select Challenge";
+    static String textTips = "Tips";
+    static String textCreateChallenge = "Create Challenge";
+    static String textTips4 = "Begin with manageable challenges to build consistency.";
+    static String textTips3 = "Adjust your challenge if needed—listen to your body.";
+    static String textTips2 = "Progress is made through daily efforts, so keep at it.";
+    static String textTips1 = "Reward yourself for completing milestones.";
+    static String textChallengeTitle = "Select Challenge";
+    static String textChallengeSubtitle = "Create your own or join existing ones, track your progress, and stay motivated every step of the way.";
+
+
+
 }

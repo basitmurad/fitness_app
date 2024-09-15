@@ -1,4 +1,3 @@
-import 'package:fitness/screens/exercise_screen/controller/ExerciseDetailScreenController.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/BottomWidget.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/CustomIconButton.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/InstructionWidget.dart';
@@ -10,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/constants/AppColor.dart';
 import '../../../utils/constants/AppImagePaths.dart';
-
 import '../../../utils/helpers/MyAppHelper.dart';
+import '../../exercise_screen_controller/ExerciseDetailScreenController.dart';
 
 class ExerciseDetailScreen extends StatelessWidget {
   const ExerciseDetailScreen({super.key, required this.exerciseName});

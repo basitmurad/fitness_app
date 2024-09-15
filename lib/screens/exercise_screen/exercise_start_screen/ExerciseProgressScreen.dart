@@ -1,7 +1,6 @@
 import 'package:fitness/screens/exercise_screen/exercise_start_screen/widgets/CenteredTextWithIconsRow.dart';
 import 'package:fitness/screens/exercise_screen/exercise_start_screen/widgets/CircleWithText.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitness/common/widgets/ButtonWidget.dart';
@@ -10,7 +9,7 @@ import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
-import '../controller/ExerciseProgressController.dart'; // Import the controller
+import '../../exercise_screen_controller/ExerciseProgressController.dart';
 
 class ExerciseProgressScreen extends StatelessWidget {
   const ExerciseProgressScreen({super.key});

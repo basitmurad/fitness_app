@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomButtonWithIcon extends StatelessWidget {
@@ -36,7 +35,7 @@ class CustomButtonWithIcon extends StatelessWidget {
             iconData,
             size: 10, color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 3,
           ),
           Text(

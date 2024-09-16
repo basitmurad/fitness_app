@@ -1,7 +1,5 @@
-import 'package:fitness/screens/exercise_screen/challenge_screen/widgets/AppbarWidget.dart';
 import 'package:fitness/screens/exercise_screen/challenge_screen/widgets/RowButtonWidgets.dart';
 import 'package:fitness/screens/exercise_screen/challenge_screen/widgets/SelectWidgets.dart';
-import 'package:fitness/screens/exercise_screen/challenge_screen/widgets/TextWithDot.dart';
 import 'package:fitness/screens/exercise_screen/challenge_screen/widgets/TipsWidgets.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
@@ -9,11 +7,8 @@ import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../home/dashboard/Dashboard.dart';
 
 class ChallengeScreen extends StatelessWidget {

@@ -8,11 +8,11 @@ class CenteredTextWithIconsRow extends StatelessWidget {
   final Color textColor;
 
   const CenteredTextWithIconsRow({
-    Key? key,
+    super.key,
     required this.text,
     required this.leftIcon,
     required this.rightIcon, required this.text1, required this.textColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

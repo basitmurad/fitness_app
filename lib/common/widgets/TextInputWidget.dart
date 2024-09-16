@@ -1,6 +1,5 @@
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:flutter/material.dart';
-
 import '../../utils/constants/AppColor.dart';
 
 class TextInputWidget extends StatelessWidget {

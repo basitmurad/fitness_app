@@ -133,10 +133,10 @@ class ExerciseProgressScreen extends StatelessWidget {
                     text: '2 sets', fontWeight: FontWeight.w600, fontSize: 16, color: dark ? AppColor.white :AppColor.black, fontFamily: 'Poppins'),
               ),
 
-          SizedBox(height: AppSizes.spaceBtwItems+10,),
+          const SizedBox(height: AppSizes.spaceBtwItems+10,),
            Center(
             child: Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: CenteredTextWithIconsRow(
                 text: '1',
 

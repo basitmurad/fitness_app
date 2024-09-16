@@ -2,17 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/AppColor.dart';
+import '../../../../utils/constants/AppImagePaths.dart';
+import '../../exercise_start_screen/widgets/CenteredTextWithIconsRow.dart';
+import 'SimpleTextWidget.dart';
 
 class BottomWidget extends StatelessWidget {
   const BottomWidget({
-    super.key,
+    super.key, required this.dark,
   });
+  final bool dark ;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      padding: const EdgeInsets.symmetric(vertical: 5 ,horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 1 ,horizontal: 5),
       decoration: const BoxDecoration(
           color: AppColor.orangeColor,
 
@@ -27,16 +31,32 @@ class BottomWidget extends StatelessWidget {
         children: [
 
           Container(
-            width: 100,
+            width: 150,
             height: 34,
-            color: Colors.blue,
+            child:
+
+            CenteredTextWithIconsRow(
+              text: '1',
+
+              leftIcon: AppImagePaths.right,
+              rightIcon: AppImagePaths.right,
+              text1: '/'+'09', textColor: dark ? AppColor.white :AppColor.black, onLeftIconPressed: () {  }, onRightIconPressed: () {  },
+            ),
+
+
+
           ),
 
-          const SizedBox(width: 70,),
           Container(
-            width: 100,
+            width: 150,
             height: 34,
-            color: Colors.black,
+            alignment: Alignment.center,
+            margin: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12)
+            ),
+            child: SimpleTextWidget(text: 'Close', fontWeight: FontWeight.w400, fontSize: 14, color: Colors.black, fontFamily: 'Poppins',),
           )
         ],
       ),

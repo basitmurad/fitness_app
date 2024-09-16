@@ -137,11 +137,13 @@ class ExerciseProgressScreen extends StatelessWidget {
            Center(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: CenteredTextWithIconsRow(
+              child:
+              CenteredTextWithIconsRow(
                 text: '1',
 
                 leftIcon: AppImagePaths.right,
-                rightIcon: AppImagePaths.left, text1: '/'+'09', textColor: dark ? AppColor.white :AppColor.black,
+                rightIcon: AppImagePaths.left,
+                text1: '/'+'09', textColor: dark ? AppColor.white :AppColor.black, onLeftIconPressed: () {  }, onRightIconPressed: () {  },
               ),
             ),
           ),

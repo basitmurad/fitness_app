@@ -1,3 +1,4 @@
+import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
 import 'package:fitness/screens/exercise_screen/exercise_start_screen/ExerciseProgressScreen.dart';
 import 'package:fitness/screens/home/dashboard/Dashboard.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:   const Dashboard());
+        home:   const OnboardingScreen());
 
   }
 }

@@ -169,6 +169,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                         color: AppColor.orangeColor,
                         fontFamily: 'Poppins-bold',
                       ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,10 +177,9 @@ class ExerciseDetailScreen extends StatelessWidget {
                           CustomIconButton(
                             iconData: Icons.remove,
                             dark: dark,
+                            onPressed: () => controller.decrementTime(),
                           ),
-                          const SizedBox(
-                            width: 8,
-                          ),
+                          const SizedBox(width: 8),
                           Container(
                             width: 100,
                             height: 30,
@@ -188,28 +188,67 @@ class ExerciseDetailScreen extends StatelessWidget {
                                 color: AppColor.orangeColor, // Border color
                                 width: 1.0, // Border width
                               ),
-                              borderRadius:
-                                  BorderRadius.circular(16), // Rounded corners
+                              borderRadius: BorderRadius.circular(16), // Rounded corners
                             ),
                             child: Center(
-                              child: Text(
-                                '00:20',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                        color: dark
-                                            ? AppColor.white
-                                            : AppColor.black),
+                              child: Obx(
+                                    () => Text(
+                                  controller.formattedTime,
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: dark ? AppColor.white : AppColor.black),
+                                ),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 8,
+                          const SizedBox(width: 8),
+                          CustomIconButton(
+                            iconData: Icons.add,
+                            dark: dark,
+                            onPressed: () => controller.incrementTime(),
                           ),
-                          CustomIconButton(iconData: Icons.add, dark: dark)
                         ],
-                      )
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     CustomIconButton(
+                      //       iconData: Icons.remove,
+                      //       dark: dark, onPressed: () => controller.decrementTime(),
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 8,
+                      //     ),
+                      //     Container(
+                      //       width: 100,
+                      //       height: 30,
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(
+                      //           color: AppColor.orangeColor, // Border color
+                      //           width: 1.0, // Border width
+                      //         ),
+                      //         borderRadius:
+                      //             BorderRadius.circular(16), // Rounded corners
+                      //       ),
+                      //       child: Center(
+                      //         child: Text(
+                      //           controller.formattedTime,
+                      //           style: Theme.of(context)
+                      //               .textTheme
+                      //               .bodyMedium
+                      //               ?.copyWith(
+                      //                   color: dark
+                      //                       ? AppColor.white
+                      //                       : AppColor.black),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 8,
+                      //     ),
+                      //     CustomIconButton(iconData: Icons.add, dark: dark, onPressed: () => controller.incrementTime(),)
+                      //   ],
+                      // )
                     ],
                   ),
                   const SizedBox(
@@ -332,7 +371,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const BottomWidget(),
+             BottomWidget(dark: dark,),
           ],
         ),
       ),

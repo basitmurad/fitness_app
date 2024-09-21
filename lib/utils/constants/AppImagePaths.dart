@@ -81,4 +81,9 @@ class AppImagePaths {
   ///// illustration
   static const String lightModeJumping = "assets/illustration/lightModeJumping.png";
 
+
+
+
+  static const String notifyIcon = "assets/myicons/notifyIcon.png";
+
 }

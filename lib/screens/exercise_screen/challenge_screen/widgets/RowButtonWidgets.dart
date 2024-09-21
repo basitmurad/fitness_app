@@ -45,7 +45,7 @@ class RowButtonWidgets extends StatelessWidget {
               foregroundColor: Colors.black, // Text color
             ),
             child:
-            Text('Create a Challenge' ,style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: dark ?AppColor.white :AppColor.black ,fontWeight: FontWeight.w300 ,fontSize: 13, fontFamily: 'Poppins'),),
+            Text('Joined a Challenge' ,style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: dark ?AppColor.white :AppColor.black ,fontWeight: FontWeight.w300 ,fontSize: 13, fontFamily: 'Poppins'),),
           ),
         ),
       ],

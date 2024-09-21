@@ -78,7 +78,7 @@ class LoginWidget extends StatelessWidget {
 
             padding: const EdgeInsets.symmetric(horizontal: 0 ,),
             child: ButtonWidget(dark: dark, onPressed: () {
-              Get.to(NavigationMenu());
+              Get.to(const NavigationMenu());
             }, buttonText: AppStrings.sigIn,),
           ),
           

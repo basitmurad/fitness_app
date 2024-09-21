@@ -1,4 +1,6 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/authentications/select_gender_screen/SelectGenderScreen.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:flutter/material.dart';
@@ -60,33 +62,86 @@ class SignUpController extends GetxController {
     isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
   }
 
-  Future<void> signUp() async {
-    print('data is saved');
 
-    try{
+
+
+  Future<void> signUp() async {
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    try {
+      // Firebase Email and Password Authentication
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Get the user's UID
+      String uid = userCredential.user!.uid;
+
+      // Save user data to Firebase Realtime Database
+      DatabaseReference ref = FirebaseDatabase.instance.ref("users/$uid");
+      await ref.set({
+        'email': email,
+        'gender': selectedGender.value,
+        'name': '', // To be filled later
+        'age': 0, // To be filled later
+        'height': '', // To be filled later
+        'weight': '', // To be filled later
+        'targetWeight': '', // To be filled later
+        'mainGoal': '', // To be filled later
+      });
+
+      // Save user data locally using shared preferences (optional)
       await UserPreferences.saveUserData(
-        email: emailController.text,
-        password: passwordController.text,
-        gender: '',
+        email: email,
+        password: password,
+        gender: selectedGender.value,
         name: '', // To be filled later
         age: 0, // To be filled later
         height: '', // To be filled later
         weight: '', // To be filled later
         targetWeight: '', // To be filled later
-        mainGoal: '',
-
-        // To be filled later
+        mainGoal: '', // To be filled later
       );
 
       setMessage('Success', 'Account successfully created', Colors.blue);
-      Get.to( SelectGenderScreen(email: emailController.text, password: passwordController.text,));
+      Get.to(SelectGenderScreen(email: email, password: password));
       KeyboardController.instance.hideKeyboard();
+    } catch (e) {
+      print('Error: ${e.toString()}');
+      setMessage('Failed', 'Account creation failed: ${e.toString()}', Colors.redAccent);
     }
-    catch(e){
-      print('Error ${e.toString()}' );
-    }
-
   }
+
+
+  // Future<void> signUp() async {
+  //   print('data is saved');
+  //
+  //   try{
+  //     await UserPreferences.saveUserData(
+  //       email: emailController.text,
+  //       password: passwordController.text,
+  //       gender: '',
+  //       name: '', // To be filled later
+  //       age: 0, // To be filled later
+  //       height: '', // To be filled later
+  //       weight: '', // To be filled later
+  //       targetWeight: '', // To be filled later
+  //       mainGoal: '',
+  //
+  //       // To be filled later
+  //     );
+  //
+  //     setMessage('Success', 'Account successfully created', Colors.blue);
+  //     Get.to( SelectGenderScreen(email: emailController.text, password: passwordController.text,));
+  //     KeyboardController.instance.hideKeyboard();
+  //   }
+  //   catch(e){
+  //     print('Error ${e.toString()}' );
+  //   }
+  //
+  // }
 
   void setMessage(String title, String message, Color backgroundColor) {
     Get.snackbar(

@@ -1,5 +1,6 @@
 import 'package:fitness/common/widgets/ButtonWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
+import 'package:fitness/screens/exercise_screen/exercise_start_screen/ExerciseProgressScreen.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
@@ -395,7 +396,7 @@ class AbsScreen extends StatelessWidget {
                 child: ButtonWidget(
                   dark: dark,
                   onPressed: () {
-                    Get.to(LoginScreen());
+                    Get.to(const ExerciseProgressScreen());
                   },
                   buttonText: 'Start',
                 ),

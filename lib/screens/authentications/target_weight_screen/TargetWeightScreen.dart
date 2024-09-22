@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +18,26 @@ import '../height_screen/widgets/InputWidget.dart';
 import '../height_screen/widgets/UnitWidget.dart';
 
 class TargetWeightScreen extends StatefulWidget {
-   const TargetWeightScreen({super.key, required this.email, required this.password, required this.gender, required this.name, required this.height, required this.year, required this.currentWeight});
-   final String email , password , gender , name , height  ,currentWeight;
-   final int year;
+  const TargetWeightScreen(
+      {super.key,
+      required this.email,
+      required this.password,
+      required this.gender,
+      required this.name,
+      required this.height,
+      required this.year,
+      required this.currentWeight});
+
+  final String email, password, gender, name, height, currentWeight;
+  final int year;
 
   @override
   State<TargetWeightScreen> createState() => _TargetWeightScreenState();
 }
 
 class _TargetWeightScreenState extends State<TargetWeightScreen> {
-  TargetWeightScreenController targetWeightScreenController  =Get.put(TargetWeightScreenController());
+  TargetWeightScreenController targetWeightScreenController =
+      Get.put(TargetWeightScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +56,57 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
               child: ButtonWidget(
                 dark: dark,
                 onPressed: () async {
-
-                  if(targetWeightScreenController.opacity.value<0.9){
+                  String message;
+                  if (targetWeightScreenController.opacity.value < 0.9) {
                     MyAppHelperFunctions.showSnackBar('Click on Kg');
                     return;
-                  }
-                  else{
-                    Get.to(Get.to(()=>NavigationMenu()));
+                  } else {
+                    // Validate the input and show a Snackbar with the value
+                    if (targetWeightScreenController.isSelected('Kg')) {
+                      final currentWeightKg =
+                          targetWeightScreenController.kgController.text;
+
+                      // Check if cmText is empty or not a valid number
+                      if (currentWeightKg.isNotEmpty) {
+                        message = "Your height: $currentWeightKg kg";
+
+                        await  _uploadGenderToFirebase(currentWeightKg);
+
+                        Get.to(Get.to(()=>NavigationMenu()));
+
+                      } else {
+                        MyAppHelperFunctions.showSnackBar(
+                            "Please enter a valid Weight");
+                      }
+                    } else if (targetWeightScreenController.isSelected('Lbs')) {
+                      final currentWeightLbs =
+                          targetWeightScreenController.lbsController.text;
+
+                      // Check if ftText and inchText are not empty and are valid numbers
+                      if (currentWeightLbs.isNotEmpty) {
+                        message = "Your height: $currentWeightLbs ";
+
+                       await _uploadGenderToFirebase(currentWeightLbs);
+                            Get.to(Get.to(()=>NavigationMenu()));
+
+
+
+                      } else {
+                        MyAppHelperFunctions.showSnackBar(
+                            "Please enter valid weight");
+                      }
+                    }
                   }
                 },
+
+                //   if(targetWeightScreenController.opacity.value<0.9){
+                //     MyAppHelperFunctions.showSnackBar('Click on Kg');
+                //     return;
+                //   }
+                //   else{
+                //     Get.to(Get.to(()=>NavigationMenu()));
+                //   }
+                // },
                 buttonText: AppStrings.next,
               ),
             );
@@ -66,7 +120,7 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
             child: Center(
               child: Column(
                 children: [
-                  const SizedBox(height: AppSizes.appBarHeight -20),
+                  const SizedBox(height: AppSizes.appBarHeight - 20),
                   Text(
                     textAlign: TextAlign.center,
                     AppStrings.signUP,
@@ -84,7 +138,7 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
                         fontWeight: FontWeight.w500,
                         fontSize: 16),
                   ),
-                  const SizedBox(height: AppSizes.appBarHeight +15),
+                  const SizedBox(height: AppSizes.appBarHeight + 15),
                   Container(
                     alignment: Alignment.center,
                     width: 110,
@@ -99,17 +153,22 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
                         Obx(() {
                           // Update UnitWidget based on selected unit
                           return GestureDetector(
-                            onTap: () => targetWeightScreenController.selectUnit('Kg'),
+                            onTap: () =>
+                                targetWeightScreenController.selectUnit('Kg'),
                             child: Opacity(
-                              opacity: targetWeightScreenController.opacity.value,
+                              opacity:
+                                  targetWeightScreenController.opacity.value,
                               child: UnitWidget(
                                 rotationAngle: 3.15,
                                 dark: dark,
                                 unitText: 'Kg',
-                                color: targetWeightScreenController.isSelected('Kg')
-                                    ? AppColor.orangeColor // Color when selected
+                                color: targetWeightScreenController
+                                        .isSelected('Kg')
+                                    ? AppColor
+                                        .orangeColor // Color when selected
                                     : Colors.white,
-                                textColor: targetWeightScreenController.isSelected('Kg')
+                                textColor: targetWeightScreenController
+                                        .isSelected('Kg')
                                     ? Colors.white // Text color when selected
                                     : Colors.black,
                               ),
@@ -124,17 +183,22 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
                         Obx(() {
                           // Update UnitWidget based on selected unit
                           return GestureDetector(
-                            onTap: () => targetWeightScreenController.selectUnit('Lbs'),
+                            onTap: () =>
+                                targetWeightScreenController.selectUnit('Lbs'),
                             child: Opacity(
-                              opacity: targetWeightScreenController.opacity.value,
+                              opacity:
+                                  targetWeightScreenController.opacity.value,
                               child: UnitWidget(
                                 rotationAngle: 0,
                                 dark: dark,
                                 unitText: 'Lbs',
-                                color: targetWeightScreenController.isSelected('Lbs')
-                                    ? AppColor.orangeColor // Color when selected
+                                color: targetWeightScreenController
+                                        .isSelected('Lbs')
+                                    ? AppColor
+                                        .orangeColor // Color when selected
                                     : Colors.white,
-                                textColor: targetWeightScreenController.isSelected('Lbs')
+                                textColor: targetWeightScreenController
+                                        .isSelected('Lbs')
                                     ? Colors.white // Text color when selected
                                     : Colors.black,
                               ),
@@ -144,7 +208,7 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: AppSizes.appBarHeight +35),
+                  const SizedBox(height: AppSizes.appBarHeight + 35),
                   Obx(() {
                     if (targetWeightScreenController.isSelected('Kg')) {
                       return Opacity(
@@ -152,7 +216,8 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
                         child: InputWidget(
                           dark: dark,
                           focusNode: FocusNode(),
-                          editingController: targetWeightScreenController.kgController,
+                          editingController:
+                              targetWeightScreenController.kgController,
                           opacity: targetWeightScreenController.opacity.value,
                           ft: 'kg',
                           onChanged: (String value) {},
@@ -167,8 +232,10 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
                             InputWidget(
                               dark: dark,
                               focusNode: FocusNode(),
-                              editingController: targetWeightScreenController.lbsController,
-                              opacity: targetWeightScreenController.opacity.value,
+                              editingController:
+                                  targetWeightScreenController.lbsController,
+                              opacity:
+                                  targetWeightScreenController.opacity.value,
                               ft: 'Lbs',
                               onChanged: (String value) {},
                             ),
@@ -188,7 +255,19 @@ class _TargetWeightScreenState extends State<TargetWeightScreen> {
         ),
       ),
     );
+  }
+}
 
+Future<void> _uploadGenderToFirebase(String name) async {
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+  final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+  try {
+    await databaseReference.child('users/$userId').update({
+      'targetWeight': name,
+    });
+    debugPrint('Gender updated in Firebase: $name');
+  } catch (e) {
+    debugPrint('Error updating gender: ${e.toString()}');
   }
 }
 
@@ -214,4 +293,3 @@ void _checkStoredData() async {
     debugPrint('Error retrieving user data: ${e.toString()}');
   }
 }
-

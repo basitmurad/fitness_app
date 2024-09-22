@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/common/snackbar/ShowSnackbar.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
@@ -61,6 +63,8 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   targetWeight: '', // To be filled later
                   mainGoal: '',
                 );
+
+              await  _uploadGenderToFirebase((_selectedYear - DateTime.now().year + 2024).toString());
 
                 Navigator.push(
                   context,
@@ -184,4 +188,18 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
       debugPrint('Error retrieving user data: ${e.toString()}');
     }
   }
+
+  Future<void> _uploadGenderToFirebase(String name) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+    try {
+      await databaseReference.child('users/$userId').update({
+        'age': name,
+      });
+      debugPrint('Gender updated in Firebase: $name');
+    } catch (e) {
+      debugPrint('Error updating gender: ${e.toString()}');
+    }
+  }
+
 }

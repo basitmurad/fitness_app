@@ -1,3 +1,4 @@
+import 'package:fitness/screens/authentications/email_verification_screen/EmailVerificationScreen.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +115,12 @@ class SignUpScreen extends StatelessWidget {
 
 
                 padding: const EdgeInsets.symmetric(horizontal: 8 ,),
-                child: ButtonWidget(dark: dark, onPressed: () {signUpController.checkValidation();}, buttonText: AppStrings.signUP,),
+                child: ButtonWidget(dark: dark, onPressed: () {
+                  signUpController.checkValidation();
+
+                  // Get.to(EmailVerificationScreen());
+
+                  }, buttonText: AppStrings.signUP,),
               ),
 
             ],

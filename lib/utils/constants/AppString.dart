@@ -34,7 +34,7 @@ class AppStrings {
   static String createAccountText = "Create an Account";
   static String menu = "Menu";
   static String alreadyHaveAccount = "Already have an account?";
-  static String enterVerification = "Enter verification code";
+  static String enterVerification = "Enter verification code send to ";
 
   static String dashboard = "Dashboard";
   static String entrePassword = "Enter Password";

@@ -12,7 +12,8 @@ import '../../authentication_controllers/OtpScreenController.dart';
 import '../change_password_screen/ChangePasswordScreen.dart';
 
 class OtpScreen extends StatelessWidget {
-  const OtpScreen({super.key});
+  const OtpScreen({super.key, });
+
 
 
   @override
@@ -38,12 +39,14 @@ class OtpScreen extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.w700, fontSize: 16),
               ),
               SizedBox(
-                height: AppDevicesUtils.getScreenWidth(context) * 0.6,
+                height: AppDevicesUtils.getScreenWidth(context) * 0.5,
                 width: AppDevicesUtils.getScreenWidth(context) * 0.4,
               ),
               Container(
                   alignment: Alignment.center,
-                  child: Text(AppStrings.enterVerification)),
+                  child: Text(
+                      '${AppStrings.enterVerification}}' ,
+                  textAlign: TextAlign.center,)),
               const SizedBox(
                 height: AppSizes.appBarHeight - 20,
               ),
@@ -56,10 +59,10 @@ class OtpScreen extends StatelessWidget {
               otpScreenController.updatePin(value); // Update pin in controller
             },
             defaultPinTheme: PinTheme(
-              width: 40,
-              height: 40,
+              width: 35,
+              height: 35,
               textStyle:  TextStyle(
-                fontSize: 20,
+                fontSize: 16,
                 color: dark ? AppColor.white :AppColor.white,
               ),
               decoration: BoxDecoration(
@@ -68,8 +71,8 @@ class OtpScreen extends StatelessWidget {
               ),
             ),
             focusedPinTheme: PinTheme(
-              width: 40,
-              height: 40,
+              width: 35,
+              height: 35,
               textStyle: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,

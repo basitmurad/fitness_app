@@ -1,18 +1,18 @@
 class UserData {
   String? email;
-  String? password;
   String? name;
   String? gender;
-  int? age;
-  double? weight;
-  double? targetWeight;
+  String? age;
+  String? height;
+  String? weight;
+  String? targetWeight;
 
   UserData({
     this.email,
-    this.password,
     this.name,
     this.gender,
     this.age,
+    this.height,
     this.weight,
     this.targetWeight,
   });
@@ -20,10 +20,10 @@ class UserData {
   Map<String, dynamic> toJson() {
     return {
       'email': email,
-      'password': password,
       'name': name,
       'gender': gender,
       'age': age,
+      'height': height,
       'weight': weight,
       'targetWeight': targetWeight,
     };

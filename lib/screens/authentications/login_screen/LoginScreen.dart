@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: AppDevicesUtils.getAppBarHeight() + 80),
+          SizedBox(height: AppDevicesUtils.getAppBarHeight() + 60),
 
           TitleTextWidget(dark: dark),
 
@@ -44,7 +44,11 @@ class LoginScreen extends StatelessWidget {
             dark: dark,
             buttonText: AppStrings.signUP,
             textMain: AppStrings.donothave,
-          )
+          ),
+
+          const SizedBox(
+            height: AppSizes.spaceBtwSections + 25,
+          ),
         ],
       ),
     )));

@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/authentications/target_weight_screen/TargetWeightScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -73,6 +75,8 @@ class WeightScreen extends StatelessWidget {
                           mainGoal: '',
                         );
 
+                        _uploadGenderToFirebase(currentWeightKg);
+
                         Get.to(TargetWeightScreen(
                           email: email,
                           password: password,
@@ -108,6 +112,9 @@ class WeightScreen extends StatelessWidget {
                           // To be filled later
                           mainGoal: '',
                         );
+
+                        _uploadGenderToFirebase(currentWeightLbs);
+
                         Get.to(TargetWeightScreen(
                           email: email,
                           password: password,
@@ -259,6 +266,18 @@ class WeightScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+  Future<void> _uploadGenderToFirebase(String name) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+    try {
+      await databaseReference.child('users/$userId').update({
+        'weight': name,
+      });
+      debugPrint('Gender updated in Firebase: $name');
+    } catch (e) {
+      debugPrint('Error updating gender: ${e.toString()}');
+    }
   }
 
   void _checkStoredData() async {

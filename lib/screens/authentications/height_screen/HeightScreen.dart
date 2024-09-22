@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/authentications/height_screen/widgets/InputWidget.dart';
 import 'package:fitness/screens/authentications/height_screen/widgets/UnitWidget.dart';
 import 'package:fitness/screens/authentications/weight_screen/WeightScreen.dart';
@@ -65,6 +67,7 @@ class HeightScreen extends StatelessWidget {
                             mainGoal: '',
                           );
 
+                          _uploadGenderToFirebase('$cmText cm');
                           Get.to(WeightScreen(
                             email: email,
                             password: password,
@@ -72,6 +75,7 @@ class HeightScreen extends StatelessWidget {
                             name: name,
                             year: year, height: cmText +"ft",
                           ));
+
                         } else {
                           MyAppHelperFunctions.showSnackBar("Please enter a valid height in cm");
                         }
@@ -96,7 +100,10 @@ class HeightScreen extends StatelessWidget {
                             weight: '', // To be filled later
                             targetWeight: '', // To be filled later
                             mainGoal: '',
+
                           );
+                          _uploadGenderToFirebase('$ftText ft and $inchText inch');
+
                           Get.to(WeightScreen(
                             email: email,
                             password: password,
@@ -257,6 +264,19 @@ class HeightScreen extends StatelessWidget {
     );
   }
 }
+Future<void> _uploadGenderToFirebase(String name) async {
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+  final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+  try {
+    await databaseReference.child('users/$userId').update({
+      'height': name,
+    });
+    debugPrint('Gender updated in Firebase: $name');
+  } catch (e) {
+    debugPrint('Error updating gender: ${e.toString()}');
+  }
+}
+
 
 void _checkStoredData() async {
   try {
@@ -279,5 +299,7 @@ void _checkStoredData() async {
   } catch (e) {
     debugPrint('Error retrieving user data: ${e.toString()}');
   }
+
+
 }
 

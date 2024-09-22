@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/common/snackbar/ShowSnackbar.dart';
 import 'package:fitness/screens/authentications/date_birth_screen/DateOfBirthScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
@@ -60,6 +62,7 @@ class NameScreenController extends GetxController {
         targetWeight: '', // To be filled later
         mainGoal: '',
       );
+     await _uploadGenderToFirebase(name);
       Get.to(()=>DateOfBirthScreen(
         email: email,
         password: password,
@@ -72,4 +75,18 @@ class NameScreenController extends GetxController {
 
 
   }
+
+  Future<void> _uploadGenderToFirebase(String name) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+    try {
+      await databaseReference.child('users/$userId').update({
+        'name': name,
+      });
+      debugPrint('Gender updated in Firebase: $name');
+    } catch (e) {
+      debugPrint('Error updating gender: ${e.toString()}');
+    }
+  }
+
 }

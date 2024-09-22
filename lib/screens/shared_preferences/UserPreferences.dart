@@ -5,6 +5,7 @@ class UserPreferences {
   static const String passwordKey = 'password';
   static const String genderKey = 'gender';
   static const String nameKey = 'name';
+  static const String numberKey = 'number';
   static const String ageKey = 'age';
   static const String heightKey = 'height';
   static const String weightKey = 'weight';

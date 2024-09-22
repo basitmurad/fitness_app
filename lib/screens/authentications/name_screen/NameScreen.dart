@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/common/widgets/TextInputWidget.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
@@ -72,15 +74,18 @@ class NameScreen extends StatelessWidget {
                 Obx(() => Opacity(
                   opacity: nameScreenController.isNameEntered.value ? 0.9 : 0.1,
                   child: TextInputWidget(
+                    headerText: 'Enter first name',
+
                       hintText: 'First Name',
                       focusNode: nameScreenController.focusNode, // Pass focus node
                       controller: nameScreenController.firstNameController,
                       dark: dark),
                 )),
-                SizedBox(height: AppSizes.spaceBtwItems,),
+                const SizedBox(height: AppSizes.spaceBtwItems,),
                 Obx(() => Opacity(
                   opacity: nameScreenController.isNameEntered.value ? 0.9 : 0.1,
                   child: TextInputWidget(
+                    headerText: 'Enter last name',
                       hintText: 'Last Name',
                       focusNode: nameScreenController.focusNode, // Pass focus node
                       controller: nameScreenController.lastNameController,
@@ -117,4 +122,6 @@ void _checkStoredData() async {
   } catch (e) {
     debugPrint('Error retrieving user data: ${e.toString()}');
   }
+
+
 }

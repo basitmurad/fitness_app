@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/BottomWidget.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/CustomIconButton.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/InstructionWidget.dart';
@@ -44,6 +45,7 @@ class ExerciseDetailScreen extends StatelessWidget {
   }
   final String gender = 'female';
 
+
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
@@ -73,6 +75,8 @@ class ExerciseDetailScreen extends StatelessWidget {
     final ExerciseDetailScreenController controller =
         Get.put(ExerciseDetailScreenController());
     return Scaffold(
+
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -726,6 +730,8 @@ final List<String> heelTouchItems = [
 ];
 const String heelTouchInstruction =
     "Lie on your back with knees bent. Lift your shoulders slightly and reach your right hand to your right heel, then left hand to left heel. Alternate sides, keeping your core tight.";
+
+
 String legImageMale =  AppImagePaths.maleAbs;
 String legImageFemale =  AppImagePaths.femaleAbs;
 /// Leg Raises
@@ -1022,6 +1028,8 @@ final List<String> spineLumberTwistLeftItems = [
 ];
 const String spineLumberTwistLeftInstruction =
     "Lie on your back with knees bent and arms out to the sides. Drop your knees to the left, turning your head to the right. Hold for 15-30 seconds, then return to the center. Repeat by dropping your knees to the right and turning your head to the left. Hold and return to the center.";
+
+
  String spineleftImage = AppImagePaths.maleAbs;
 String spineleftFemale =  AppImagePaths.femaleAbs;
 

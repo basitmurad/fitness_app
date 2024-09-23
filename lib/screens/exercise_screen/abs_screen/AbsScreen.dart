@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/common/widgets/ButtonWidget.dart';
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/screens/exercise_screen/exercise_start_screen/ExerciseProgressScreen.dart';
@@ -232,6 +233,66 @@ List<Map<String, String>> shoulderExercise = [
   },
 ];
 
+Future<void> fetchExerciseDetails(String exerciseName) async {
+  // Reference to the Firebase Database
+  final DatabaseReference databaseRef = FirebaseDatabase.instance.ref('Exercise/$exerciseName');
+
+  try {
+    // Fetch data once
+    DataSnapshot snapshot = await databaseRef.get();
+
+    if (snapshot.exists) {
+      // Convert data to Map
+      final exerciseDetails = snapshot.value as Map<dynamic, dynamic>;
+
+      // Print the exercise details to the console
+      print('Exercise details for $exerciseName:');
+      exerciseDetails.forEach((key, value) {
+        print('$key: $value');
+      });
+
+      // If you want to access a specific child, you can do so like this:
+      if (exerciseDetails.containsKey('commonMistakes')) {
+        print('Common Mistakes:');
+        exerciseDetails['commonMistakes'].forEach((mistake) {
+          print(' - ${mistake['title']}: ${mistake['description']}');
+        });
+      }
+
+      // You can also handle other children similarly as needed
+
+    } else {
+      print('No data found for $exerciseName');
+    }
+  } catch (error) {
+    print('Error fetching exercise details: $error');
+  }
+}
+
+// Future<void> fetchExerciseDetails(String exerciseName) async {
+//   // Reference to the Firebase Database
+//   final DatabaseReference databaseRef = FirebaseDatabase.instance.ref('Exercise/$exerciseName');
+//
+//   try {
+//     // Fetch data once
+//     DataSnapshot snapshot = await databaseRef.get();
+//
+//     if (snapshot.exists) {
+//       // Convert data to Map
+//       final exerciseDetails = snapshot.value as Map<dynamic, dynamic>;
+//
+//
+//       print('data exit ');
+//       // Print the details to the console
+//
+//       // You can return the details or process further as needed
+//     } else {
+//       print('No data found for $exerciseName');
+//     }
+//   } catch (error) {
+//     print('Error fetching exercise details: $error');
+//   }
+// }
 
 class AbsScreen extends StatelessWidget {
   const AbsScreen({super.key, required this.exerciseName, required this.exerciseRepititon, required this.gender});
@@ -278,6 +339,11 @@ class AbsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String AbsExercise = "AbsExercise";
+    print(exerciseName);
+    print(exerciseName);
+    fetchExerciseDetails(AbsExercise);
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
     List<Map<String, String>> exerciseList = _getExerciseList();
     final imagePath = _getImagePath();

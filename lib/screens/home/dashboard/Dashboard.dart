@@ -206,6 +206,7 @@ class Dashboard extends StatelessWidget {
       ),
     );
   }
+
   Future<void> _checkUserData(BuildContext context) async {
     final User? user = FirebaseAuth.instance.currentUser; // Get the current user
     if (user == null) {
@@ -232,7 +233,7 @@ class Dashboard extends StatelessWidget {
           int? age = int.tryParse(userData['age']?.toString() ?? '') ?? 0; // Convert to int
           String? email = userData['email'] as String?;
           String? height = userData['height'] as String?;
-          String? currentWeight = userData['currentWeight'] as String?;
+          String? currentWeight = userData['weight'] as String?;
           int? targetWeight = int.tryParse(userData['targetWeight']?.toString() ?? '') ?? null; // Convert to int
 
           // Navigate based on the presence of data
@@ -252,11 +253,15 @@ class Dashboard extends StatelessWidget {
             } else if (currentWeight == null || currentWeight.isEmpty) {
               debugPrint("Navigating to WeightScreen");
               Get.to(() => WeightScreen(email: email, password: '', gender: gender, name: name, height: height, year: age,));
+              debugPrint("Age: $age, Current Weight: $currentWeight, Target Weight: $targetWeight");
+
+
             } else if (targetWeight == null) {
               debugPrint("Navigating to TargetWeightScreen");
               Get.to(() => TargetWeightScreen(email: email, password: '', gender: gender, name: name, height: height, currentWeight: currentWeight, year: age,));
             } else {
-              // If all data is present, print it
+              // If all data is present, navigate to Dashboard and print user data
+              Get.to(Dashboard());
               debugPrint("User Data: Email: $email, Name: $name, Gender: $gender, Age: $age, Height: $height, Current Weight: $currentWeight, Target Weight: $targetWeight");
             }
           } else {
@@ -273,160 +278,6 @@ class Dashboard extends StatelessWidget {
     }
   }
 
-  // Future<void> _checkUserData(BuildContext context) async {
-  //   final User? user = FirebaseAuth.instance.currentUser; // Get the current user
-  //   if (user == null) {
-  //     // Handle the case when no user is logged in
-  //     Get.to(() => LoginScreen()); // Navigate to the login screen if needed
-  //     return;
-  //   }
-  //
-  //   String userId = user.uid; // Get user ID
-  //   final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
-  //
-  //   try {
-  //     DataSnapshot snapshot = await databaseReference.child('users/$userId').get();
-  //
-  //     if (snapshot.exists) {
-  //       // Check if the snapshot value is a Map
-  //       if (snapshot.value is Map) {
-  //         Map<Object?, Object?> userData = snapshot.value as Map<Object?, Object?>;
-  //
-  //         // Extract the required fields, handling any type conversion
-  //         String? gender = userData['gender'] as String?;
-  //         String? name = userData['name'] as String?;
-  //         int? age = userData['age'] as int?;
-  //         String? email = userData['email'] as String?;
-  //         String? height = userData['height'] as String?;
-  //         String? currentWeight = userData['currentWeight'] as String?;
-  //         int? targetWeight = userData['targetWeight'] as int?;
-  //
-  //         // Navigate based on the presence of data
-  //         if (email != null && email.isNotEmpty) {
-  //           if (gender == null || gender.isEmpty) {
-  //             Get.to(() => SelectGenderScreen(email: email, password: ''));
-  //           } else if (name == null || name.isEmpty) {
-  //             Get.to(() => NameScreen(email: email, gender: gender, password: '',));
-  //           } else if (age == null || age == 0) {
-  //             Get.to(() => DateOfBirthScreen(email: email, password: '', gender: gender, name: name));
-  //           } else if (height == null) {
-  //             Get.to(() => HeightScreen(email: email, password: '', gender: gender, name: name, year: age));
-  //           } else if (currentWeight == null) {
-  //             Get.to(() => WeightScreen(email: email, password: '', gender: gender, name: name, height: height, year: age,));
-  //           } else if (targetWeight == null) {
-  //             Get.to(() => TargetWeightScreen(email: email, password: '', gender: gender, name: name, height: height, currentWeight: currentWeight, year: age,));
-  //           } else {
-  //             // If all data is present, print it
-  //             debugPrint("User Data: Email: $email, Name: $name, Gender: $gender, Age: $age, Height: $height, Current Weight: $currentWeight, Target Weight: $targetWeight");
-  //           }
-  //         } else {
-  //           debugPrint("Email is missing.");
-  //         }
-  //       } else {
-  //         debugPrint("User data is not in the expected format.");
-  //       }
-  //     } else {
-  //       debugPrint("No user data found for this user ID.");
-  //     }
-  //   } catch (e) {
-  //     debugPrint('Error checking user data: ${e.toString()}');
-  //   }
-  // }
 
 
-// Future<void> _checkUserData(BuildContext context) async {
-  //   final User? user = FirebaseAuth.instance.currentUser; // Get the current user
-  //   if (user == null) {
-  //     // Handle the case when no user is logged in
-  //     Get.to(() => LoginScreen()); // Navigate to the login screen if needed
-  //     return;
-  //   }
-  //
-  //   String userId = user.uid; // Get user ID
-  //   final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
-  //
-  //   try {
-  //     DataSnapshot snapshot = await databaseReference.child('users/$userId').get();
-  //
-  //     if (snapshot.exists) {
-  //       // Check if the snapshot value is a Map
-  //       if (snapshot.value is Map) {
-  //         Map<Object?, Object?> userData = snapshot.value as Map<Object?, Object?>;
-  //
-  //         // Extract required fields
-  //         String? gender = userData['gender'] as String?;
-  //         String? name = userData['name'] as String?;
-  //         int? age = userData['age'] as int?;
-  //         String? email = userData['email'] as String?;
-  //         int? targetWeight = userData['targetWeight'] as int?;
-  //         int? weight = userData['weight'] as int?;
-  //
-  //         // Navigate based on available data
-  //         if (email != null && email.isNotEmpty) {
-  //           if (gender == null || gender.isEmpty) {
-  //             Get.to(() => SelectGenderScreen(email: email, password: '',));
-  //           } else if (name == null || name.isEmpty) {
-  //             Get.to(() => NameScreen(email: email, gender: gender, password: '',));
-  //           }
-  //         } else {
-  //           debugPrint("Email  is required but not found.");
-  //           Get.to(() => LoginScreen()); // Redirect to login if email is missing
-  //         }
-  //       } else {
-  //         debugPrint("User data is not in the expected format.");
-  //       }
-  //     } else {
-  //       debugPrint("No user data found for this user ID.");
-  //     }
-  //   } catch (e) {
-  //     debugPrint('Error checking user data: ${e.toString()}');
-  //   }
-  // }
-
-
-// Future<void> _checkUserData(BuildContext context) async {
-//     final User? user = FirebaseAuth.instance
-//         .currentUser; // Get the current user
-//     if (user == null) {
-//       // Handle the case when no user is logged in
-//       Get.to(() => LoginScreen()); // Navigate to the login screen if needed
-//       return;
-//     }
-//
-//     String userId = user.uid; // Get user ID
-//     final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
-//
-//     try {
-//       DataSnapshot snapshot = await databaseReference.child('users/$userId')
-//           .get();
-//
-//       if (snapshot.exists) {
-//         // Check if the snapshot value is a Map
-//         if (snapshot.value is Map) {
-//           Map<Object?, Object?> userData = snapshot.value as Map<Object?,
-//               Object?>;
-//
-//           // Now safely extract the required fields, handling any type conversion
-//           String? gender = userData['gender'] as String?;
-//           String? name = userData['name'] as String?;
-//           int? age = userData['age'] as int?;
-//           String? email = userData['email'] as String?;
-//
-//           // Check if any required fields are null or empty
-//           if (gender == null || gender.isEmpty || name == null ||
-//               name.isEmpty || age == null || age == 0) {
-//             // Navigate to SelectGenderScreen
-//             Get.to(() => SelectGenderScreen(email: email ?? '',
-//                 password: '')); // Pass email and any other required data
-//           }
-//         } else {
-//           debugPrint("User data is not in the expected format.");
-//         }
-//       } else {
-//         debugPrint("No user data found for this user ID.");
-//       }
-//     } catch (e) {
-//       debugPrint('Error checking user data: ${e.toString()}');
-//     }
-//   }
 }

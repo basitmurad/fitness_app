@@ -176,11 +176,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false, // Hide the debug banner
-      title: 'Flutter Demo',
-      theme: MyAppTheme.lightTheme,
-      home: const AuthChecker(), // Use the AuthChecker to manage authentication state
-    );
+        themeMode: ThemeMode.system,
+        theme: MyAppTheme.lightTheme,
+        darkTheme: MyAppTheme.darkTheme,
+        debugShowCheckedModeBanner: false,// Us
+        home:    AuthChecker());
   }
 }
 

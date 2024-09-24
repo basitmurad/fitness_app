@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/common/widgets/TextInputWidget.dart';
 import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
@@ -75,22 +73,26 @@ class NameScreen extends StatelessWidget {
                   opacity: nameScreenController.isNameEntered.value ? 0.9 : 0.1,
                   child: TextInputWidget(
                     headerText: 'Enter first name',
-
-                      hintText: 'First Name',
-                      focusNode: nameScreenController.focusNode, // Pass focus node
-                      controller: nameScreenController.firstNameController,
-                      dark: dark),
+                    hintText: 'First Name',
+                    focusNode: nameScreenController.focusNodeFirstName,
+                    controller: nameScreenController.firstNameController,
+                    dark: dark,
+                  ),
                 )),
+
+
                 const SizedBox(height: AppSizes.spaceBtwItems,),
                 Obx(() => Opacity(
                   opacity: nameScreenController.isNameEntered.value ? 0.9 : 0.1,
                   child: TextInputWidget(
                     headerText: 'Enter last name',
-                      hintText: 'Last Name',
-                      focusNode: nameScreenController.focusNode, // Pass focus node
-                      controller: nameScreenController.lastNameController,
-                      dark: dark),
+                    hintText: 'Last Name',
+                    focusNode: nameScreenController.focusNodeLastName,
+                    controller: nameScreenController.lastNameController,
+                    dark: dark,
+                  ),
                 )),
+
                 const SizedBox(height: 20),
               ],
             ),

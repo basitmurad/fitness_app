@@ -141,6 +141,7 @@
 // //     );
 // //   }
 // // }
+import 'package:fitness/navigation_menu.dart';
 import 'package:fitness/screens/authentication_controllers/SignUpScreenController.dart';
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
@@ -184,6 +185,33 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// class AuthChecker extends StatelessWidget {
+//   const AuthChecker({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return StreamBuilder<User?>(
+//       stream: FirebaseAuth.instance.authStateChanges(),
+//       builder: (BuildContext context, snapshot) {
+//         if (snapshot.connectionState == ConnectionState.waiting) {
+//           return const Scaffold(
+//             body: Center(
+//               child: CircularProgressIndicator(),
+//             ),
+//           );
+//         } else if (snapshot.hasData && snapshot.data != null) {
+//           // User is logged in, navigate to dashboard
+//           print("User is logged in: $snapshot");
+//           return const NavigationMenu();
+//         } else {
+//           // User is not logged in, navigate to login screen
+//           print("User is not logged in: $snapshot");
+//           return const LoginScreen();
+//         }
+//       },
+//     );
+//   }
+// }
 class AuthChecker extends StatelessWidget {
   const AuthChecker({super.key});
 
@@ -199,9 +227,10 @@ class AuthChecker extends StatelessWidget {
             ),
           );
         } else if (snapshot.hasData && snapshot.data != null) {
-          // User is logged in, navigate to dashboard
+          // User is logged in, navigate to navigation menu with user
+          User user = snapshot.data!; // Get the logged-in user
           print("User is logged in: $snapshot");
-          return const Dashboard();
+          return NavigationMenu(user: user); // Pass user to NavigationMenu
         } else {
           // User is not logged in, navigate to login screen
           print("User is not logged in: $snapshot");

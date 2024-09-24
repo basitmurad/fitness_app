@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness/screens/home/dashboard/Dashboard.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
@@ -6,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class NavigationMenu extends StatelessWidget {
-  const NavigationMenu({super.key});
+  const NavigationMenu({super.key,  this.user});
+  final User? user;
 
   @override
   Widget build(BuildContext context) {

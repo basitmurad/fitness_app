@@ -1,4 +1,3 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/BottomWidget.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/CustomIconButton.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/InstructionWidget.dart';
@@ -966,7 +965,10 @@ final List<String> spineLumberTwistRightItems = [
 ];
 const String spineLumberTwistRightInstruction =
     "Lie on your back with knees bent and arms out to the sides. Drop your knees to the left, turning your head to the right. Hold for 15-30 seconds, then return to the center. Repeat by dropping your knees to the right and turning your head to the left. Hold and return to the center.";
- String spineImageMale =  AppImagePaths.maleAbs;
+
+
+
+String spineImageMale =  AppImagePaths.maleAbs;
  String spineImageFemale =  AppImagePaths.femaleAbs;
 
 /// Spine Lumber Twist left

@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/BottomWidget.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/CustomIconButton.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/InstructionWidget.dart';
@@ -11,12 +12,15 @@ import '../../../utils/constants/AppColor.dart';
 import '../../../utils/constants/AppImagePaths.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
 import '../../exercise_screen_controller/ExerciseDetailScreenController.dart';
+import '../../modelClass/ExerciseController.dart';
 
 class ExerciseDetailScreen extends StatelessWidget {
-  const ExerciseDetailScreen({super.key, required this.exerciseName});
+   ExerciseDetailScreen({super.key, required this.exerciseName, required this.exerciseType});
 
   final String exerciseName;
+  final String exerciseType;
 
+   String? title="";
   Map<String, dynamic> _getExerciseList() {
     switch (exerciseName) {
       case 'Jumping Jack':
@@ -45,11 +49,81 @@ class ExerciseDetailScreen extends StatelessWidget {
   final String gender = 'female';
 
 
+
+  Future<void> fetchExerciseData() async {
+    final DatabaseReference databaseReference = FirebaseDatabase.instance.ref('Exercise').child(exerciseType);
+
+    try {
+      final DatabaseEvent event = await databaseReference.child(exerciseName).once();
+      final data = event.snapshot.value as Map<dynamic, dynamic>?;
+
+      if (data != null) {
+        printExerciseData(data);
+      } else {
+        print("No data found.");
+      }
+    } catch (error) {
+      print("Error fetching data: $error");
+    }
+  }
+
+  void printExerciseData(Map<dynamic, dynamic> data) {
+    // print("Title: ${data['title']}");
+    // title="$data['title']";
+    // print("Title Main $title");
+    // print("Description: ${data['description']}\n");
+
+    // print("Breathing Tips:");
+    // for (var tip in data["breathingTips"]) {
+    //   print("  - Title: ${tip['title']}");
+    //   print("    Description: ${tip['description']}");
+    // }
+    //
+    // // print("\nCommon Mistakes:");
+    // for (var mistake in data["commonMistakes"]) {
+    //   print("  - Title: ${mistake['title']}");
+    //   print("    Description: ${mistake['description']}");
+    // }
+
+    // print("\nFocus Areas:");
+    // for (var area in data["focusAreas"]) {
+    //   print("  - $area");
+    // }
+
+    print("\nInstruction:");
+    print("  ${data['instruction']}\n");
+    title="$data['instruction']";
+    print("Title Main $title");
+    // print("Multimedia:");
+    // for (var gender in data["multimedia"].keys) {
+    //   if (data["multimedia"].containsKey(gender)) {
+    //     final media = data["multimedia"][gender];
+    //     // Check if gender is a String before calling capitalize
+    //     if (gender is String) {
+    //  //     print("  ${gender[0].toUpperCase()}${gender.substring(1)}:");  // Capitalizing manually
+    //     }
+    //     // print("    Animation Path: ${media['animationPath']}");
+    //     // print("    Image Path: ${media['imagePath']}");
+    //     // print("    Muscle Path: ${media['musclePath']}");
+    //     // print("    Video URL: ${media['videoURL']}\n");
+    //   }
+    // }
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
+    final ExerciseController exerciseController = Get.put(ExerciseController());
+    fetchExerciseData();
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
     Map<String, dynamic> getCategoryX = _getExerciseList();
 
+
+
+
+    print('Main exercise is  $exerciseType  and  its specific exercise id $exerciseName' );
 
     final imageUrl = gender == 'female'
         ? getCategoryX['femaleImage']
@@ -373,6 +447,13 @@ class ExerciseDetailScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                // exerciseController.fetchExerciseData();
+              },
+              child: Text('Fetch Exercise Data'),
             ),
              BottomWidget(dark: dark,),
           ],
@@ -1034,4 +1115,6 @@ const String spineLumberTwistLeftInstruction =
 
  String spineleftImage = AppImagePaths.maleAbs;
 String spineleftFemale =  AppImagePaths.femaleAbs;
+
+
 

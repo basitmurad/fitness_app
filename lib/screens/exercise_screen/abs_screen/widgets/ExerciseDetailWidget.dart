@@ -104,6 +104,7 @@
 // }
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/screens/exercise_screen/abs_screen/AbsScreen.dart';
+import 'package:fitness/screens/exercise_screen/all_detail/AllDetail.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/ExerciseDetailScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -119,12 +120,14 @@ class ExerciseDetailWidget extends StatelessWidget {
     required this.exerciseName,
     required this.exercieRep,
     required this.imageUrl,
+    required this.exerciseType,
   });
 
   final bool dark;
   final String exerciseName;
   final String exercieRep;
   final String imageUrl;
+  final String exerciseType;
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +143,7 @@ class ExerciseDetailWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            onPressed: () => Get.to(() => ExerciseDetailScreen(exerciseName: exerciseName)),
+            onPressed: () => Get.to(() => AllDetail(exerciseName: exerciseName, exerciseType: exerciseType,)),
             icon: const Icon(Icons.menu),
             tooltip: 'View details for $exerciseName',
           ),

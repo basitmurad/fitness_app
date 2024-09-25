@@ -17,7 +17,8 @@ class MyAppGridLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return
+      SizedBox(
 
       height: height, // Set the height of the widget
       child: GridView.builder(

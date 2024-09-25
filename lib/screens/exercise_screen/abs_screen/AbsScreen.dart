@@ -400,7 +400,7 @@ class AbsScreen extends StatelessWidget {
                       dark: dark,
                       exerciseName: exerciseList[index]['exerciseName']!,
                       exercieRep: exerciseList[index]['exerciseRepetition']!,
-                      imageUrl: exerciseList[index]['imagePath']!,
+                      imageUrl: exerciseList[index]['imagePath']!, exerciseType: exerciseName,
                     ),
                   );
                 },

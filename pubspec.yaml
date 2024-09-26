@@ -43,7 +43,7 @@ dependencies:
   intl_phone_field: ^3.2.0
   country_code_picker: ^3.0.0
   http: ^1.2.2
-
+  searchfield: ^1.1.5
 
 dev_dependencies:
   flutter_test:

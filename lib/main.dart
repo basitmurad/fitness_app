@@ -145,7 +145,6 @@ import 'package:fitness/navigation_menu.dart';
 import 'package:fitness/screens/authentication_controllers/SignUpScreenController.dart';
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
-import 'package:fitness/screens/home/dashboard/Dashboard.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';
 import 'package:flutter/material.dart';

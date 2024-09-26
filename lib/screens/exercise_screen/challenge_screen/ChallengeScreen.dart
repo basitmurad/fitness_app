@@ -9,7 +9,8 @@ import 'package:fitness/utils/constants/AppString.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../home/dashboard/Dashboard.dart';
+
+import '../../home/dashboard_screen/Dashboard.dart';
 
 class ChallengeScreen extends StatelessWidget {
   const ChallengeScreen({super.key});

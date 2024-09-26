@@ -55,7 +55,8 @@ class FollowUserCard extends StatelessWidget {
           const SizedBox(height: 16.0),
           const Padding(
             padding: EdgeInsets.only(left: 6, right: 6),
-            child: Row(
+            child:
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(

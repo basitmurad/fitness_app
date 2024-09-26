@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness/screens/home/dashboard/Dashboard.dart';
+import 'package:fitness/screens/home/dashboard_screen/Dashboard.dart';
+import 'package:fitness/screens/home/profile/UserProfileScreen.dart';
+import 'package:fitness/screens/home/search_screen/SearchAndSuggestionScreen.dart';
+import 'package:fitness/screens/home/social/SocialScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class NavigationMenu extends StatelessWidget {
-  const NavigationMenu({super.key,  this.user});
+  const NavigationMenu({super.key, this.user});
   final User? user;
 
   @override
@@ -16,7 +19,7 @@ class NavigationMenu extends StatelessWidget {
     final darkMode = MyAppHelperFunctions.isDarkMode(context);
     return Scaffold(
       bottomNavigationBar: Obx(
-        () => NavigationBar(
+            () => NavigationBar(
           height: 60,
           elevation: 0,
           selectedIndex: controller.selectedIndex.value,
@@ -24,14 +27,17 @@ class NavigationMenu extends StatelessWidget {
           indicatorColor: darkMode
               ? AppColor.white.withOpacity(0.1)
               : AppColor.black.withOpacity(0.1),
-          onDestinationSelected: (index) =>
-              controller.selectedIndex.value = index,
+          onDestinationSelected: (index) {
+            // Check index bounds before assigning
+            if (index >= 0 && index < controller.screens.length) {
+              controller.selectedIndex.value = index;
+            }
+          },
           destinations: const [
-            NavigationDestination(icon: Icon(Iconsax.home ,size: 20), label: 'Home'),
-            NavigationDestination(
-                icon: Icon(Iconsax.search_favorite ,size: 20,), label: 'Search' ),
-            NavigationDestination(icon: Icon(Iconsax.shop ,size: 20,), label: 'Social'),
-            NavigationDestination(icon: Icon(Iconsax.user ,size: 20,), label: 'Profile'),
+            NavigationDestination(icon: Icon(Iconsax.home, size: 20), label: 'Home'),
+            NavigationDestination(icon: Icon(Iconsax.search_favorite, size: 20), label: 'Search'),
+            NavigationDestination(icon: Icon(Iconsax.shop, size: 20), label: 'Social'),
+            NavigationDestination(icon: Icon(Iconsax.user, size: 20), label: 'Profile'),
           ],
         ),
       ),
@@ -43,13 +49,10 @@ class NavigationMenu extends StatelessWidget {
 class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
 
-  final screens = [
+  final List<Widget> screens = [
     const Dashboard(),
-    Container(
-      color: Colors.blue,
-    ),
-    Container(
-      color: Colors.green,
-    ),
+    const SearchAndSuggestionScreen(),
+    const SocialScreen(),
+    const UserProfileScreen(),
   ];
 }

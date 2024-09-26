@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/common/widgets/MyAppGridLayout.dart';
 import 'package:fitness/screens/exercise_screen/abs_screen/AbsScreen.dart';
-import 'package:fitness/screens/home/dashboard/widgets/ChallengedWidget.dart';
-import 'package:fitness/screens/home/dashboard/widgets/ExerciseWidget.dart';
-import 'package:fitness/screens/home/dashboard/widgets/FollowUserCard.dart';
-import 'package:fitness/screens/home/dashboard/widgets/TextWidget.dart';
+import 'package:fitness/screens/home/dashboard_screen/widgets/ChallengedWidget.dart';
+import 'package:fitness/screens/home/dashboard_screen/widgets/ExerciseWidget.dart';
+import 'package:fitness/screens/home/dashboard_screen/widgets/FollowUserCard.dart';
+import 'package:fitness/screens/home/dashboard_screen/widgets/TextWidget.dart';
+
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:fitness/utils/constants/AppString.dart';

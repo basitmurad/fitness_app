@@ -115,7 +115,6 @@ class ExerciseDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ExerciseController exerciseController = Get.put(ExerciseController());
     fetchExerciseData();
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
     Map<String, dynamic> getCategoryX = _getExerciseList();
@@ -449,12 +448,6 @@ class ExerciseDetailScreen extends StatelessWidget {
               ),
             ),
 
-            ElevatedButton(
-              onPressed: () {
-                // exerciseController.fetchExerciseData();
-              },
-              child: Text('Fetch Exercise Data'),
-            ),
              BottomWidget(dark: dark,),
           ],
         ),

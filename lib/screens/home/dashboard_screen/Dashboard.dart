@@ -139,7 +139,7 @@ class Dashboard extends StatelessWidget {
                   return Card(
                     child: FollowUserCard(dark: dark),
                   );
-                },
+                }, scrollDirection: Axis.horizontal,
               ),
               const SizedBox(height: AppSizes.spaceBtwInputFields),
               TextWidget(dark: dark),

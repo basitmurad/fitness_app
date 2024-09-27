@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import '../../utils/constants/AppSizes.dart';
 
 class MyAppGridLayout extends StatelessWidget {
@@ -7,12 +8,14 @@ class MyAppGridLayout extends StatelessWidget {
     required this.itemCount,
     required this.itemBuilder,
     this.mainAxisExtent = 143,
-    this.height = 140, // Add height parameter
+    this.height = 140, required this.scrollDirection, // Add height parameter
   });
 
   final int itemCount;
   final double? mainAxisExtent;
-  final double height; // Define the height of the grid
+  final double height;
+  final Axis scrollDirection;
+  // Define the height of the grid
   final Widget? Function(BuildContext, int) itemBuilder;
 
   @override
@@ -23,7 +26,7 @@ class MyAppGridLayout extends StatelessWidget {
       height: height, // Set the height of the widget
       child: GridView.builder(
 
-        scrollDirection: Axis.horizontal, // Set scroll direction to horizontal
+        scrollDirection: scrollDirection, // Set scroll direction to horizontal
         itemCount: itemCount,
         shrinkWrap: true,
         padding: EdgeInsets.zero,

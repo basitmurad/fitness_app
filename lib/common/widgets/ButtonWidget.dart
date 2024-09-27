@@ -1,4 +1,3 @@
-
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:flutter/material.dart';
 
@@ -25,10 +24,14 @@ class ButtonWidget extends StatelessWidget {
       child: ElevatedButton(
         onPressed: enabled ? onPressed : null, // Use the passed callback if enabled
         style: ElevatedButton.styleFrom(
-          fixedSize: const Size(double.infinity, 46), backgroundColor: backColor ?? AppColor.orangeColor, // Full width of its parent
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 6, bottom: 6), // Background color of the button
+          fixedSize: const Size(double.infinity, 46), // Full width of its parent
+          backgroundColor: backColor ?? AppColor.orangeColor, // Background color of the button
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 6, bottom: 6),
           shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.white),
+            side: const BorderSide(
+              color: Colors.transparent, // Transparent border color
+              width: 2,
+            ),
             borderRadius: BorderRadius.circular(6), // Radius: 6px
           ),
         ),

@@ -77,8 +77,10 @@ class SearchAndSuggestionScreen extends StatelessWidget {
             ),
             TabBar(
               indicatorColor: AppColor.orangeColor,
-              labelColor: dark ? AppColor.white : AppColor.dark, // Sets the text color of the active tab
-              unselectedLabelColor: Colors.grey, // Sets the text color of the inactive tabs
+              labelColor: dark ? AppColor.white : AppColor.dark,
+              // Sets the text color of the active tab
+              unselectedLabelColor: Colors.grey,
+              // Sets the text color of the inactive tabs
               tabs: [
                 const Tab(text: 'Friends'),
                 const Tab(text: 'Suggested'),
@@ -90,16 +92,14 @@ class SearchAndSuggestionScreen extends StatelessWidget {
                   // Friends Tab
                   ListView.builder(
                       itemCount: 10,
-                      itemBuilder: (index, context){
-
-                        return                       UserCard(dark: dark);
-                      }),                  // Suggested Tab
+                      itemBuilder: (index, context) {
+                        return UserCard(dark: dark);
+                      }), // Suggested Tab
                   ListView.builder(
                       itemCount: 10,
-                      itemBuilder: (index, context){
-
-                    return                       UserCard1(dark: dark);
-                  }),
+                      itemBuilder: (index, context) {
+                        return UserCard1(dark: dark);
+                      }),
                 ],
               ),
             ),
@@ -124,14 +124,12 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.zero,
-      margin: EdgeInsets.symmetric(vertical: 8,horizontal: 8),
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.1),
-
-          borderRadius: BorderRadius.circular(4)
-      ),
+          borderRadius: BorderRadius.circular(4)),
       height: 120,
-      width: AppDevicesUtils.screenWidth()* 1.2,
+      width: AppDevicesUtils.screenWidth() * 1.2,
       alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,7 +138,8 @@ class UserCard extends StatelessWidget {
           const SizedBox(width: 5), // Space between the image and the text
 
           CircularImage(
-            imageUrl: 'https://images.unsplash.com/photo-1727324358652-e82abf20aad2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            imageUrl:
+                'https://images.unsplash.com/photo-1727324358652-e82abf20aad2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             size: 98,
           ),
           const SizedBox(width: 10), // Space between the image and the text
@@ -155,7 +154,9 @@ class UserCard extends StatelessWidget {
                 color: dark ? AppColor.white : AppColor.black,
                 fontFamily: 'Poppins',
               ),
-              const SizedBox(height: 1,),
+              const SizedBox(
+                height: 1,
+              ),
               SimpleTextWidget(
                 text: 'You may know “Miachel”',
                 fontWeight: FontWeight.w300,
@@ -163,44 +164,61 @@ class UserCard extends StatelessWidget {
                 color: dark ? AppColor.white : AppColor.black,
                 fontFamily: 'Poppins',
               ),
-              const SizedBox(height: 4,),
+              const SizedBox(
+                height: 4,
+              ),
               Row(
                 children: [
                   Container(
                     padding: EdgeInsets.zero,
                     margin: EdgeInsets.zero,
                     height: 50,
-                    width: 220, // Add a width for proper visibility
-                  child: Row(
-                    children: [
-                    Container(
-                    height: 40,
-                    width: 91,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: AppColor.grey1.withOpacity(0.6),
-                      ),// Add a width for proper bl
+                    width: 220,
+                    // Add a width for proper visibility
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 91,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: AppColor.grey1.withOpacity(0.6),
+                          ), // Add a width for proper bl
 
-                    child: TextButton(onPressed: (){}, child: SimpleTextWidget(text: 'Remove', fontWeight: FontWeight.w300, fontSize: 16, color: dark ? AppColor.black : AppColor.black, fontFamily: 'Poppins')),),
-                    const SizedBox(width: 8,),
-                    Container(
-                      padding: EdgeInsets.zero,
-                      margin: EdgeInsets.zero,
-                    height: 40,
-                    width: 110,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: AppColor.orangeColor
-                      ),// Add a width for proper bl
+                          child: TextButton(
+                              onPressed: () {},
+                              child: SimpleTextWidget(
+                                  text: 'Remove',
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 16,
+                                  color: dark ? AppColor.black : AppColor.black,
+                                  fontFamily: 'Poppins')),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          padding: EdgeInsets.zero,
+                          margin: EdgeInsets.zero,
+                          height: 40,
+                          width: 110,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: AppColor.orangeColor),
+                          // Add a width for proper bl
 
-                    child: TextButton(onPressed: (){}, child: const SimpleTextWidget(text: 'Follow', fontWeight: FontWeight.w300, fontSize: 16, color: Colors.white, fontFamily: 'Poppins')),),
-
-
-
-                    ],
+                          child: TextButton(
+                              onPressed: () {},
+                              child: const SimpleTextWidget(
+                                  text: 'Follow',
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontFamily: 'Poppins')),
+                        ),
+                      ],
+                    ),
                   ),
-                  ),
-
                 ],
               ),
             ],
@@ -210,27 +228,22 @@ class UserCard extends StatelessWidget {
     );
   }
 }
+
 class UserCard1 extends StatelessWidget {
-  const UserCard1({
-    super.key,
-    required this.dark
-  });
+  const UserCard1({super.key, required this.dark});
 
   final bool dark;
-
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.zero,
-      margin: EdgeInsets.symmetric(vertical: 8,horizontal: 8),
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.1),
-
-          borderRadius: BorderRadius.circular(4)
-      ),
+          borderRadius: BorderRadius.circular(4)),
       height: 120,
-      width: AppDevicesUtils.screenWidth()* 1.2,
+      width: AppDevicesUtils.screenWidth() * 1.2,
       alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -239,33 +252,32 @@ class UserCard1 extends StatelessWidget {
           const SizedBox(width: 5), // Space between the image and the text
 
           CircularImage(
-            imageUrl: 'https://images.unsplash.com/photo-1727324358652-e82abf20aad2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            imageUrl:
+                'https://images.unsplash.com/photo-1727324358652-e82abf20aad2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             size: 98,
           ),
           const SizedBox(width: 10),
 
-Column(
-  crossAxisAlignment: CrossAxisAlignment.center,
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    SimpleTextWidget(
-      text: 'Rahila Swati',
-      fontWeight: FontWeight.w400,
-      fontSize: 16,
-      color: dark ? AppColor.white : AppColor.black,
-      fontFamily: 'Poppins',
-    ),
-
-    SimpleTextWidget(
-      text: '06 post',
-      fontWeight: FontWeight.w300,
-      fontSize: 12,
-      color: dark ? AppColor.white : AppColor.black,
-      fontFamily: 'Poppins',
-    ),
-
-  ],
-),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SimpleTextWidget(
+                text: 'Rahila Swati',
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+                color: dark ? AppColor.white : AppColor.black,
+                fontFamily: 'Poppins',
+              ),
+              SimpleTextWidget(
+                text: '06 post',
+                fontWeight: FontWeight.w300,
+                fontSize: 12,
+                color: dark ? AppColor.white : AppColor.black,
+                fontFamily: 'Poppins',
+              ),
+            ],
+          ),
           const SizedBox(width: 10),
 
           Container(
@@ -275,16 +287,20 @@ Column(
             width: 110,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
-                color: AppColor.orangeColor
-            ),// Add a width for proper bl
+                color: AppColor.orangeColor),
+            // Add a width for proper bl
 
-            child: TextButton(onPressed: (){}, child: const SimpleTextWidget(text: 'Message', fontWeight: FontWeight.w300, fontSize: 16, color: Colors.white, fontFamily: 'Poppins')),),
-
-
-
+            child: TextButton(
+                onPressed: () {},
+                child: const SimpleTextWidget(
+                    text: 'Message',
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontFamily: 'Poppins')),
+          ),
         ],
       ),
     );
   }
 }
-

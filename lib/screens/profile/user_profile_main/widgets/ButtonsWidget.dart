@@ -1,19 +1,17 @@
-import 'package:fitness/screens/home/profile/user_profile_main/edit_profile_screen/EditProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../../utils/constants/AppColor.dart';
-import '../../../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../edit_profile_screen/EditProfileScreen.dart';
+import '../../share_profile_screen/ShareProfileScreen.dart';
 
 class ButtonsWidget extends StatelessWidget {
   const ButtonsWidget({
     super.key,
     required this.dark,
-    required this.context,
   });
 
   final bool dark;
-  final BuildContext context;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,12 @@ class ButtonsWidget extends StatelessWidget {
                 color: AppColor.grey,
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+
+
+                  Get.to(() => const ShareProfileScreen());
+
+                },
                 child: const SimpleTextWidget(
                   text: 'Share Profile',
                   fontWeight: FontWeight.w300,

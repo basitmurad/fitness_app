@@ -43,6 +43,7 @@ class AppColor{
   static const Color borderPrimary = Color(0xFFD9D9D9);
   static const Color borderSecondary = Color(0xFFE6E6E6);
   static const Color iconColor = Color(0xFF575757);
+  static const Color postBackColor = Color(0xFFF3F2F2);
 
   // Error and validation colors
   static const Color error = Color(0xFFD32F2F);

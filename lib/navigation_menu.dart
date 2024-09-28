@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness/screens/home/dashboard_screen/Dashboard.dart';
-import 'package:fitness/screens/home/profile/user_profile_main/UserProfileScreen.dart';
 import 'package:fitness/screens/home/search_screen/SearchAndSuggestionScreen.dart';
 import 'package:fitness/screens/home/social/SocialScreen.dart';
+import 'package:fitness/screens/profile/user_profile_main/UserProfileScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';

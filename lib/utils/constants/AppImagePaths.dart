@@ -86,4 +86,10 @@ class AppImagePaths {
 
   static const String notifyIcon = "assets/myicons/notifyIcon.png";
 
+
+  static const String bookmark = "assets/myicons/bookmark.png";
+  static const String heart = "assets/myicons/heart.png";
+  static const String icon = "assets/myicons/Icon.png";
+  static const String send1 = "assets/myicons/send1.png";
+
 }

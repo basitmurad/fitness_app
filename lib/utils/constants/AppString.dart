@@ -18,6 +18,8 @@ class AppStrings {
   static String birthdaytext = "What's your birth year?";
   static String textName = "What is your good name, please?";
   static String next = "Next";
+  static String textChalpro = "Chalpro";
+  static String textConnect = "Connect and have fun with friends with Chalpro";
   static String passwordChangeText = "Your password has been updated!";
   static String createNewPassword = "Create New Password";
   static String resend = "Resend";
@@ -33,6 +35,7 @@ class AppStrings {
   static String forgetPassword = "Forget Password?";
   static String createAccountText = "Create an Account";
   static String menu = "Menu";
+  static String save = "save";
   static String alreadyHaveAccount = "Already have an account?";
   static String enterVerification = "Enter verification code send to ";
 

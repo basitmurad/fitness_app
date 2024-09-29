@@ -120,7 +120,7 @@ class ExerciseDetailWidget extends StatelessWidget {
     required this.exerciseName,
     required this.exercieRep,
     required this.imageUrl,
-    required this.exerciseType,
+    required this.exerciseType, required this.gender,
   });
 
   final bool dark;
@@ -128,6 +128,7 @@ class ExerciseDetailWidget extends StatelessWidget {
   final String exercieRep;
   final String imageUrl;
   final String exerciseType;
+  final String gender;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +144,9 @@ class ExerciseDetailWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            onPressed: () => Get.to(() => ExerciseDetailScreen(exerciseName: exerciseName, exerciseType: exerciseType,)),
+            onPressed: () => Get.to(() => AllDetail(exerciseName: exerciseName, exerciseType: exerciseType, gender: gender,)),
+
+            // onPressed: () => Get.to(() => ExerciseDetailScreen(exerciseName: exerciseName, exerciseType: exerciseType,)),
             icon: const Icon(Icons.menu),
             tooltip: 'View details for $exerciseName',
           ),

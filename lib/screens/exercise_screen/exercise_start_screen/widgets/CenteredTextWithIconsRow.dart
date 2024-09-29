@@ -81,7 +81,7 @@ class CenteredTextWithIconsRow extends StatelessWidget {
             child: GestureDetector(
               onTap: onRightIconPressed,
               child: Transform.rotate(
-                angle: 3.1,
+                angle: 0,
                 child: Image(
                   height: 28,
                   width: 28,

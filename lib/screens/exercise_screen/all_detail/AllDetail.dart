@@ -17,11 +17,12 @@ import '../exercise_detail_screen/widgets/MistakesListWidget.dart';
 import '../exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class AllDetail extends StatefulWidget {
-    const AllDetail({super.key, required this.exerciseName, required this.exerciseType});
+    const AllDetail({super.key, required this.exerciseName, required this.exerciseType, required this.gender});
 
 
   final String exerciseName;
   final String exerciseType;
+  final String gender;
 
   @override
   State<AllDetail> createState() => _AllDetailState();
@@ -32,12 +33,16 @@ class _AllDetailState extends State<AllDetail> {
   List<Map<String, String>> breathingTips = [];
   List<Map<String, String>> commonMistakes = [];
   List<String> focusArea=[];
+  String? videoUrl="";
+  String? darkImagePath1="";
+  String? lightImagePath1="";
+  String? muscleImage="";
   @override
   void initState() {
     super.initState();
     fetchExerciseData(); // Fetch data once when the widget is initialized
   }
-  Future<void> fetchExerciseData() async {
+  Future<void> fetchExerciseData( ) async {
     final DatabaseReference databaseReference = FirebaseDatabase.instance.ref('Exercise').child(widget.exerciseType);
 
     try {
@@ -45,7 +50,7 @@ class _AllDetailState extends State<AllDetail> {
       final data = event.snapshot.value as Map<dynamic, dynamic>?;
 
       if (data != null) {
-        printExerciseData(data);
+        printExerciseData(data , widget.gender);
       } else {
         print("No data found.");
       }
@@ -56,41 +61,127 @@ class _AllDetailState extends State<AllDetail> {
 
 
 
-  void printExerciseData(Map<dynamic, dynamic> data) {
-    print('==============print data in format===============');
+  void printExerciseData(Map<dynamic, dynamic> data, String gender) {
+    print('============== Print Data in Format ===============');
 
-
-    print("\nInstruction:");
-    print(" instrucion are  ${data['instruction']}\n");
+    // Print multimedia data
 
     setState(() {
       // Set the instruction title
       title = "${data['instruction']}\n";
 
+      // Fetch common mistakes
+      commonMistakes.clear();
       for (var mistake in data["commonMistakes"]) {
         commonMistakes.add({
           "title": mistake['title'],
           "description": mistake['description'],
         });
       }
+
+      // Fetch breathing tips
+      breathingTips.clear();
       for (var tips in data["breathingTips"]) {
         breathingTips.add({
           "title": tips['title'],
           "description": tips['description'],
         });
-
       }
 
+      // Fetch focus areas
+      focusArea.clear();
       for (var area in data["focusAreas"]) {
         focusArea.add(area);
       }
 
+      // Fetch multimedia data based on gender
+
+      if (data['multimedia'] != null && data['multimedia'][gender] != null) {
+        final genderSpecificData = data['multimedia'][gender];
+
+        // Fetch video URL, animation path, image paths
+        //  String videoURL = genderSpecificData['videoURL'] ?? '';
+        //  String animationPath = genderSpecificData['animationPath'] ?? '';
+        // String lightThemeImage = genderSpecificData['lightTheme'] ?? '';
+        //  String darkThemeImage = genderSpecificData['darkTheme'] ?? '';
+        //  String muscleImage = genderSpecificData['musclePath'] ?? '';
+
+         print('$gender');
+        muscleImage = genderSpecificData['musclePath'] ?? '';
+        lightImagePath1 = "${data['lightTheme']}\n";
+        darkImagePath1 = "${data['darkTheme']}\n";
+        // Print the fetched data
+        print("\nVideo URL: $muscleImage");
+        // print("Animation Path: $animationPath");
+        // print("Light Theme Image: $lightThemeImage");
+        // print("Dark Theme Image: $darkThemeImage");
+        // print("Muscle Image: $muscleImage");
 
 
+      } else {
+        print("No multimedia data found for the selected gender: $gender");
+      }
     });
-
-
   }
+
+  // void printExerciseData(Map<dynamic, dynamic> data , String gender) {
+  //   print('==============print data in format===============');
+  //
+  //
+  //
+  //   // print("\nInstruction:");
+  //   // print(" instrucion are  ${data['instruction']}\n");
+  //
+  //   print("\n url are :");
+  //   print(" are  ${data['multimedia']}\n");
+  //
+  //   setState(() {
+  //     // Set the instruction title
+  //     title = "${data['instruction']}\n";
+  //
+  //     for (var mistake in data["commonMistakes"]) {
+  //       commonMistakes.add({
+  //         "title": mistake['title'],
+  //         "description": mistake['description'],
+  //       });
+  //     }
+  //     for (var tips in data["breathingTips"]) {
+  //       breathingTips.add({
+  //         "title": tips['title'],
+  //         "description": tips['description'],
+  //       });
+  //
+  //     }
+  //
+  //     for (var area in data["focusAreas"]) {
+  //       focusArea.add(area);
+  //     }
+  //
+  //
+  //
+  //
+  //
+  //
+  //     // Fetch video URL, animation path, image paths
+  //     final String videoURL = genderSpecificData['videoURL'] ?? '';
+  //     final String animationPath = genderSpecificData['animationPath'] ?? '';
+  //     final Map<String, dynamic> imagePaths = genderSpecificData['imagePath'] ?? {};
+  //     final String lightThemeImage = imagePaths['lightTheme'] ?? '';
+  //     final String darkThemeImage = imagePaths['darkTheme'] ?? '';
+  //     final String muscleImage = genderSpecificData['musclePath'] ?? '';
+  //
+  //     // Print the fetched data
+  //     print("\nVideo URL: $videoURL");
+  //     print("Animation Path: $animationPath");
+  //     print("Light Theme Image: $lightThemeImage");
+  //     print("Dark Theme Image: $darkThemeImage");
+  //     print("Muscle Image: $muscleImage");
+  //
+  //
+  //   });
+  //
+  //
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -145,14 +236,12 @@ class _AllDetailState extends State<AllDetail> {
                             controller: controller.pageController,
                             onPageChanged: controller.onPageChanged,
                             children:  [
-                              InstructionWidget(
+                              const InstructionWidget(imageUrl: AppImagePaths.abs,),
+
+                              const InstructionWidget(
                                 imageUrl: '',
-                                // imageUrl:  getCategoryX['imagePaths'],
                               ),
-                              InstructionWidget(
-                                imageUrl: AppImagePaths.femaleAbs,
-                              ),
-                              InstructionWidget(
+                              const InstructionWidget(
                                 imageUrl: AppImagePaths.abs,
                               )
                             ],
@@ -175,8 +264,8 @@ class _AllDetailState extends State<AllDetail> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          _buildControlItem('Animation', 0),
-                          _buildControlItem('Muscle', 1),
+                          _buildControlItem('Muscle', 0),
+                          _buildControlItem('Animation', 1),
                           _buildControlItem('Video', 2),
                         ],
                       ),
@@ -275,32 +364,45 @@ class _AllDetailState extends State<AllDetail> {
                   ),
 
 
-              Wrap(
-                spacing: 8.0, // Space between items horizontally
-                runSpacing: 4.0, // Space between lines vertically
-                children: focusArea.map((area) {
-                  return Container(
-                    constraints: BoxConstraints(maxWidth: 120), // Set a max width
-                    child: Chip(
-                      label: Text(
-                        area,
-                        overflow: TextOverflow.ellipsis, // Handle overflow
-                        maxLines: 1, // Limit to one line
-                      ),
-                      backgroundColor: Colors.blueAccent,
-                    ),
-                  );
-                }).toList(),
-              ),
+                  Wrap(
+                    spacing: 8.0, // Space between items horizontally
+                    runSpacing: 4.0, // Space between lines vertically
+                    children: focusArea.map((area) {
+                      return Container(
+
+                        constraints: const BoxConstraints(maxWidth: 120), // Set a max width
+                        child: Chip(
+                          label: Text(
+                            style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12,
+                            ),
+                            area,
+                            maxLines: 1, // Limit to one line
+                          ),
+                          backgroundColor: AppColor.grey,
+                          side: BorderSide.none, // Remove border
+                        ),
+                      );
+                    }).toList(),
+                  ),
+
+
 
 
               const SizedBox(
                     height: AppSizes.inputFieldRadius,
                   ),
 
-                  const Image(image: AssetImage('')),
+                  Image.network(
+                  muscleImage!,                    errorBuilder: (context, error, stackTrace) {
+                      return const Text('Error loading image'); // Display an error message or a placeholder
+                    },
+                  )
 
-                  const SimpleTextWidget(
+
+                  ,const SimpleTextWidget(
                       text: 'Common Mistakes',
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
@@ -334,13 +436,6 @@ class _AllDetailState extends State<AllDetail> {
               ),
             ),
 
-            ElevatedButton(
-              onPressed: () {
-
-                fetchExerciseData();
-              },
-              child: Text('Fetch Exercise Data'),
-            ),
             BottomWidget(dark: dark,),
           ],
         ),

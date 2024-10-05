@@ -145,6 +145,7 @@ import 'package:fitness/navigation_menu.dart';
 import 'package:fitness/screens/authentication_controllers/SignUpScreenController.dart';
 import 'package:fitness/screens/authentications/login_screen/LoginScreen.dart';
 import 'package:fitness/screens/authentications/onboarding_screen/Onboarding.dart';
+import 'package:fitness/screens/home/social/post_screen/AddPostScreen.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';
 import 'package:flutter/material.dart';
@@ -180,7 +181,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:    AuthChecker());
+        home:    AddPostScreen());
   }
 }
 

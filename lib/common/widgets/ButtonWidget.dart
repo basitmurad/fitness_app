@@ -21,7 +21,8 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: enabled ? 1.0 : 0.1, // Set opacity based on whether the button is enabled
-      child: ElevatedButton(
+      child:
+      ElevatedButton(
         onPressed: enabled ? onPressed : null, // Use the passed callback if enabled
         style: ElevatedButton.styleFrom(
           fixedSize: const Size(double.infinity, 46), // Full width of its parent

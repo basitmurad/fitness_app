@@ -1,8 +1,8 @@
-import 'package:fitness/utils/constants/AppColor.dart';
-import 'package:fitness/utils/constants/AppImagePaths.dart';
+
 import 'package:flutter/material.dart';
 
 import 'Widgets/PostCard.dart';
+
 
 class SocialScreen extends StatelessWidget {
   const SocialScreen({super.key});

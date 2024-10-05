@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../../utils/constants/AppColor.dart';
-import '../../../../utils/constants/AppImagePaths.dart';
+import '../../../../../utils/constants/AppColor.dart';
+import '../../../../../utils/constants/AppImagePaths.dart';
 
 class PostCard extends StatelessWidget {
   const PostCard({

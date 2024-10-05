@@ -1,12 +1,13 @@
-class AbdominalCrunches {
+class ExerciseClass {
   final String title;
   final String description;
+
   final List<String> commonMistakes;
   final List<String> focusAreas;
   final String instruction;
   final Multimedia multimedia;
 
-  AbdominalCrunches({
+  ExerciseClass({
     required this.title,
     required this.description,
     required this.commonMistakes,
@@ -15,8 +16,8 @@ class AbdominalCrunches {
     required this.multimedia,
   });
 
-  factory AbdominalCrunches.fromJson(Map<String, dynamic> json) {
-    return AbdominalCrunches(
+  factory ExerciseClass.fromJson(Map<String, dynamic> json) {
+    return ExerciseClass(
       title: json['title'] as String,
       description: json['description'] as String,
       commonMistakes: List<String>.from(json['commonMistakes']

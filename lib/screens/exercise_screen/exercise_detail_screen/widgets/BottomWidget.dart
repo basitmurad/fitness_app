@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../utils/constants/AppColor.dart';
 import '../../../../utils/constants/AppImagePaths.dart';
@@ -30,7 +32,7 @@ class BottomWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 
-          Container(
+          SizedBox(
             width: 150,
             height: 34,
             child:
@@ -40,23 +42,26 @@ class BottomWidget extends StatelessWidget {
 
               leftIcon: AppImagePaths.right,
               rightIcon: AppImagePaths.right,
-              text1: '/'+'09', textColor: dark ? AppColor.white :AppColor.black, onLeftIconPressed: () {  }, onRightIconPressed: () {  },
+              text1: '/'+'09', textColor: dark ? AppColor.white :AppColor.black, onLeftIconPressed: () {  }, onRightIconPressed: () {  }, leftIconAngle: 0, rightIconAngle: 3.15,
             ),
 
 
 
           ),
 
-          Container(
-            width: 150,
-            height: 34,
-            alignment: Alignment.center,
-            margin: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12)
+          GestureDetector(
+            onTap: ()=> Get.back(),
+            child: Container(
+              width: 150,
+              height: 34,
+              alignment: Alignment.center,
+              margin: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12)
+              ),
+              child: const SimpleTextWidget(text: 'Close', fontWeight: FontWeight.w400, fontSize: 14, color: Colors.black, fontFamily: 'Poppins',),
             ),
-            child: SimpleTextWidget(text: 'Close', fontWeight: FontWeight.w400, fontSize: 14, color: Colors.black, fontFamily: 'Poppins',),
           )
         ],
       ),

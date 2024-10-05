@@ -54,8 +54,27 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
   flutter_lints: ^3.0.0
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  color_dark: "#272727"
+  image: assets/logos/logo.png
+
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#272727"
+    image: assets/logos/logo.png
+
+  # For Android, you can control the image alignment and scaling
+  android_gravity: center  # You can use options like 'center', 'bottom', etc.
+
+  # For iOS, you control the image scaling mode
+  ios_content_mode: scaleAspectFit  # Options include 'scaleAspectFit', 'scaleToFill', etc.
+
+  web: false
+
+
 
 
 flutter:

@@ -133,16 +133,16 @@ class ExerciseDetailScreen extends StatelessWidget {
 
     print('<<<<<<<<<<<<<<<<<<data is >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.');
 // Check if the map is not empty and print its values
-    if (getCategoryX.isNotEmpty) {
-      print('Instruction: ${getCategoryX['instruction']}');
-      print('Common Mistakes: ${getCategoryX['commonMistakes']}');
-      print('Breathing Tips: ${getCategoryX['breathingTips']}');
-      print('Items: ${getCategoryX['items']}');
-
-      print('image ${getCategoryX['imagePaths']}');
-    } else {
-      print('No data found for the selected exercise.');
-    }
+//     if (getCategoryX.isNotEmpty) {
+//       print('Instruction: ${getCategoryX['instruction']}');
+//       print('Common Mistakes: ${getCategoryX['commonMistakes']}');
+//       print('Breathing Tips: ${getCategoryX['breathingTips']}');
+//       print('Items: ${getCategoryX['items']}');
+//
+//       print('image ${getCategoryX['imagePaths']}');
+//     } else {
+//       print('No data found for the selected exercise.');
+//     }
 
     final ExerciseDetailScreenController controller =
         Get.put(ExerciseDetailScreenController());

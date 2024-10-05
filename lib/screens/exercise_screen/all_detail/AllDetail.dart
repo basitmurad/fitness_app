@@ -1,23 +1,20 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../common/widgets/MyAppGridLayout.dart';
 import '../../../utils/constants/AppColor.dart';
 import '../../../utils/constants/AppImagePaths.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
 import '../../exercise_screen_controller/ExerciseDetailScreenController.dart';
-import '../exercise_detail_screen/ExerciseDetailScreen.dart';
 import '../exercise_detail_screen/widgets/BottomWidget.dart';
 import '../exercise_detail_screen/widgets/CustomIconButton.dart';
 import '../exercise_detail_screen/widgets/InstructionWidget.dart';
-import '../exercise_detail_screen/widgets/Item.dart';
 import '../exercise_detail_screen/widgets/MistakesListWidget.dart';
 import '../exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class AllDetail extends StatefulWidget {
-    const AllDetail({super.key, required this.exerciseName, required this.exerciseType, required this.gender});
+    const AllDetail({super.key, required this.exerciseName, required this.exerciseType, required this.gender, required this.exerciseList});
+    final List<Map<String, dynamic>> exerciseList; // Receive the list
 
 
   final String exerciseName;
@@ -29,6 +26,7 @@ class AllDetail extends StatefulWidget {
 }
 
 class _AllDetailState extends State<AllDetail> {
+
   String? title="";
   List<Map<String, String>> breathingTips = [];
   List<Map<String, String>> commonMistakes = [];
@@ -40,6 +38,7 @@ class _AllDetailState extends State<AllDetail> {
   @override
   void initState() {
     super.initState();
+    print('list os ${widget.exerciseList}');
     fetchExerciseData(); // Fetch data once when the widget is initialized
   }
   Future<void> fetchExerciseData( ) async {
@@ -51,8 +50,11 @@ class _AllDetailState extends State<AllDetail> {
 
       if (data != null) {
         printExerciseData(data , widget.gender);
+        print("Data Exist.");
+
+
       } else {
-        print("No data found.");
+        print("No data exist.");
       }
     } catch (error) {
       print("Error fetching data: $error");
@@ -63,6 +65,7 @@ class _AllDetailState extends State<AllDetail> {
 
   void printExerciseData(Map<dynamic, dynamic> data, String gender) {
     print('============== Print Data in Format ===============');
+    print('Exercise name is ${widget.exerciseType} and ${widget.exerciseName}');
 
     // Print multimedia data
 
@@ -108,10 +111,13 @@ class _AllDetailState extends State<AllDetail> {
 
          print('$gender');
         muscleImage = genderSpecificData['musclePath'] ?? '';
-        lightImagePath1 = "${data['lightTheme']}\n";
-        darkImagePath1 = "${data['darkTheme']}\n";
+        lightImagePath1 = genderSpecificData['lightTheme'] ?? '';
+        darkImagePath1 = genderSpecificData['darkTheme'] ?? '';
+
         // Print the fetched data
+        print("\nVideo URL: $lightImagePath1");
         print("\nVideo URL: $muscleImage");
+        print("\nVideo URL: $darkImagePath1");
         // print("Animation Path: $animationPath");
         // print("Light Theme Image: $lightThemeImage");
         // print("Dark Theme Image: $darkThemeImage");
@@ -124,64 +130,7 @@ class _AllDetailState extends State<AllDetail> {
     });
   }
 
-  // void printExerciseData(Map<dynamic, dynamic> data , String gender) {
-  //   print('==============print data in format===============');
-  //
-  //
-  //
-  //   // print("\nInstruction:");
-  //   // print(" instrucion are  ${data['instruction']}\n");
-  //
-  //   print("\n url are :");
-  //   print(" are  ${data['multimedia']}\n");
-  //
-  //   setState(() {
-  //     // Set the instruction title
-  //     title = "${data['instruction']}\n";
-  //
-  //     for (var mistake in data["commonMistakes"]) {
-  //       commonMistakes.add({
-  //         "title": mistake['title'],
-  //         "description": mistake['description'],
-  //       });
-  //     }
-  //     for (var tips in data["breathingTips"]) {
-  //       breathingTips.add({
-  //         "title": tips['title'],
-  //         "description": tips['description'],
-  //       });
-  //
-  //     }
-  //
-  //     for (var area in data["focusAreas"]) {
-  //       focusArea.add(area);
-  //     }
-  //
-  //
-  //
-  //
-  //
-  //
-  //     // Fetch video URL, animation path, image paths
-  //     final String videoURL = genderSpecificData['videoURL'] ?? '';
-  //     final String animationPath = genderSpecificData['animationPath'] ?? '';
-  //     final Map<String, dynamic> imagePaths = genderSpecificData['imagePath'] ?? {};
-  //     final String lightThemeImage = imagePaths['lightTheme'] ?? '';
-  //     final String darkThemeImage = imagePaths['darkTheme'] ?? '';
-  //     final String muscleImage = genderSpecificData['musclePath'] ?? '';
-  //
-  //     // Print the fetched data
-  //     print("\nVideo URL: $videoURL");
-  //     print("Animation Path: $animationPath");
-  //     print("Light Theme Image: $lightThemeImage");
-  //     print("Dark Theme Image: $darkThemeImage");
-  //     print("Muscle Image: $muscleImage");
-  //
-  //
-  //   });
-  //
-  //
-  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -236,11 +185,12 @@ class _AllDetailState extends State<AllDetail> {
                             controller: controller.pageController,
                             onPageChanged: controller.onPageChanged,
                             children:  [
-                              const InstructionWidget(imageUrl: AppImagePaths.abs,),
 
-                              const InstructionWidget(
-                                imageUrl: '',
+                               InstructionWidget(
+                                imageUrl: muscleImage!,
                               ),
+                              const InstructionWidget(imageUrl: '',),
+
                               const InstructionWidget(
                                 imageUrl: AppImagePaths.abs,
                               )
@@ -377,11 +327,13 @@ class _AllDetailState extends State<AllDetail> {
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w300,
                               fontSize: 12,
+                              color: Colors.black
                             ),
                             area,
                             maxLines: 1, // Limit to one line
                           ),
-                          backgroundColor: AppColor.grey,
+                          backgroundColor:          AppColor.grey,
+
                           side: BorderSide.none, // Remove border
                         ),
                       );
@@ -396,7 +348,7 @@ class _AllDetailState extends State<AllDetail> {
                   ),
 
                   Image.network(
-                  muscleImage!,                    errorBuilder: (context, error, stackTrace) {
+                      dark ? darkImagePath1! : lightImagePath1! ,                    errorBuilder: (context, error, stackTrace) {
                       return const Text('Error loading image'); // Display an error message or a placeholder
                     },
                   )
@@ -412,7 +364,7 @@ class _AllDetailState extends State<AllDetail> {
                     height: AppSizes.spaceBtwItems,
                   ),
 
-                  MistakesListWidget(commonMistakes: breathingTips, dark: dark),
+                  MistakesListWidget(commonMistakes: commonMistakes, dark: dark),
 
                   const SizedBox(
                     height: AppSizes.spaceBtwItems,
@@ -428,7 +380,7 @@ class _AllDetailState extends State<AllDetail> {
                   ),
 
                   MistakesListWidget(
-                    commonMistakes:  commonMistakes, // Use empty list if null
+                    commonMistakes:  breathingTips, // Use empty list if null
                     dark: dark,
                   ),
 

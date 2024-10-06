@@ -91,5 +91,6 @@ class AppImagePaths {
   static const String heart = "assets/myicons/heart.png";
   static const String icon = "assets/myicons/Icon.png";
   static const String send1 = "assets/myicons/send1.png";
+  static const String send12 = "assets/myicons/earht.png";
 
 }

@@ -279,61 +279,61 @@ class ExerciseProgressScreen extends StatefulWidget {
 
 
 class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
-  List<Map<String, String>> exerciseList = []; // Store exercise names and repetitions
-  bool isLoading = true; // Show loading indicator while data is being fetched
-
-  Future<void> getData() async {
-    // Reference to the specific exercise name
-    DatabaseReference databaseReference =
-    FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
-
-    // Fetch the snapshot of the data
-    DataSnapshot snapshot = await databaseReference.get();
-
-    if (snapshot.exists) {
-      // Initialize a list to hold fetched exercises
-      List<Map<String, String>> fetchedExercises = [];
-
-      // Iterate through each child in the snapshot
-      for (var child in snapshot.children) {
-        // Ensure child has a key
-        if (child.key != null) {
-          // Fetch the value of the specific child (assuming the value is under a specific child name like 'Reps')
-          String? repetition = child.child("exerciseRepetition").value?.toString();
-
-          if (repetition != null) {
-            // Create a map with exercise name and its single repetition value
-            fetchedExercises.add({
-              "exerciseName": child.key!,
-              "exerciseRepetition": repetition,
-            });
-
-            // Print exerciseName and exerciseRepetition in brackets
-            print('Exercise Name: [${child.key!}]');
-            print('Exercise Repetition: [${repetition}]');
-          }
-        }
-      }
-
-      // Update the state to reflect the fetched data only for the first exercise
-      if (fetchedExercises.isNotEmpty) {
-        setState(() {
-          exerciseList = [fetchedExercises[0]]; // Only keep the first exercise
-          isLoading = false;
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        print('No data exists for the given exercise.');
-      }
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-      print('No data exists for the given exercise.');
-    }
-  }
+  // List<Map<String, String>> exerciseList = []; // Store exercise names and repetitions
+  // bool isLoading = true; // Show loading indicator while data is being fetched
+  //
+  // Future<void> getData() async {
+  //   // Reference to the specific exercise name
+  //   DatabaseReference databaseReference =
+  //   FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
+  //
+  //   // Fetch the snapshot of the data
+  //   DataSnapshot snapshot = await databaseReference.get();
+  //
+  //   if (snapshot.exists) {
+  //     // Initialize a list to hold fetched exercises
+  //     List<Map<String, String>> fetchedExercises = [];
+  //
+  //     // Iterate through each child in the snapshot
+  //     for (var child in snapshot.children) {
+  //       // Ensure child has a key
+  //       if (child.key != null) {
+  //         // Fetch the value of the specific child (assuming the value is under a specific child name like 'Reps')
+  //         String? repetition = child.child("exerciseRepetition").value?.toString();
+  //
+  //         if (repetition != null) {
+  //           // Create a map with exercise name and its single repetition value
+  //           fetchedExercises.add({
+  //             "exerciseName": child.key!,
+  //             "exerciseRepetition": repetition,
+  //           });
+  //
+  //           // Print exerciseName and exerciseRepetition in brackets
+  //           print('Exercise Name: [${child.key!}]');
+  //           print('Exercise Repetition: [${repetition}]');
+  //         }
+  //       }
+  //     }
+  //
+  //     // Update the state to reflect the fetched data only for the first exercise
+  //     if (fetchedExercises.isNotEmpty) {
+  //       setState(() {
+  //         exerciseList = [fetchedExercises[0]]; // Only keep the first exercise
+  //         isLoading = false;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //       print('No data exists for the given exercise.');
+  //     }
+  //   } else {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     print('No data exists for the given exercise.');
+  //   }
+  // }
 
   final ExerciseProgressController controller = Get.put(ExerciseProgressController());
 
@@ -342,7 +342,7 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
   void initState() {
     super.initState();
 
-    getData();
+    // getData();
   }
 
 
@@ -417,7 +417,7 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
                 height: AppSizes.appBarHeight - 10,
               ),
               SimpleTextWidget(
-                text: '${exerciseList[0]['exerciseName']}',
+                text: "",
                 fontWeight: FontWeight.w700,
                 fontSize: 24,
                 color: dark ? AppColor.white : AppColor.black,
@@ -473,7 +473,7 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
               Container(
                 alignment: Alignment.center,
                 child: SimpleTextWidget(
-                  text: '${exerciseList[0]['exerciseRepetition']}',
+                  text: "",
 
 
                   fontWeight: FontWeight.w600,
@@ -491,7 +491,7 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
                     // Show the current index + 1
                     leftIcon: AppImagePaths.right,
                     rightIcon: AppImagePaths.left,
-                    text1: '${exerciseList.length}',
+                    text1: "",
                     textColor: dark ? AppColor.white : AppColor.black,
                     onLeftIconPressed: () {},
                     onRightIconPressed: () {},

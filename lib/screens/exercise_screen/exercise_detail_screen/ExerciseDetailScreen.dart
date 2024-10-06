@@ -253,7 +253,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                           CustomIconButton(
                             iconData: Icons.remove,
                             dark: dark,
-                            onPressed: () => controller.decrementTime(),
+                            onPressed: () => controller.decrementTime1(),
                           ),
                           const SizedBox(width: 8),
                           Container(
@@ -280,7 +280,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                           CustomIconButton(
                             iconData: Icons.add,
                             dark: dark,
-                            onPressed: () => controller.incrementTime(),
+                            onPressed: () => controller.incrementTime1(),
                           ),
                         ],
                       ),

@@ -42,7 +42,7 @@ class ExerciseDetailWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            onPressed: () => Get.to(() => AllDetail(exerciseName: exerciseName, exerciseType: exerciseType, gender: gender, exerciseList: exerciseList,)),
+            onPressed: () => Get.to(() => AllDetail(exerciseName: exerciseName, exerciseType: exerciseType, gender: gender,)),
 
             // onPressed: () => Get.to(() => ExerciseDetailScreen(exerciseName: exerciseName, exerciseType: exerciseType,)),
             icon: const Icon(Icons.menu),

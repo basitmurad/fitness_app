@@ -181,7 +181,7 @@ class MyApp extends StatelessWidget {
         theme: MyAppTheme.lightTheme,
         darkTheme: MyAppTheme.darkTheme,
         debugShowCheckedModeBanner: false,// Us
-        home:    AddPostScreen());
+        home:    AuthChecker());
   }
 }
 

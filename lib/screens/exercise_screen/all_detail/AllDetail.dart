@@ -13,8 +13,7 @@ import '../exercise_detail_screen/widgets/MistakesListWidget.dart';
 import '../exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class AllDetail extends StatefulWidget {
-    const AllDetail({super.key, required this.exerciseName, required this.exerciseType, required this.gender, required this.exerciseList});
-    final List<Map<String, dynamic>> exerciseList; // Receive the list
+    const AllDetail({super.key, required this.exerciseName, required this.exerciseType, required this.gender, });
 
 
   final String exerciseName;
@@ -28,6 +27,10 @@ class AllDetail extends StatefulWidget {
 class _AllDetailState extends State<AllDetail> {
 
   String? title="";
+  String? durarions="";
+  String durationInSeconds = "";
+  // Will store the duration as an integer for easier manipulation
+
   List<Map<String, String>> breathingTips = [];
   List<Map<String, String>> commonMistakes = [];
   List<String> focusArea=[];
@@ -38,8 +41,8 @@ class _AllDetailState extends State<AllDetail> {
   @override
   void initState() {
     super.initState();
-    print('list os ${widget.exerciseList}');
-    fetchExerciseData(); // Fetch data once when the widget is initialized
+    fetchExerciseData();
+
   }
   Future<void> fetchExerciseData( ) async {
     final DatabaseReference databaseReference = FirebaseDatabase.instance.ref('Exercise').child(widget.exerciseType);
@@ -67,11 +70,17 @@ class _AllDetailState extends State<AllDetail> {
     print('============== Print Data in Format ===============');
     print('Exercise name is ${widget.exerciseType} and ${widget.exerciseName}');
 
+
+
     // Print multimedia data
 
     setState(() {
       // Set the instruction title
       title = "${data['instruction']}\n";
+      durarions = "${data['durarions']}\n";
+
+      print('Duration is $durarions');
+
 
       // Fetch common mistakes
       commonMistakes.clear();
@@ -96,37 +105,26 @@ class _AllDetailState extends State<AllDetail> {
       for (var area in data["focusAreas"]) {
         focusArea.add(area);
       }
+      print("Multimedia:");
+      for (var gender in data["multimedia"].keys) {
+        if (data["multimedia"].containsKey(gender)) {
+          final media = data["multimedia"][gender];
+          // Check if gender is a String before calling capitalize
+          if (gender is String) {
+           print("  ${gender[0].toUpperCase()}${gender.substring(1)}:");  // Capitalizing manually
+          }
 
-      // Fetch multimedia data based on gender
-
-      if (data['multimedia'] != null && data['multimedia'][gender] != null) {
-        final genderSpecificData = data['multimedia'][gender];
-
-        // Fetch video URL, animation path, image paths
-        //  String videoURL = genderSpecificData['videoURL'] ?? '';
-        //  String animationPath = genderSpecificData['animationPath'] ?? '';
-        // String lightThemeImage = genderSpecificData['lightTheme'] ?? '';
-        //  String darkThemeImage = genderSpecificData['darkTheme'] ?? '';
-        //  String muscleImage = genderSpecificData['musclePath'] ?? '';
-
-         print('$gender');
-        muscleImage = genderSpecificData['musclePath'] ?? '';
-        lightImagePath1 = genderSpecificData['lightTheme'] ?? '';
-        darkImagePath1 = genderSpecificData['darkTheme'] ?? '';
-
-        // Print the fetched data
-        print("\nVideo URL: $lightImagePath1");
-        print("\nVideo URL: $muscleImage");
-        print("\nVideo URL: $darkImagePath1");
-        // print("Animation Path: $animationPath");
-        // print("Light Theme Image: $lightThemeImage");
-        // print("Dark Theme Image: $darkThemeImage");
-        // print("Muscle Image: $muscleImage");
+          muscleImage = "${media['musclePath']}";
+          lightImagePath1 = "${media['lightTheme']}";
+          darkImagePath1 = "${media['darkTheme']}";
 
 
-      } else {
-        print("No multimedia data found for the selected gender: $gender");
+
+          print(muscleImage);
+
+        }
       }
+
     });
   }
 
@@ -136,12 +134,18 @@ class _AllDetailState extends State<AllDetail> {
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
 
+
     final ExerciseDetailScreenController controller =
     Get.put(ExerciseDetailScreenController());
+
+    durarions = controller.currentDuration.value.toString();
     return Scaffold(
 
 
+
       body: SingleChildScrollView(
+
+
         child: Column(
           children: [
             Padding(
@@ -244,12 +248,13 @@ class _AllDetailState extends State<AllDetail> {
                           CustomIconButton(
                             iconData: Icons.remove,
                             dark: dark,
-                            onPressed: () => controller.decrementTime(),
+                            onPressed: () => controller.decrementTime(widget.exerciseType, widget.exerciseName),
                           ),
                           const SizedBox(width: 8),
                           Container(
+                            alignment: Alignment.center,
                             width: 100,
-                            height: 30,
+                            height: 25,
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: AppColor.orangeColor, // Border color
@@ -258,23 +263,64 @@ class _AllDetailState extends State<AllDetail> {
                               borderRadius: BorderRadius.circular(16), // Rounded corners
                             ),
                             child: Center(
-                              child: Obx(
-                                    () => Text(
-                                  controller.formattedTime,
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: dark ? AppColor.white : AppColor.black),
-                                ),
-                              ),
+                              child: Obx(() => Text(
+                                'Sec: ${controller.currentDuration.value}', // Display updated duration
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: dark ? AppColor.white : AppColor.black),
+                              )),
                             ),
                           ),
                           const SizedBox(width: 8),
                           CustomIconButton(
                             iconData: Icons.add,
                             dark: dark,
-                            onPressed: () => controller.incrementTime(),
+                            onPressed: () => controller.incrementTime(widget.exerciseType, widget.exerciseName),
                           ),
                         ],
-                      ),
+                      )
+
+
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     CustomIconButton(
+                      //       iconData: Icons.remove,
+                      //       dark: dark,
+                      //       onPressed: ()=>controller.decrementTime,
+                      //     ),
+                      //     const SizedBox(width: 8),
+                      //     Container(
+                      //       alignment: Alignment.center,
+                      //       width: 100,
+                      //       height: 25,
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(
+                      //           color: AppColor.orangeColor, // Border color
+                      //           width: 1.0, // Border width
+                      //         ),
+                      //         borderRadius: BorderRadius.circular(16), // Rounded corners
+                      //       ),
+                      //       child:
+                      //       Center(
+                      //         child: Text(
+                      //            'Sec: $durarions',
+                      //             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      //                 color: dark ? AppColor.white : AppColor.black),
+                      //           ),
+                      //         ),
+                      //
+                      //     ),
+                      //     const SizedBox(width: 8),
+                      //     CustomIconButton(
+                      //       iconData: Icons.add,
+                      //       dark: dark,
+                      //       onPressed: ()=>controller.incrementTime,
+                      //     ),
+                      //   ],
+                      // ),
+
+
                     ],
                   ),
                   const SizedBox(

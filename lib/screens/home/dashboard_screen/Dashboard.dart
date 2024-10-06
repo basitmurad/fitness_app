@@ -170,7 +170,7 @@ class Dashboard extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           child: GestureDetector(
                             onTap: () {
-                              // Pass the exercise name when navigating to AbsScreen
+
                               Get.to(AbsScreen(
                                 exerciseType:
                                 exercisesList[index]['exerciseName']!,
@@ -178,6 +178,12 @@ class Dashboard extends StatelessWidget {
                                 exercisesList[index]['exerciseRepetition']!,
                                 gender: gender,
                               ));
+                              // Pass the exercise name when navigating to AbsScreen
+                              // Get.to(AbsScreen(
+                              //   exerciseRepititon:
+                              //   exercisesList[index]['exerciseRepetition']!,
+                              //   gender: gender, exerciseName: exercisesList[index]['exerciseName']!, exerciseType: '',
+                              // ));
                             },
                             child: ExerciseWidget(
                               dark: dark,

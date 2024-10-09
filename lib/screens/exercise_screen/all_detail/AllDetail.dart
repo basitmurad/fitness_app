@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../utils/constants/AppColor.dart';
 import '../../../utils/constants/AppImagePaths.dart';
 import '../../../utils/constants/AppSizes.dart';
@@ -34,14 +35,25 @@ class _AllDetailState extends State<AllDetail> {
   List<Map<String, String>> breathingTips = [];
   List<Map<String, String>> commonMistakes = [];
   List<String> focusArea=[];
-  String? videoUrl="";
+  String? videoUrl;
   String? darkImagePath1="";
   String? lightImagePath1="";
   String? muscleImage="";
+  YoutubePlayerController? _youtubePlayerController;
+
   @override
   void initState() {
     super.initState();
     fetchExerciseData();
+
+    _youtubePlayerController = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(videoUrl ?? 'https://www.youtube.com/watch?v=dQw4w9WgXcQ')!, // Replace with the actual video URL
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+
 
   }
   Future<void> fetchExerciseData( ) async {
@@ -193,8 +205,11 @@ class _AllDetailState extends State<AllDetail> {
                                InstructionWidget(
                                 imageUrl: muscleImage!,
                               ),
-                              const InstructionWidget(imageUrl: '',),
 
+
+                              const InstructionWidget(
+                                imageUrl: AppImagePaths.abs,
+                              ),
                               const InstructionWidget(
                                 imageUrl: AppImagePaths.abs,
                               )
@@ -280,45 +295,7 @@ class _AllDetailState extends State<AllDetail> {
                       )
 
 
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   children: [
-                      //     CustomIconButton(
-                      //       iconData: Icons.remove,
-                      //       dark: dark,
-                      //       onPressed: ()=>controller.decrementTime,
-                      //     ),
-                      //     const SizedBox(width: 8),
-                      //     Container(
-                      //       alignment: Alignment.center,
-                      //       width: 100,
-                      //       height: 25,
-                      //       decoration: BoxDecoration(
-                      //         border: Border.all(
-                      //           color: AppColor.orangeColor, // Border color
-                      //           width: 1.0, // Border width
-                      //         ),
-                      //         borderRadius: BorderRadius.circular(16), // Rounded corners
-                      //       ),
-                      //       child:
-                      //       Center(
-                      //         child: Text(
-                      //            'Sec: $durarions',
-                      //             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      //                 color: dark ? AppColor.white : AppColor.black),
-                      //           ),
-                      //         ),
-                      //
-                      //     ),
-                      //     const SizedBox(width: 8),
-                      //     CustomIconButton(
-                      //       iconData: Icons.add,
-                      //       dark: dark,
-                      //       onPressed: ()=>controller.incrementTime,
-                      //     ),
-                      //   ],
-                      // ),
+
 
 
                     ],

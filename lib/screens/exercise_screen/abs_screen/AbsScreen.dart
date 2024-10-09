@@ -100,21 +100,29 @@ class _AbsScreenState extends State<AbsScreen> {
       for (var child in snapshot.children) {
         if (child.key != null) {
           String? repetition = child.child("exerciseRepetition").value?.toString();
-          String? durations = child.child("durarions").value?.toString();
-          String? muscleImage;
+          String? durations = child.child("durations").value?.toString(); // Fixed typo from "durarions" to "durations"
+          String? musclePath;
+
+          // Access the multimedia node to get musclePath based on gender
           if (widget.gender.toLowerCase() == 'female') {
-            muscleImage = child.child("female").value?.toString(); // Assuming 'female' holds the female image
+            musclePath = child.child("multimedia").child("female").child("musclePath").value?.toString(); // Updated path
           } else if (widget.gender.toLowerCase() == 'male') {
-            muscleImage = child.child("male").value?.toString(); // Assuming 'male' holds the male image
+            musclePath = child.child("multimedia").child("male").child("musclePath").value?.toString(); // Updated path
           }
+
+          print('Muscle image is $musclePath');
+
           if (repetition != null) {
             fetchedExercises.add({
               "exerciseName": child.key!,
               "exerciseRepetition": repetition,
               "durations": durations ?? 'N/A',
-              // Default to 'N/A' if durations is null
+              "musclePath": musclePath ?? 'N/A', // Default to 'N/A' if musclePath is null
             });
-            // print('Fetched: ${child.key!} - Repetition: $repetition - Duration: $durations'); // Debugging print
+
+            print('Child Key: ${child.key}');
+            print('Female data: ${child.child("multimedia").child("female").value}'); // Updated path
+            print('Male data: ${child.child("multimedia").child("male").value}'); // Updated path
           }
         }
       }
@@ -123,8 +131,6 @@ class _AbsScreenState extends State<AbsScreen> {
         isLoading = false;
       });
       await _storeDataInSharedPreferences(fetchedExercises);
-
-
     } else {
       print('No data exists for the given exercise type: ${widget.exerciseType}');
       setState(() {
@@ -132,6 +138,60 @@ class _AbsScreenState extends State<AbsScreen> {
       });
     }
   }
+
+  // Future<void> getData1() async {
+  //   DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
+  //   print('Fetching data from: ${databaseReference.path}'); // Debugging print statement
+  //
+  //   DataSnapshot snapshot = await databaseReference.get();
+  //
+  //   if (snapshot.exists) {
+  //     List<Map<String, String>> fetchedExercises = [];
+  //     for (var child in snapshot.children) {
+  //       if (child.key != null) {
+  //         String? repetition = child.child("exerciseRepetition").value?.toString();
+  //         String? durations = child.child("durarions").value?.toString();
+  //         String? musclePath;
+  //         if (widget.gender.toLowerCase() == 'female') {
+  //           musclePath = child.child("female").child("musclePath").value?.toString(); // Fetch muscle path for female
+  //         } else if (widget.gender.toLowerCase() == 'male') {
+  //           musclePath = child.child("male").child("musclePath").value?.toString(); // Fetch muscle path for male
+  //         }
+  //
+  //
+  //         print('muscle image is $musclePath');
+  //
+  //         if (repetition != null) {
+  //           fetchedExercises.add({
+  //             "exerciseName": child.key!,
+  //             "exerciseRepetition": repetition,
+  //             "durations": durations ?? 'N/A',
+  //             "musclePath": musclePath ?? 'N/A',
+  //             // Default to 'N/A' if durations is null
+  //           });
+  //
+  //           print('Child Key: ${child.key}');
+  //           print('Female data: ${child.child("female").value}');
+  //           print('Male data: ${child.child("male").value}');
+  //
+  //           // print('Fetched: ${child.key!} - Repetition: $repetition - Duration: $durations'); // Debugging print
+  //         }
+  //       }
+  //     }
+  //     setState(() {
+  //       exerciseList = fetchedExercises;
+  //       isLoading = false;
+  //     });
+  //     await _storeDataInSharedPreferences(fetchedExercises);
+  //
+  //
+  //   } else {
+  //     print('No data exists for the given exercise type: ${widget.exerciseType}');
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
 
 
 

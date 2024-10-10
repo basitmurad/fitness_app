@@ -28,8 +28,7 @@ class TargetWeightScreen extends StatefulWidget {
       required this.year,
       required this.currentWeight});
 
-  final String email, password, gender, name, height, currentWeight;
-  final int year;
+  final String email, password, gender, name, height, currentWeight ,year;
 
   @override
   State<TargetWeightScreen> createState() => _TargetWeightScreenState();

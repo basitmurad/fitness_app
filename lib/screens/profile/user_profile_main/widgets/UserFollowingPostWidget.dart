@@ -3,12 +3,18 @@ import '../../../../../utils/constants/AppColor.dart';
 import '../../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class UserFollowingPostWidget extends StatelessWidget {
-  const UserFollowingPostWidget({
+   UserFollowingPostWidget({
     super.key,
     required this.dark,
+    required this.post,
+    required this.followers,
+    required this.following,
   });
 
   final bool dark;
+  String post;
+  String following;
+  String followers;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class UserFollowingPostWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SimpleTextWidget(
-                  text: '47',
+                  text: post,
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
                   color: dark ? AppColor.white : AppColor.black,
@@ -39,7 +45,7 @@ class UserFollowingPostWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SimpleTextWidget(
-                  text: '47',
+                  text: followers,
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
                   color: dark ? AppColor.white : AppColor.black,
@@ -57,7 +63,7 @@ class UserFollowingPostWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SimpleTextWidget(
-                  text: '47',
+                  text: following,
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
                   color: dark ? AppColor.white : AppColor.black,

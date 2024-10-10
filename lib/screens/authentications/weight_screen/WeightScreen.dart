@@ -23,9 +23,8 @@ class WeightScreen extends StatelessWidget {
       required this.year,
       required this.height});
 
-  final String email, password, gender, name, height;
+  final String email, password, gender, name, height ,year;
 
-  final int year;
   final WeightScreenController weightController =
       Get.put(WeightScreenController());
 

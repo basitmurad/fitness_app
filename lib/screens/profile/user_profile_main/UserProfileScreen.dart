@@ -1,4 +1,6 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/profile/user_profile_main/widgets/ButtonsWidget.dart';
 import 'package:fitness/screens/profile/user_profile_main/widgets/UserFollowingPostWidget.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +9,29 @@ import '../../../../common/widgets/CircularImage.dart';
 import '../../../../utils/constants/AppColor.dart';
 import '../../../../utils/constants/AppSizes.dart';
 import '../../../../utils/helpers/MyAppHelper.dart';
+import '../../authentications/login_screen/LoginScreen.dart';
 import '../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
+  Future<String?> fetchUserImageUrl(String userId) async {
+    // Reference to the Firebase Realtime Database
+    DatabaseReference userRef = FirebaseDatabase.instance.ref('users/$userId');
 
+    // Get the user data
+    final snapshot = await userRef.get();
+    if (snapshot.exists) {
+      // Check if the imageUrl field exists in the user data
+      return snapshot.child('imageUrl').value as String?;
+    }
+    return null; // Return null if the user doesn't exist or doesn't have an image URL
+  }
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
+
+    fetchUserCounts();
+    final String userId = FirebaseAuth.instance.currentUser?.uid ?? ''; // Get the current user's ID
 
     return DefaultTabController(
       length: 3,
@@ -120,9 +137,18 @@ class UserProfileScreen extends StatelessWidget {
               ),
               ListTile(
                 title: const Text('Log Out'),
-                onTap: () {
-                  // Handle Log Out action
-                  Navigator.pop(context); // Close the drawer
+                onTap: () async {
+                  try {
+                    // Sign out from Firebase
+                    await FirebaseAuth.instance.signOut();
+
+                    // Navigate to the LoginScreen or another relevant screen
+                    Get.offAll(() => const LoginScreen()); // Replace with your login screen
+
+                  } catch (e) {
+                    // Handle any errors that might occur during logout
+                    print('Error logging out: $e');
+                  }
                 },
               ),
             ],
@@ -134,10 +160,25 @@ class UserProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 8),
-                CircularImage(
-                  imageUrl: 'https://images.unsplash.com/photo-1727324358652-e82abf20aad2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                  size: 100,
+
+
+                FutureBuilder<String?>(
+                  future: fetchUserImageUrl(userId), // Fetch user image URL
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator(); // Show loading indicator
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}'); // Handle error
+                    } else {
+                      // If image URL exists, show it; otherwise, show placeholder
+                      return CircularImage(
+                        imageUrl: snapshot.data ?? 'https://via.placeholder.com/100', // Placeholder image
+                        size: 100,
+                      );
+                    }
+                  },
                 ),
+
                 const SizedBox(height: 4),
                 SimpleTextWidget(
                   text: '@knc sors',
@@ -147,7 +188,27 @@ class UserProfileScreen extends StatelessWidget {
                   fontFamily: 'Poppins',
                 ),
                 const SizedBox(height: AppSizes.spaceBtwSections - 20),
-                UserFollowingPostWidget(dark: dark),
+                FutureBuilder<Map<String, int>>(
+                  future: fetchUserCounts(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator(); // Show loading indicator
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}'); // Handle error
+                    } else {
+                      // Pass the fetched counts to the widget
+                      final data = snapshot.data ?? {'posts': 0, 'followers': 0, 'following': 0};
+                      return UserFollowingPostWidget(
+                        dark: dark,
+                        post: data['posts'].toString(),
+                        followers: data['followers'].toString(),
+                        following: data['following'].toString(),
+                      );
+                    }
+                  },
+                ),
+
+                // UserFollowingPostWidget(dark: dark, post: '', followers: '', following: '',),
                 const SizedBox(height: AppSizes.spaceBtwSections - 10),
                 ButtonsWidget(dark: dark),
                 const SizedBox(height: 20),
@@ -218,5 +279,39 @@ class UserProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+
+  Future<Map<String, int>> fetchUserCounts() async {
+    // Get the current user's ID
+    final String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+
+    // Reference to the user's data in Firebase Realtime Database
+    DatabaseReference userRef = FirebaseDatabase.instance.ref('users/$userId');
+
+    // Fetch the data
+    final DataSnapshot snapshot = await userRef.get();
+
+    if (snapshot.exists) {
+      // Count the number of posts, followers, and following
+      int postCount = (snapshot.child('posts').value as Map<dynamic, dynamic>?)?.length ?? 0;
+      int followersCount = (snapshot.child('followers').value as Map<dynamic, dynamic>?)?.length ?? 0;
+      int followingCount = (snapshot.child('following').value as Map<dynamic, dynamic>?)?.length ?? 0;
+
+      // Return a map containing the counts
+      return {
+        'posts': postCount,
+        'followers': followersCount,
+        'following': followingCount,
+      };
+    } else {
+      // Return zeros if no data exists
+      return {
+        'posts': 0,
+        'followers': 0,
+        'following': 0,
+      };
+    }
   }
 }

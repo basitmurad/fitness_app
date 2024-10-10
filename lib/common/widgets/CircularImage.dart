@@ -1,3 +1,4 @@
+import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:flutter/material.dart';
 
 class CircularImage extends StatelessWidget {
@@ -8,7 +9,8 @@ class CircularImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return
+      Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
@@ -20,7 +22,7 @@ class CircularImage extends StatelessWidget {
       ),
       child: ClipOval(
         child: FadeInImage(
-          placeholder: AssetImage('assets/placeholder.png'), // Placeholder image
+          placeholder: AssetImage(AppImagePaths.placeholder1), // Placeholder image
           image: NetworkImage(imageUrl),
           fit: BoxFit.cover,
           fadeInDuration: Duration(milliseconds: 200),

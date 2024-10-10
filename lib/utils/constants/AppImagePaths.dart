@@ -92,5 +92,6 @@ class AppImagePaths {
   static const String icon = "assets/myicons/Icon.png";
   static const String send1 = "assets/myicons/send1.png";
   static const String send12 = "assets/myicons/earht.png";
+  static const String placeholder1 = "assets/images/placehoolder.png";
 
 }

@@ -57,7 +57,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                   password: widget.password,
                   gender: widget.gender,
                   name: widget.name,
-                  age: _selectedYear - DateTime.now().year + 2024, // Set age based on the selected year
+                  age: _selectedYear - DateTime.now().year + 2024 as String, // Set age based on the selected year
                   height: '', // To be filled later
                   weight: '', // To be filled later
                   targetWeight: '', // To be filled later
@@ -73,7 +73,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                       email: widget.email,
                       password: widget.password,
                       gender: widget.gender,
-                      name: widget.name, year: _selectedYear,
+                      name: widget.name, year: _selectedYear as String,
                     ),
                   ),
                 );

@@ -73,7 +73,7 @@ class SignUpController extends GetxController {
         password: passwordController.text,
         gender: '',
         name: '',
-        age: 0,
+        age: '',
         height: '',
         weight: '',
         targetWeight: '',

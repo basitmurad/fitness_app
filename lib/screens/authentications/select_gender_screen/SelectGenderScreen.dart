@@ -267,7 +267,7 @@ class SelectGenderScreen extends StatelessWidget {
                     password: password,
                     gender: selectedGender,
                     name: '',
-                    age: 0,
+                    age: '',
                     height: '',
                     weight: '',
                     targetWeight: '',

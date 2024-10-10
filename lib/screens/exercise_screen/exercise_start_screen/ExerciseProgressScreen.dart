@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -212,59 +211,6 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
         );
       }),
 
-      // bottomNavigationBar: Obx(() {
-      //   return BottomAppBar(
-      //     height: 85,
-      //     padding: const EdgeInsets.only(bottom: 5),
-      //     color: Colors.transparent,
-      //     child: Padding(
-      //       padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 18),
-      //       child: controller.isStartButtonVisible.value
-      //           ? ButtonWidget(
-      //               dark: dark,
-      //               onPressed: () {
-      //                 // Start the countdown
-      //                 startCountdown();
-      //                 controller
-      //                     .toggleButton(); // Hide Start button and show Paused button
-      //               },
-      //               buttonText: 'Start',
-      //             )
-      //           : GestureDetector(
-      //               onTap: () {
-      //                 hasStarted = false; // Reset hasStarted when paused
-      //                 countdownTimer.cancel(); // Cancel the timer
-      //                 controller.toggleButton();
-      //               },
-      //               child: Container(
-      //                 decoration: BoxDecoration(
-      //                   color: AppColor.orangeColor,
-      //                   borderRadius: BorderRadius.circular(6),
-      //                 ),
-      //                 child: Row(
-      //                   crossAxisAlignment: CrossAxisAlignment.center,
-      //                   mainAxisAlignment: MainAxisAlignment.center,
-      //                   children: [
-      //                     const Icon(Icons.pause, color: Colors.white),
-      //                     Text(
-      //                       'Pause',
-      //                       style: Theme.of(context)
-      //                           .textTheme
-      //                           .bodyMedium
-      //                           ?.copyWith(
-      //                             color: dark ? AppColor.white : AppColor.white,
-      //                             fontSize: 14,
-      //                             fontWeight: FontWeight.w400,
-      //                             fontFamily: 'Poppins',
-      //                           ),
-      //                     ),
-      //                   ],
-      //                 ),
-      //               ),
-      //             ),
-      //     ),
-      //   );
-      // }),
       body: Padding(
         padding:  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: SingleChildScrollView(

@@ -1,21 +1,26 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fitness/common/widgets/MyAppGridLayout.dart';
-import 'package:fitness/screens/exercise_screen/abs_screen/AbsScreen.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/ChallengedWidget.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/ExerciseWidget.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/FollowUserCard.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/TextWidget.dart';
-
-import 'package:fitness/utils/constants/AppColor.dart';
-import 'package:fitness/utils/constants/AppImagePaths.dart';
-import 'package:fitness/utils/constants/AppString.dart';
-import 'package:fitness/utils/helpers/MyAppHelper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../../common/widgets/MyAppGridLayout.dart';
+import '../../../utils/constants/AppColor.dart';
+import '../../../utils/constants/AppImagePaths.dart';
 import '../../../utils/constants/AppSizes.dart';
+import '../../../utils/constants/AppString.dart';
+import '../../../utils/helpers/MyAppHelper.dart';
+
 import '../../authentications/login_screen/LoginScreen.dart';
 
+import '../../exercise_screen/abs_screen/AbsScreen.dart';
+import '../social/post_screen/AddPostScreen.dart';
 
 
 List<Map<String, String>> maleExercise = [
@@ -82,14 +87,15 @@ List<Map<String, String>> femaleExercises = [
     'exerciseRepetition': '05',
   },
 ];
+
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
     late FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -139,7 +145,8 @@ class Dashboard extends StatelessWidget {
                   return Card(
                     child: FollowUserCard(dark: dark),
                   );
-                }, scrollDirection: Axis.horizontal,
+                },
+                scrollDirection: Axis.horizontal,
               ),
               const SizedBox(height: AppSizes.spaceBtwInputFields),
               TextWidget(dark: dark),
@@ -157,7 +164,7 @@ class Dashboard extends StatelessWidget {
                   } else if (snapshot.hasData) {
                     // Once the data (gender) is received, update the exercise list based on gender
                     String gender = snapshot.data!;
-                    List<Map<String, String>> exercisesList = gender == 'female'
+                    List<Map<String, String>> exercisesList = gender == 'Female'
                         ? femaleExercises
                         : maleExercise;
 
@@ -170,7 +177,6 @@ class Dashboard extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           child: GestureDetector(
                             onTap: () {
-
                               Get.to(AbsScreen(
                                 exerciseType:
                                 exercisesList[index]['exerciseName']!,
@@ -178,12 +184,6 @@ class Dashboard extends StatelessWidget {
                                 exercisesList[index]['exerciseRepetition']!,
                                 gender: gender,
                               ));
-                              // Pass the exercise name when navigating to AbsScreen
-                              // Get.to(AbsScreen(
-                              //   exerciseRepititon:
-                              //   exercisesList[index]['exerciseRepetition']!,
-                              //   gender: gender, exerciseName: exercisesList[index]['exerciseName']!, exerciseType: '',
-                              // ));
                             },
                             child: ExerciseWidget(
                               dark: dark,
@@ -207,6 +207,16 @@ class Dashboard extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(() => AddPostScreen());
+        },
+        backgroundColor: AppColor.orangeColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50), // Ensures the shape is a circle
+        ),
+        child: const Icon(Icons.add, color: Colors.white, size: 45), // Customize the FAB icon
+      ),
     );
   }
 
@@ -228,7 +238,9 @@ class Dashboard extends StatelessWidget {
 
       if (snapshot.exists && snapshot.value is Map) {
         Map<Object?, Object?> userData = snapshot.value as Map<Object?, Object?>;
-        gender = userData['gender'] as String? ?? gender; // Update gender if found
+        gender = userData['gender'] as String? ?? gender;
+
+        print('gender $gender');// Update gender if found
       } else {
         debugPrint("No user data found or data is not in the expected format.");
       }
@@ -238,6 +250,7 @@ class Dashboard extends StatelessWidget {
 
     return gender; // Return the determined gender
   }
+
+
+
 }
-
-

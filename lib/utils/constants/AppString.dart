@@ -155,6 +155,7 @@ class AppStrings {
     static String textTips2 = "Progress is made through daily efforts, so keep at it.";
     static String textTips1 = "Reward yourself for completing milestones.";
     static String textChallengeTitle = "Select Challenge";
+    static String textJoinChallenge= "Join challenge";
     static String textChallengeSubtitle = "Create your own or join existing ones, track your progress, and stay motivated every step of the way.";
 
 

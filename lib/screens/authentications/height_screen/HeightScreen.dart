@@ -16,7 +16,8 @@ import '../../shared_preferences/UserPreferences.dart';
 class HeightScreen extends StatelessWidget {
   const HeightScreen({super.key, required this.email, required this.password, required this.gender, required this.name, required this.year, });
 
-  final String email , password , gender , name ,year;
+  final String email , password , gender , name;
+  final  int year;
 
   @override
   Widget build(BuildContext context) {

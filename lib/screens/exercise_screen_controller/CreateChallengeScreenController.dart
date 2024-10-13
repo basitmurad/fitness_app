@@ -6,94 +6,135 @@ import 'package:intl/intl.dart';
 class CreateChallengeScreenController extends GetxController {
   Rx<DateTimeRange?> selectedDateRange = Rx<DateTimeRange?>(null);
   Rx<TimeOfDay?> selectedTime = Rx<TimeOfDay?>(null);
-
-  // Date format for time (hh:mm a)
-  final DateFormat timeFormat = DateFormat('hh:mm a');
-  // Separate RxInt for each category to track selected index
-  var selectedFitnessIndex = (-1).obs;  // No item is selected initially
-  var selectedWellnessIndex = (-1).obs; // No item is selected initially
-  var selectedPersonalGrowthIndex = (-1).obs; // No item is selected initially
-  var selectedDurations = (-1).obs; // No item is selected initially
-  var selectedSeeList = (-1).obs; // No item is selected initially
   final DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+  final DateFormat timeFormat = DateFormat('hh:mm a');
+  var selectedChallenges = <String>[].obs;
+  var selectedDurations = <int>[].obs; // RxList of selected duration indices
+  var selectedDurationIndex = 0.obs; // To hold the selected duration index
+  var selectedFitnessIndices = <int>[].obs;
+  var selectedWellnessIndices = <int>[].obs;
+  var selectedPersonalGrowthIndices = <int>[].obs;
+  var selectedSeeListIndices = <int>[].obs;
 
-  // Last selected item for each category (if needed)
-  var lastSelectedFitnessItem = ''.obs;
-  var lastSelectedWellnessItem = ''.obs;
-  var lastSelectedPersonalGrowthItem = ''.obs;
-  var lastSelectedDurationsItem = ''.obs;
-  var lastSeeListItem = ''.obs;
+
+
+  RxList<String> lastSelectedFitnessItems = <String>[].obs;
+  var lastSelectedWellnessItems = <String>[].obs;
+  var lastSelectedPersonalGrowthItems = <String>[].obs;
+  var lastSeeListItems = <String>[].obs;
+  var lastSelectedDurationsItem = <String>[].obs;
 
 
 
-  // Function to update the selected Fitness item
+
+
+  // Update the selected fitness item
   void updateSelectedFitnessIndex(int index, List<String> fitnessChallenges) {
-    selectedFitnessIndex.value = index; // Update selected index
-    lastSelectedFitnessItem.value = fitnessChallenges[index];
-    print('lastSelectedFitnessItem${lastSelectedFitnessItem.value}'); // Print selected item
-// Store the selected item
+    if (selectedFitnessIndices.contains(index)) {
+      selectedFitnessIndices.remove(index); // Deselect if already selected
+      lastSelectedFitnessItems.remove(fitnessChallenges[index]); // Remove from last selected items
+    } else {
+      selectedFitnessIndices.add(index); // Select the challenge
+      lastSelectedFitnessItems.add(fitnessChallenges[index]); // Add to last selected items
+    }
   }
-  void updateSelectedDurationIndex(int index, List<String> selectedDuration) {
-    selectedDurations.value = index; // Update selected index
-    lastSelectedDurationsItem.value = selectedDuration[index];
-    print('lastSelectedFitnessItem${lastSelectedDurationsItem.value}'); // Print selected item
-// Store the selected item
-  }
-
-  // Function to update the selected Wellness item
-  void updateSelectedWellnessIndex(int index, List<String> wellnessChallenges) {
-    selectedWellnessIndex.value = index; // Update selected index
-    lastSelectedWellnessItem.value = wellnessChallenges[index];
-    print('lastSelectedWellnessItem: ${lastSelectedWellnessItem.value}'); // Print selected item
-// Store the selected item
-  }
-
-  // Function to update the selected Personal Growth item
-  void updateSelectedPersonalGrowthIndex(int index, List<String> personalGrowth) {
-    selectedPersonalGrowthIndex.value = index; // Update selected index
-    lastSelectedPersonalGrowthItem.value = personalGrowth[index];
-    print('lastSelectedPersonalGrowthItem: ${lastSelectedPersonalGrowthItem.value}'); // Print selected item
-// Store the selected item
-  }
-  void updateSeeListIndex(int index, List<String> personalGrowth) {
-    selectedSeeList.value = index; // Update selected index
-    lastSeeListItem.value = personalGrowth[index];
-    print('lastSelectedPersonalGrowthItem: ${lastSeeListItem.value}'); // Print selected item
-// Store the selected item
-  }
-
-  // Function to get the tile color based on selected index
+// Get tile color for fitness challenge
   Color getFitnessTileColor(int index) {
-    return selectedFitnessIndex.value == index ? Colors.orange : Colors.white;
+    return selectedFitnessIndices.contains(index) ? Colors.orange : Colors.white;
   }
-  Color getSeeTileColor(int index) {
-    return selectedSeeList.value == index ? Colors.orange : Colors.white;
-  }
-
-  Color getWellnessTileColor(int index) {
-    return selectedWellnessIndex.value == index ? Colors.orange : Colors.white;
-  }
-
-  Color getPersonalGrowthTileColor(int index) {
-    return selectedPersonalGrowthIndex.value == index ? Colors.orange : Colors.white;
-  }
-
-  Color getSelectDurationTileColor(int index) {
-    return selectedDurations.value == index ? Colors.orange : Colors.white;
-  }
-
-  // To determine whether the subtitle should be visible
+// Check if fitness subtitle is visible
   bool isFitnessSubtitleVisible(int index) {
-    return selectedFitnessIndex.value == index;
+    return selectedFitnessIndices.contains(index);
   }
 
-  bool isWellnessSubtitleVisible(int index) {
-    return selectedWellnessIndex.value == index;
+// Update selected wellness index
+  void updateSelectedWellnessIndex(int index, List<String> wellnessChallenges) {
+    if (selectedWellnessIndices.contains(index)) {
+      selectedWellnessIndices.remove(index); // Deselect if already selected
+      lastSelectedWellnessItems.remove(wellnessChallenges[index]); // Remove from last selected items
+    } else {
+      selectedWellnessIndices.add(index); // Select the challenge
+      lastSelectedWellnessItems.add(wellnessChallenges[index]); // Add to last selected items
+    }
+  }
+// Get tile color for wellness challenge
+  Color getSelectedWellnessColor(int index) {
+    return selectedWellnessIndices.contains(index) ? Colors.orange : Colors.white;
+  }
+// Check if wellness subtitle is visible
+  bool isSelectedWellnessVisible(int index) {
+    return selectedWellnessIndices.contains(index);
   }
 
-  bool isPersonalGrowthSubtitleVisible(int index) {
-    return selectedPersonalGrowthIndex.value == index;
+  void updateSelectedPersonalGrowthIndex(int index, List<String> personalGrowthChallenges) {
+    if (selectedPersonalGrowthIndices.contains(index)) {
+      selectedPersonalGrowthIndices.remove(index); // Deselect if already selected
+      lastSelectedPersonalGrowthItems.remove(personalGrowthChallenges[index]); // Remove from last selected items
+    } else {
+      selectedPersonalGrowthIndices.add(index); // Select the challenge
+      lastSelectedPersonalGrowthItems.add(personalGrowthChallenges[index]); // Add to last selected items
+    }
   }
+// Get tile color for wellness challenge
+  Color getSelectedPersonalGrowthColor(int index) {
+    return selectedPersonalGrowthIndices.contains(index) ? Colors.orange : Colors.white;
+  }
+// Check if wellness subtitle is visible
+  bool isSelectedPersonalGrowthVisible(int index) {
+    return selectedPersonalGrowthIndices.contains(index);
+  }
+
+
+  // Update this method in your controller
+  void updateDurationsIndex(int index, List<String> durations) {
+    // If an item is already selected, remove it from the list
+    if (selectedDurations.isNotEmpty) {
+      // Deselect the previously selected duration
+      selectedDurations.clear();
+      lastSelectedDurationsItem.clear();
+    }
+
+    // Add the new selected duration
+    selectedDurations.add(index);
+    lastSelectedDurationsItem.add(durations[index]);
+    selectedDurationIndex.value = index; // Save the selected duration index globally
+  }
+
+// Updated getDurationsColor method remains unchanged
+  Color getDurationsColor(int index) {
+    return selectedDurations.contains(index) ? Colors.orange : Colors.white;
+  }
+
+  String get selectedDuration => lastSelectedDurationsItem.isNotEmpty
+      ? lastSelectedDurationsItem[0] // Return the selected duration string
+      : 'No duration selected';
+
+
+
+// Update method for single selection
+  void updateSeeListIndex(int index, List<String> seeList) {
+    // Clear previous selections and add the new one
+    selectedSeeListIndices.clear();
+    selectedSeeListIndices.add(index);
+    lastSeeListItems.clear(); // Clear previous items
+    lastSeeListItems.add(seeList[index]); // Add the new selected item
+  }
+
+  String getSelectedSeeListItem() {
+    return lastSeeListItems.isNotEmpty
+        ? lastSeeListItems.join(', ') // Return the selected item as a string
+        : 'No List selected';
+  }
+
+  Color getSeeListColor(int index) {
+    return selectedSeeListIndices.contains(index) ? Colors.orange : Colors.white;
+  }
+
+
+
+
+
+
 
 
   Future<void> pickDateRange(BuildContext context) async {
@@ -151,19 +192,7 @@ class CreateChallengeScreenController extends GetxController {
     }
   }
 
-  // Method to open time picker
-  // Future<void> pickTime(BuildContext context) async {
-  //   TimeOfDay? picked = await showTimePicker(
-  //     context: context,
-  //     initialTime: selectedTime.value ?? TimeOfDay.now(),
-  //   );
-  //
-  //   if (picked != null) {
-  //     selectedTime.value = picked;
-  //   }
-  // }
 
-  // Get formatted time
   String getFormattedTime() {
     if (selectedTime.value != null) {
       final now = DateTime.now();
@@ -173,4 +202,10 @@ class CreateChallengeScreenController extends GetxController {
       return 'Select Time';
     }
   }
+
+
+
+
+
+
 }

@@ -1,4 +1,5 @@
 import 'package:fitness/screens/exercise_screen/create_challenge_screen/CreateChallengeScreen.dart';
+import 'package:fitness/screens/exercise_screen/join_challenge_screen/JoinChallengeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../utils/constants/AppColor.dart';
@@ -37,6 +38,8 @@ class RowButtonWidgets extends StatelessWidget {
         Expanded(
           child: OutlinedButton(
             onPressed: () {
+
+              Get.to(() => const JoinChallengeScreen());
               // Define your action for the OutlinedButton here
             },
             style: OutlinedButton.styleFrom(

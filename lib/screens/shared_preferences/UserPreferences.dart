@@ -19,7 +19,7 @@ class UserPreferences {
     required String password,
     required String gender,
     required String name,
-    required String age,
+    required int age,
     required String height,
     required String weight,
     required String targetWeight,
@@ -30,7 +30,7 @@ class UserPreferences {
     await prefs.setString(passwordKey, password);
     await prefs.setString(genderKey, gender);
     await prefs.setString(nameKey, name);
-    await prefs.setString(ageKey, age);
+    await prefs.setInt(ageKey, age);
     await prefs.setString(heightKey, height);
     await prefs.setString(weightKey, weight);
     await prefs.setString(targetWeightKey, targetWeight);
@@ -45,7 +45,7 @@ class UserPreferences {
       passwordKey: prefs.getString(passwordKey),
       genderKey: prefs.getString(genderKey),
       nameKey: prefs.getString(nameKey),
-      ageKey: prefs.getString(ageKey),
+      ageKey: prefs.getInt(ageKey),
       heightKey: prefs.getString(heightKey),
       weightKey: prefs.getString(weightKey),
       targetWeightKey: prefs.getString(targetWeightKey),

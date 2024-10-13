@@ -51,7 +51,7 @@ class NameScreenController extends GetxController {
         email: email,
         password: password,
         name: name, // To be filled later
-        age: '', // To be filled later
+        age: 0, // To be filled later
         height: '', // To be filled later
         weight: '', // To be filled later
         targetWeight: '', // To be filled later

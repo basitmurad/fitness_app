@@ -12,6 +12,10 @@ class ButtonsWidget extends StatelessWidget {
   });
 
   final bool dark;
+  String generateProfileLink(String userId) {
+    const String baseUrl = 'https://yourapp.com/profile/'; // Replace with your actual app URL
+    return '$baseUrl$userId';
+  }
 
   @override
   Widget build(BuildContext context) {

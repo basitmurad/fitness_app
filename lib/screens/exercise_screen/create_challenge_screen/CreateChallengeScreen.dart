@@ -1,4 +1,3 @@
-import 'package:calender_picker/calender_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/common/snackbar/ShowSnackbar.dart';
@@ -623,6 +622,7 @@ class CreateChallengeScreen extends StatelessWidget {
                     dark: dark,
                     onPressed: () async {
                       String time = controller.getFormattedTime();
+                      String userID = FirebaseAuth.instance.currentUser!.uid;
                       String dateRange = controller.getFormattedDateRange();
 
                       // Check if any required information is missing
@@ -636,9 +636,8 @@ class CreateChallengeScreen extends StatelessWidget {
                         );
                       } else {
                         // Create challenge data
-                        String userId = "userId"; // Replace with actual user ID
                         Map<String, dynamic> challengeData = {
-                          'userId': userId,
+                          'userId': userID,
                           'selectedChallenges': selectedChallenges,
                           'duration': duration,
                           'time': time,

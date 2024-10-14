@@ -20,6 +20,9 @@ class _SearchAndSuggestionScreenState extends State<SearchAndSuggestionScreen> {
   List<Map<String, dynamic>> usersList = []; // List to hold user data
   List<Map<String, dynamic>> filteredUsersList = []; // List to hold filtered user data
   TextEditingController searchController = TextEditingController(); // Controller for the search field
+  final String placeholderImageUrl = 'https://ttwo.dk/person-placeholder/'; // Placeholder image URL
+
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -30,9 +33,16 @@ class _SearchAndSuggestionScreenState extends State<SearchAndSuggestionScreen> {
       filterUsers();
     });
   }
-
   Future<void> fetchUsers() async {
     final DatabaseReference usersRef = FirebaseDatabase.instance.ref('users'); // Adjust the reference to your users node
+    final User? currentUser = FirebaseAuth.instance.currentUser; // Get the current logged-in user
+    if (currentUser == null) {
+      print("User not logged in.");
+      return;
+    }
+    setState(() {
+      isLoading = true; // Set loading state to true before fetching
+    });
 
     // Listen for value changes at the 'users' node
     usersRef.onValue.listen((DatabaseEvent event) {
@@ -52,12 +62,17 @@ class _SearchAndSuggestionScreenState extends State<SearchAndSuggestionScreen> {
           // value should contain user data (e.g., name)
           final userId = key;
           final userName = value['name']; // Adjust according to your data structure
+          final userImageUrl = value['imageUrl'] ?? placeholderImageUrl; // Get image URL or use placeholder
 
-          // Add user data to the list
-          usersList.add({
-            'id': userId,
-            'name': userName,
-          });
+          // Add user data to the list only if it's not the current user
+          if (userId != currentUser.uid) {
+            usersList.add({
+              'id': userId,
+              'name': userName,
+              'imageUrl': userImageUrl, // Include image URL
+
+            });
+          }
         });
 
         // Initialize filtered list with all users
@@ -66,10 +81,57 @@ class _SearchAndSuggestionScreenState extends State<SearchAndSuggestionScreen> {
       } else {
         print('No users found.');
       }
+      setState(() {
+        isLoading = false; // Set loading state to false after fetching
+      });
     }, onError: (error) {
       print('Error fetching users: $error');
+      setState(() {
+        isLoading = false; // Set loading state to false after fetching
+      });
     });
   }
+
+
+  // Future<void> fetchUsers() async {
+  //   final DatabaseReference usersRef = FirebaseDatabase.instance.ref('users'); // Adjust the reference to your users node
+  //
+  //   // Listen for value changes at the 'users' node
+  //   usersRef.onValue.listen((DatabaseEvent event) {
+  //     final dataSnapshot = event.snapshot;
+  //
+  //     // Check if data is available
+  //     if (dataSnapshot.exists) {
+  //       // Convert the data to a Map
+  //       final Map<dynamic, dynamic> usersMap = dataSnapshot.value as Map<dynamic, dynamic>;
+  //
+  //       // Clear previous data
+  //       usersList.clear();
+  //
+  //       // Iterate through each user in the map
+  //       usersMap.forEach((key, value) {
+  //         // key is the user ID
+  //         // value should contain user data (e.g., name)
+  //         final userId = key;
+  //         final userName = value['name']; // Adjust according to your data structure
+  //
+  //         // Add user data to the list
+  //         usersList.add({
+  //           'id': userId,
+  //           'name': userName,
+  //         });
+  //       });
+  //
+  //       // Initialize filtered list with all users
+  //       filteredUsersList = List.from(usersList);
+  //       setState(() {}); // Update the UI after fetching users
+  //     } else {
+  //       print('No users found.');
+  //     }
+  //   }, onError: (error) {
+  //     print('Error fetching users: $error');
+  //   });
+  // }
   void onRemove(String userId) {
     setState(() {
       usersList.removeWhere((user) => user['id'] == userId);
@@ -109,30 +171,7 @@ class _SearchAndSuggestionScreenState extends State<SearchAndSuggestionScreen> {
     }
   }
 
-  // void onFollow(String followedUserId, String followedUserName) async {
-  //   try {
-  //     // Get the current user
-  //     User? currentUser = FirebaseAuth.instance.currentUser;
-  //
-  //     if (currentUser != null) {
-  //       // Get a reference to the current user's "following" node in Firebase
-  //       DatabaseReference followingRef = FirebaseDatabase.instance
-  //           .ref('users/${currentUser.uid}/following/$followedUserId');
-  //
-  //       // Update the following node with the followed user's data
-  //       await followingRef.set({
-  //         'id': followedUserId,
-  //         'name': followedUserName,
-  //       });
-  //
-  //       print('Successfully followed $followedUserName');
-  //     } else {
-  //       print('No user logged in');
-  //     }
-  //   } catch (e) {
-  //     print('Error following user: $e');
-  //   }
-  // }
+
   void filterUsers() {
     final query = searchController.text.toLowerCase();
     // Filter users based on the query
@@ -210,6 +249,8 @@ class _SearchAndSuggestionScreenState extends State<SearchAndSuggestionScreen> {
                       return UserCard(
                         dark: dark,
                         userName: user['name'],
+                        userImageUrl: user['imageUrl'], // Pass the image URL to UserCard
+
                         onRemove: () => onRemove(user['id']),
                         onFollow: () => onFollow(user['id'], user['name']), // Pass the userId and userName here
 
@@ -242,11 +283,12 @@ class UserCard extends StatelessWidget {
     super.key,
     required this.dark,
     required this.userName,
-    required this.onRemove, required this.onFollow, // Add onRemove parameter
+    required this.onRemove, required this.onFollow, required this.userImageUrl, // Add onRemove parameter
   });
 
   final bool dark;
   final String userName;
+  final String userImageUrl;
   final VoidCallback onRemove; // Callback to handle removal
   final VoidCallback onFollow; // Callback to handle removal
 
@@ -268,8 +310,7 @@ class UserCard extends StatelessWidget {
         children: [
           const SizedBox(width: 5),
           CircularImage(
-            imageUrl:
-            'https://images.unsplash.com/photo-1727324358652-e82abf20aad2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            imageUrl: userImageUrl,
             size: 98,
           ),
           const SizedBox(width: 10),
@@ -286,7 +327,7 @@ class UserCard extends StatelessWidget {
               ),
               const SizedBox(height: 1),
               SimpleTextWidget(
-                text: 'You may know “Miachel”',
+                text: 'You may know “$userName”',
                 fontWeight: FontWeight.w300,
                 fontSize: 14,
                 color: dark ? AppColor.white : AppColor.black,
@@ -315,7 +356,7 @@ class UserCard extends StatelessWidget {
                               text: 'Remove',
                               fontWeight: FontWeight.w300,
                               fontSize: 16,
-                              color: dark ? AppColor.black : AppColor.black,
+                              color: dark ? AppColor.white : AppColor.black,
                               fontFamily: 'Poppins',
                             ),
                           ),

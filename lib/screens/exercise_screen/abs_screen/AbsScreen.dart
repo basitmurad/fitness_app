@@ -139,59 +139,7 @@ class _AbsScreenState extends State<AbsScreen> {
     }
   }
 
-  // Future<void> getData1() async {
-  //   DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
-  //   print('Fetching data from: ${databaseReference.path}'); // Debugging print statement
-  //
-  //   DataSnapshot snapshot = await databaseReference.get();
-  //
-  //   if (snapshot.exists) {
-  //     List<Map<String, String>> fetchedExercises = [];
-  //     for (var child in snapshot.children) {
-  //       if (child.key != null) {
-  //         String? repetition = child.child("exerciseRepetition").value?.toString();
-  //         String? durations = child.child("durarions").value?.toString();
-  //         String? musclePath;
-  //         if (widget.gender.toLowerCase() == 'female') {
-  //           musclePath = child.child("female").child("musclePath").value?.toString(); // Fetch muscle path for female
-  //         } else if (widget.gender.toLowerCase() == 'male') {
-  //           musclePath = child.child("male").child("musclePath").value?.toString(); // Fetch muscle path for male
-  //         }
-  //
-  //
-  //         print('muscle image is $musclePath');
-  //
-  //         if (repetition != null) {
-  //           fetchedExercises.add({
-  //             "exerciseName": child.key!,
-  //             "exerciseRepetition": repetition,
-  //             "durations": durations ?? 'N/A',
-  //             "musclePath": musclePath ?? 'N/A',
-  //             // Default to 'N/A' if durations is null
-  //           });
-  //
-  //           print('Child Key: ${child.key}');
-  //           print('Female data: ${child.child("female").value}');
-  //           print('Male data: ${child.child("male").value}');
-  //
-  //           // print('Fetched: ${child.key!} - Repetition: $repetition - Duration: $durations'); // Debugging print
-  //         }
-  //       }
-  //     }
-  //     setState(() {
-  //       exerciseList = fetchedExercises;
-  //       isLoading = false;
-  //     });
-  //     await _storeDataInSharedPreferences(fetchedExercises);
-  //
-  //
-  //   } else {
-  //     print('No data exists for the given exercise type: ${widget.exerciseType}');
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
+
 
 
 

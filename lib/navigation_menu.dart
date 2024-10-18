@@ -52,7 +52,7 @@ class NavigationController extends GetxController {
   final List<Widget> screens = [
     const Dashboard(),
     const SearchAndSuggestionScreen(),
-    const SocialScreen(),
+     SocialScreen(),
     const UserProfileScreen(),
   ];
 }

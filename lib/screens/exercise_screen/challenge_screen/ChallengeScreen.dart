@@ -23,7 +23,7 @@ class ChallengeScreen extends StatelessWidget {
         leading: IconButton(
             padding: EdgeInsets.zero,
             onPressed: () {
-              Get.to(const Dashboard());
+              Get.back();
             },
             icon:  Icon(
               Icons.arrow_back,

@@ -75,7 +75,7 @@ class AddPostScreen extends StatelessWidget {
                   userProfilePic: userProfilePic,
                   content: inputText,
                   images: imageUrls,
-                  timestamp: DateTime.now(),
+                  timestamp: DateTime.now(), likedUsers: [],
                 );
 
                 // Save the post to Firebase Realtime Database

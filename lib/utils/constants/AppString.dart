@@ -1,4 +1,5 @@
 class AppStrings {
+
   static String pic1TextHeader = "Track Your Workouts";
   static String pic1TextDetail =
       "Keep a detailed log of all your workouts and progress over time to reach your fitness goals.";

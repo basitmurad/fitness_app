@@ -41,6 +41,7 @@ class _AbsScreenState extends State<AbsScreen> {
   @override
   void initState() {
     super.initState();
+    print('name is ${widget.exerciseType}');
 
     _getImagePath();
     getData();

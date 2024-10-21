@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import '../../models/Post.dart';
 
 
 class SocialScreen extends StatefulWidget {
-   SocialScreen({super.key});
+   const SocialScreen({super.key});
 
   @override
   State<SocialScreen> createState() => _SocialScreenState();
@@ -113,15 +114,28 @@ class PostCard1 extends StatefulWidget {
 }
 
 class _PostCard1State extends State<PostCard1> {
+  final DatabaseReference likesRef = FirebaseDatabase.instance.ref('Likes'); // Reference for likes
+
+  bool _isLiked = false; // User's like status
+  int _likeCount = 0;
   final TextEditingController _commentController = TextEditingController();
   final DatabaseReference databaseReference = FirebaseDatabase.instance.ref('Comments');
-  final DatabaseReference likesRef = FirebaseDatabase.instance.ref('Likes'); // Reference for likes
 
   // List to hold fetched comments
   List<Map<String, dynamic>> comments = [];
 
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchLikeStatus(); // Fetch if the user has liked the post
+    _fetchLikeCount();  // Fetch the total like count
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool dark = MyAppHelperFunctions.isDarkMode(context);
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       color: AppColor.postBackColor,
@@ -202,22 +216,35 @@ class _PostCard1State extends State<PostCard1> {
             children: [
               const SizedBox(width: 12),
               // Like button
-              GestureDetector(
-                onTap: () {
-                  _toggleLike();  // Toggle like status
+              Stack(
 
-                  // setState(() {
-                  //   widget.post.toggleLike();
-                  // });
-                },
-                child: Icon(
-                  widget.post.isLiked
-                      ? CupertinoIcons.heart_fill
-                      : CupertinoIcons.heart,
-                  size: 26,
-                  color:
-                  widget.post.isLiked ? AppColor.orangeColor : null,
-                ),
+                alignment: Alignment.topCenter,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _toggleLike();  // Toggle like status
+                    },
+                    child: Icon(
+                      widget.post.isLiked
+                          ? CupertinoIcons.heart_fill
+                          : CupertinoIcons.heart,
+                      size: 26,
+                      color: widget.post.isLiked ? AppColor.orangeColor : null,
+                    ),
+                  ),
+                  // Display like count above the like button
+                  Positioned(
+                    top: -4,
+                    child: Container(
+                      padding: const EdgeInsets.all(4.0),
+                      decoration: const BoxDecoration(
+                        color: Colors.red, // Background color for the like count
+                        shape: BoxShape.circle, // Circle for like count
+                      ),
+                      child: SimpleTextWidget(text: '$_likeCount', fontWeight: FontWeight.w200, fontSize: 10, color: AppColor.white, fontFamily: 'Poppins')
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(width: 8),
               // Comment button
@@ -338,21 +365,66 @@ class _PostCard1State extends State<PostCard1> {
       },
     );
   }
-// Toggle like status
+
+  void _fetchLikeStatus() {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    String postId = widget.post.id;
+
+    likesRef.child(postId).child(userId).once().then((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        // The user has liked the post
+        setState(() {
+          _isLiked = true;
+        });
+      } else {
+        // The user has not liked the post
+        setState(() {
+          _isLiked = false;
+        });
+      }
+    }).catchError((error) {
+      // Handle error during fetching like status
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load like status: $error')),
+      );
+    });
+  }
+
+  // Fetch the total like count for the post
+  void _fetchLikeCount() {
+    String postId = widget.post.id;
+
+    likesRef.child(postId).onValue.listen((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        // Count the number of likes (children)
+        setState(() {
+          _likeCount = event.snapshot.children.length;
+        });
+      } else {
+        // No likes yet
+        setState(() {
+          _likeCount = 0;
+        });
+      }
+    });
+  }
+
+  // Toggle like status
   void _toggleLike() {
     String userId = FirebaseAuth.instance.currentUser!.uid;
     String postId = widget.post.id;
 
     setState(() {
-      widget.post.isLiked = !widget.post.isLiked;
+      _isLiked = !_isLiked;
     });
 
-    if (widget.post.isLiked) {
+    if (_isLiked) {
       // User likes the post, update Firebase
       likesRef.child(postId).child(userId).set(true).then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Liked the post!')),
         );
+        _fetchLikeCount();  // Update the like count
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to like the post: $error')),
@@ -364,6 +436,7 @@ class _PostCard1State extends State<PostCard1> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Unliked the post!')),
         );
+        _fetchLikeCount();  // Update the like count
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to unlike the post: $error')),
@@ -371,8 +444,6 @@ class _PostCard1State extends State<PostCard1> {
       });
     }
   }
-
-// Fetch comments from Firebase
   void _fetchComments() {
     String postId = widget.post.id;
     String userId = FirebaseAuth.instance.currentUser!.uid;

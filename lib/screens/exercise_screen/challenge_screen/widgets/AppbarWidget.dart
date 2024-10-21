@@ -24,7 +24,7 @@ class AppbarWidget extends StatelessWidget {
         IconButton(
             padding: EdgeInsets.zero,
             onPressed: (){
-          Get.to(const Dashboard());
+          Get.to( Dashboard());
 
         }, icon: Icon(Icons.arrow_back ,color: dark ? AppColor.white :AppColor.black
           ,)),

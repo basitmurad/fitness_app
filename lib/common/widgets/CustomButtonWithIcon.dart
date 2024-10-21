@@ -8,47 +8,49 @@ class CustomButtonWithIcon extends StatelessWidget {
     required this.backColor,
     required this.textColor,
     required this.iconData,
+    required this.onPressed,
   });
 
-  final double height1; // Corrected the type from 'Double' to 'double'
+  final double height1;
   final String buttontext;
-
   final Color backColor;
   final Color textColor;
   final IconData iconData;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: double.infinity,
-      height: height1,
-      decoration: BoxDecoration(
-        color: backColor,
-        borderRadius: BorderRadius.circular(2.0),
-      ),
-      child: Row(
-     crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            iconData,
-            size: 10, color: Colors.white,
-          ),
-          const SizedBox(
-            width: 3,
-          ),
-          Text(
-            buttontext,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  fontSize: 10,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w300,
-                  color: textColor,
-                ),
-          ),
-        ],
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        alignment: Alignment.center,
+        width: double.infinity,
+        height: height1,
+        decoration: BoxDecoration(
+          color: backColor,
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              iconData,
+              size: 12,
+              color: textColor,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              buttontext,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                fontSize: 12,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w400,
+                color: textColor,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

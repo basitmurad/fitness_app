@@ -7,6 +7,7 @@ class UserData {
   String? height;
   String? weight;
   String? targetWeight;
+  String? imageUrl;
 
   UserData({
     this.email,
@@ -17,6 +18,7 @@ class UserData {
     this.height,
     this.weight,
     this.targetWeight,
+    this.imageUrl,
   });
 
   Map<String, dynamic> toJson() {
@@ -29,6 +31,7 @@ class UserData {
       'height': height,
       'weight': weight,
       'targetWeight': targetWeight,
+      'imageUrl': imageUrl,
     };
   }
 }

@@ -1,8 +1,8 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/authentications/select_gender_screen/SelectGenderScreen.dart';
+import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import 'package:fitness/screens/home/chats/chat_user_screen/ChatsUserScreen.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/ChallengedWidget.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/ExerciseWidget.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '../../../common/widgets/CircularImage.dart';
 import '../../../common/widgets/MyAppGridLayout.dart';
 import '../../../utils/constants/AppColor.dart';
 import '../../../utils/constants/AppImagePaths.dart';
@@ -97,20 +98,14 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
+  String? name = '';
+  String? imageUrl = '';
   List<Map<String, dynamic>> usersList = [];
- // List to hold user data
-  List<Map<String, dynamic>> filteredUsersList =
-  [];
- // List to hold filtered user data
-  TextEditingController searchController =
-  TextEditingController();
- // Controller for the search field
-  final String placeholderImageUrl =
-      'https://ttwo.dk/person-placeholder/';
- // Placeholder image URL
-  List<Map<String, dynamic>> followingUsersList =
-  [];
- // List to hold followed users data
+  List<Map<String, dynamic>> filteredUsersList = [];
+  TextEditingController searchController = TextEditingController();
+  final String placeholderImageUrl = 'https://ttwo.dk/person-placeholder/';
+  List<Map<String, dynamic>> followingUsersList = [];
   bool isLoadingFollowing = true;
 
   bool isLoading = true;
@@ -202,7 +197,6 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
-    late FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
     return WillPopScope(
 
@@ -217,7 +211,12 @@ class _DashboardState extends State<Dashboard> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text(AppStrings.dashboard),
+          title: Row(children: [
+            CircularImage(imageUrl: imageUrl!, size: 50,) ,
+            SizedBox(width: 6,),
+            SimpleTextWidget(text: name!, fontWeight: FontWeight.w300, fontSize: 12, color: dark ? AppColor.white : AppColor.black
+                , fontFamily: 'Poppins')
+          ],),
           actions: [
             GestureDetector(
               onTap: (){
@@ -415,14 +414,16 @@ class _DashboardState extends State<Dashboard> {
           height: userDataMap['height'] as String?,
           weight: userDataMap['weight'] as String?,
           targetWeight: userDataMap['targetWeight'] as String?,
+          imageUrl: userDataMap['imageUrl'] as String?,
         );
 
         // Check for missing information
-        if (userData.gender == null || userData.gender!.isEmpty ||
+        if (userData.gender == null || userData.name!.isEmpty ||
             userData.age == null || userData.age!.isEmpty ||
             userData.height == null || userData.height!.isEmpty ||
             userData.weight == null || userData.weight!.isEmpty ||
             userData.targetWeight == null || userData.targetWeight!.isEmpty) {
+
 
           // Show Snackbar notification
           Get.snackbar(
@@ -436,8 +437,14 @@ class _DashboardState extends State<Dashboard> {
           // Navigate to the Gender Selection screen
           Get.to(() => SelectGenderScreen(email: userData.email!, password: ''));
         } else {
+
           // If all data is present, do nothing or proceed as needed
           debugPrint('User Data is complete. No action required.');
+          debugPrint('${userData.name} and ${userData.imageUrl}');
+
+          name = '${userData.name}';
+          imageUrl = '${userData.imageUrl}';
+
           // Optionally print user data here if needed
         }
       } else {
@@ -525,10 +532,8 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
-  void onFollow(
-      String followedUserId, String followedUserName, String imageUrl) async {
-    final User? currentUser =
-        FirebaseAuth.instance.currentUser; // Get current logged-in user
+  void onFollow(String followedUserId, String followedUserName, String imageUrl) async {
+    final User? currentUser = FirebaseAuth.instance.currentUser; // Get current logged-in user
     if (currentUser == null) {
       if (kDebugMode) {
         print("User not logged in.");

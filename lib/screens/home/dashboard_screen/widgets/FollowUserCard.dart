@@ -29,7 +29,7 @@ class FollowUserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColor.white.withOpacity(0.9),
+        color: AppColor.white.withOpacity(0.5),
         borderRadius: BorderRadius.circular(6.0),
       ),
       child: Column(
@@ -46,7 +46,7 @@ class FollowUserCard extends StatelessWidget {
               imagePath,
               height: 70,
               width: 155,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child; // Return the child if loading is done
                 return Center(

@@ -1,6 +1,7 @@
 class UserData {
   String? email;
   String? name;
+  String? userFcmToken;
   String? gender;
   String? age;
   String? height;
@@ -10,6 +11,7 @@ class UserData {
   UserData({
     this.email,
     this.name,
+    this.userFcmToken,
     this.gender,
     this.age,
     this.height,
@@ -21,6 +23,7 @@ class UserData {
     return {
       'email': email,
       'name': name,
+      'userFcmToken': userFcmToken,
       'gender': gender,
       'age': age,
       'height': height,

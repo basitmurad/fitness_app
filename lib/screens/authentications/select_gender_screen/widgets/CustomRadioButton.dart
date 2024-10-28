@@ -6,7 +6,7 @@ class CustomRadioButton extends StatelessWidget {
   final String iconPath;
   final String selectedIconPath;
 
-  CustomRadioButton({
+  const CustomRadioButton({super.key,
     required this.isSelected,
     required this.onTap,
     required this.iconPath,

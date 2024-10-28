@@ -67,11 +67,7 @@ class GenderWidget extends StatelessWidget {
               opacity: otherSelected ? 0.3 : 1.0,
               child: Column(
                 children: [
-                  // Image.asset(
-                  //   imagePath!,
-                  //   height: AppDevicesUtils.getScreenWidth(context) * 1.2,
-                  //   width: AppDevicesUtils.getScreenWidth(context) * 0.3,
-                  // ),
+
                   SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

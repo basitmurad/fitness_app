@@ -1,6 +1,8 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fitness/screens/authentications/select_gender_screen/SelectGenderScreen.dart';
 import 'package:fitness/screens/home/chats/chat_user_screen/ChatsUserScreen.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/ChallengedWidget.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/ExerciseWidget.dart';
@@ -18,6 +20,7 @@ import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
 import '../../authentications/login_screen/LoginScreen.dart';
 import '../../exercise_screen/abs_screen/AbsScreen.dart';
+import '../../modelClass/UserData .dart';
 import '../social/post_screen/AddPostScreen.dart';
 
 
@@ -187,11 +190,15 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
+
+    fetchUserData(context);
     fetchFollowedUsers(); // Fetch the followed users
 
     fetchUsers(); // Fetch users when the widget is initialized
 
   }
+
+
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
@@ -385,6 +392,62 @@ class _DashboardState extends State<Dashboard> {
     return gender; // Return the determined gender
   }
 
+
+  Future<void> fetchUserData(BuildContext context) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    String? userId = user?.uid; // Get user ID
+    final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+
+    try {
+      DataSnapshot snapshot = await databaseReference.child('users/$userId').get();
+
+      if (snapshot.exists && snapshot.value is Map) {
+        Map<Object?, Object?> userDataMap = snapshot.value as Map<Object?, Object?>;
+
+        // Create an instance of UserData from the retrieved data
+        UserData userData = UserData(
+          email: userDataMap['email'] as String?,
+          name: userDataMap['name'] as String?,
+          userFcmToken: userDataMap['userFcmToken'] as String?,
+          gender: userDataMap['gender'] as String?,
+          age: userDataMap['age'] as String?,
+          height: userDataMap['height'] as String?,
+          weight: userDataMap['weight'] as String?,
+          targetWeight: userDataMap['targetWeight'] as String?,
+        );
+
+        // Check for missing information
+        if (userData.gender == null || userData.gender!.isEmpty ||
+            userData.age == null || userData.age!.isEmpty ||
+            userData.height == null || userData.height!.isEmpty ||
+            userData.weight == null || userData.weight!.isEmpty ||
+            userData.targetWeight == null || userData.targetWeight!.isEmpty) {
+
+          // Show Snackbar notification
+          Get.snackbar(
+            "Missing Information",
+            "Some information is missing. Please select your gender.",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+
+          // Navigate to the Gender Selection screen
+          Get.to(() => SelectGenderScreen(email: userData.email!, password: ''));
+        } else {
+          // If all data is present, do nothing or proceed as needed
+          debugPrint('User Data is complete. No action required.');
+          // Optionally print user data here if needed
+        }
+      } else {
+        debugPrint("No user data found or data is not in the expected format.");
+      }
+    } catch (e) {
+      debugPrint('Error fetching user data: ${e.toString()}');
+    }
+  }
+
   Future<void> fetchUsers() async {
     final DatabaseReference usersRef = FirebaseDatabase.instance.ref('users'); // Reference to the 'users' node
     final User? currentUser = FirebaseAuth.instance.currentUser; // Get the current logged-in user
@@ -504,5 +567,7 @@ class _DashboardState extends State<Dashboard> {
       }
     }
   }
+
+
 
 }

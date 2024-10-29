@@ -214,7 +214,7 @@ class _DashboardState extends State<Dashboard> {
           title: Row(children: [
             CircularImage(imageUrl: imageUrl!, size: 50,) ,
             SizedBox(width: 6,),
-            SimpleTextWidget(text: name!, fontWeight: FontWeight.w300, fontSize: 12, color: dark ? AppColor.white : AppColor.black
+            SimpleTextWidget(text: name!, fontWeight: FontWeight.w300, fontSize: 12, color: dark ? Colors.white : AppColor.white
                 , fontFamily: 'Poppins')
           ],),
           actions: [
@@ -253,6 +253,50 @@ class _DashboardState extends State<Dashboard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
+                Container(
+                  width: MyAppHelperFunctions.screenWidth() * 0.95,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: dark ? AppColor.grey.withOpacity(0.1) : AppColor.grey.withOpacity(0.3),
+                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SimpleTextWidget(
+                          text: 'Your weekly progress',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 13,
+                          color: dark ? AppColor.white : AppColor.black,
+                          fontFamily: 'Poppins',
+                          align: TextAlign.start,
+                        ),
+                        const SizedBox(height: 8), // Add space between the text and the row
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Distribute space evenly
+                          children: [
+
+
+
+                            ProgressContainer(
+                              iconPath: AppImagePaths.kcalicon,
+                              label: 'Workout',
+                              value: '5 sessions',
+                            ),
+
+
+
+
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                ,
                 const SizedBox(height: AppSizes.inputFieldRadius),
                 ChallengedWidget(dark: dark),
                 const SizedBox(height: AppSizes.inputFieldRadius - 5),
@@ -573,6 +617,26 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
+}
+class ProgressContainer extends StatelessWidget {
+  final String iconPath;
+  final String label;
+  final String value;
 
+  ProgressContainer({required this.iconPath, required this.label, required this.value});
 
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Image.asset(
+          iconPath,
+          width: 40, // Adjust the size as needed
+          height: 40, // Adjust the size as needed
+        ),
+        Text(label),
+        Text(value),
+      ],
+    );
+  }
 }

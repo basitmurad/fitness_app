@@ -1,4 +1,3 @@
-import 'package:fitness/screens/authentications/email_verification_screen/EmailVerificationScreen.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/constants/AppString.dart';
 import 'package:flutter/material.dart';

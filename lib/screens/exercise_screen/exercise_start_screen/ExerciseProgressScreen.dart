@@ -19,17 +19,20 @@ class ExerciseProgressScreen extends StatefulWidget {
   const ExerciseProgressScreen({
     super.key,
     required this.exerciseType,
-    required this.gender,
+    required this.gender,required this.exerciseName,
   });
 
   final String exerciseType;
   final String gender;
+  final exerciseName;
 
   @override
   _ExerciseProgressScreenState createState() => _ExerciseProgressScreenState();
 }
 
 class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
+
+
   List<Map<String, String>> exerciseList = []; // Store the retrieved exercises
   bool isLoading = true; // Show loading while retrieving data
   final ExerciseProgressController controller =
@@ -47,6 +50,7 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
   @override
   void initState() {
     super.initState();
+    print(' detail of exercise is ${widget.exerciseType}  ${widget.exerciseName} ${widget.gender} ');
     _loadExercises(); // Load exercises when the screen is initialized
   }
 
@@ -84,7 +88,7 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
       Map<String, String> exercise =
           exerciseList[index]; // Get the current exercise
       firstExerciseName = exercise["exerciseName"] ?? "N/A"; // Set exerciseName
-      firstExerciseDuration = exercise["durations"] ?? "N/A"; // Set durations
+      firstExerciseDuration = exercise["durarions"] ?? "20"; // Set durations
       imageurl = exercise["musclePath"] ?? "N/A"; // Set durations
 
       print('image url is progreee su s $imageurl');
@@ -105,33 +109,38 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
     }
   }
 
-  @override
-  void dispose() {
-    countdownTimer.cancel(); // Cancel the timer if the widget is disposed
-    super.dispose();
-  }
   void startCountdown() {
     if (firstExerciseDuration.isNotEmpty &&
         RegExp(r'^\d+$').hasMatch(firstExerciseDuration)) {
-      remainingDuration = Duration(seconds: int.parse(firstExerciseDuration)); // Set remaining duration
-      hasStarted = true; // Set hasStarted to true
+      remainingDuration = Duration(seconds: int.parse(firstExerciseDuration));
+      hasStarted = true;
 
       countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
         setState(() {
           if (remainingDuration.inSeconds > 0) {
             remainingDuration = remainingDuration - const Duration(seconds: 1);
           } else {
-            timer.cancel(); // Stop the timer when it reaches zero
-            hasStarted = false; // Reset hasStarted when the timer ends
-            controller.toggleButton(); // Show the Start button again
+            timer.cancel();
+            hasStarted = false;
+            controller.isStartButtonVisible.value = true;
           }
         });
       });
-    } else {
-      // Handle the case where the duration is invalid
-      print('Invalid exercise duration: $firstExerciseDuration');
-      // You may want to show an error message to the user or set a default duration
     }
+  }
+
+  void pauseCountdown() {
+    if (countdownTimer.isActive) {
+      countdownTimer.cancel();
+      hasStarted = false;
+      controller.isStartButtonVisible.value = true;
+    }
+  }
+
+  @override
+  void dispose() {
+    countdownTimer.cancel();
+    super.dispose();
   }
 
 
@@ -144,6 +153,7 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
+    String remainingTimeString = '${remainingDuration.inMinutes}:${(remainingDuration.inSeconds.remainder(60)).toString().padLeft(2, '0')}';
 
     return Scaffold(
       bottomNavigationBar: Obx(() {
@@ -156,53 +166,24 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Start Button
-                if (controller.isStartButtonVisible.value) // Show Start button if visible
+                if (controller.isStartButtonVisible.value)
                   Expanded(
                     child: ButtonWidget(
                       dark: dark,
                       onPressed: () {
-                        // Start the countdown
                         startCountdown();
-                        controller.isStartButtonVisible.value = false; // Hide Start button
+                        controller.isStartButtonVisible.value = false;
                       },
                       buttonText: 'Start',
                     ),
                   ),
-                // Pause Button
-                if (!controller.isStartButtonVisible.value) // Show Pause button if Start is hidden
+                if (!controller.isStartButtonVisible.value)
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        hasStarted = false; // Reset hasStarted when paused
-                        countdownTimer.cancel(); // Cancel the timer
-                        controller.isStartButtonVisible.value = true; // Show Start button again
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColor.orangeColor,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.pause, color: Colors.white),
-                            Text(
-                              'Pause',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                color: AppColor.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    child: ButtonWidget(
+                      dark: dark,
+                      backColor: AppColor.black,
+                      onPressed: pauseCountdown,
+                      buttonText: 'Pause',
                     ),
                   ),
               ],
@@ -210,6 +191,7 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
           ),
         );
       }),
+
 
       body: Padding(
         padding:  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -292,10 +274,7 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
 
               const SizedBox(height: AppSizes.appBarHeight),
               CircleWithText(
-                text: hasStarted
-                    ? remainingDuration.inSeconds
-                        .toString() // Display remaining time if started
-                    : reps,
+                text: remainingTimeString,
                 // Display reps if not started
                 size: 144.0,
                 borderColor: AppColor.orangeColor,
@@ -304,6 +283,16 @@ class _ExerciseProgressScreenState extends State<ExerciseProgressScreen> {
                 borderWidth: 12.0,
               ),
               const SizedBox(height: AppSizes.spaceBtwItems + 10),
+              Container(
+                alignment: Alignment.center,
+                child: SimpleTextWidget(
+                  text: reps,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: dark ? AppColor.white : AppColor.black,
+                  fontFamily: 'Poppins',
+                ),
+              ),
               Container(
                 alignment: Alignment.center,
                 child: SimpleTextWidget(

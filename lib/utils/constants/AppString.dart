@@ -162,35 +162,6 @@ class AppStrings {
 
 
 
-// Future<void> fetchExerciseChild(String exerciseName) async {
-//   // Reference to the Firebase Database
-//   final DatabaseReference databaseRef =
-//   FirebaseDatabase.instance.ref('Exercise/$exerciseName');
-//
-//   try {
-//     // Fetch data once
-//     DataSnapshot snapshot = await databaseRef.get();
-//
-//     if (snapshot.exists) {
-//       // Get child keys and values
-//       final exerciseChildData = snapshot.value as Map<dynamic, dynamic>;
-//
-//       print('Child data under $exerciseName:');
-//       exerciseChildData.forEach((key, value) {
-//         print('$key: $value');
-//       });
-//
-//       // If you need to handle specific children, access them like this:
-//       if (exerciseChildData.containsKey('someChildKey')) {
-//         print('Specific child data: ${exerciseChildData['someChildKey']}');
-//       }
-//     } else {
-//       print('No data found for $exerciseName');
-//     }
-//   } catch (error) {
-//     print('Error fetching child data: $error');
-//   }
-// }
 
 
 }

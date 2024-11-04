@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fitness/common/widgets/ButtonWidget.dart';
 import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import 'package:fitness/screens/home/chats/chat_user_screen/ChatsUserScreen.dart';
 import 'package:fitness/screens/home/controller/DashboardController.dart';
@@ -45,7 +44,7 @@ List<Map<String, String>> maleExercise = [
   },
   {
     'imagePath': AppImagePaths.maleLegWorkout,
-    'exerciseName': 'Legs Workout',
+    'exerciseName': 'leg Workout',
     'exerciseRepetition': '06 Exercise',
   },
   {
@@ -77,7 +76,7 @@ List<Map<String, String>> femaleExercises = [
   },
   {
     'imagePath': AppImagePaths.femaleLegWorkout,
-    'exerciseName': 'Legs Workout',
+    'exerciseName': 'leg Workout',
     'exerciseRepetition': '06 Exercise',
   },
   {
@@ -108,64 +107,85 @@ class _DashboardState extends State<Dashboard> {
   List<Map<String, dynamic>> usersList = [];
   List<Map<String, dynamic>> filteredUsersList = [];
   TextEditingController searchController = TextEditingController();
-  final String placeholderImageUrl = 'https://ttwo.dk/person-placeholder/';
   List<Map<String, dynamic>> followingUsersList = [];
   bool isLoadingFollowing = true;
 
   bool isLoading = true;
 
-  late Stream<StepCount> _stepCountStream; // Stream for step count
-  int stepCount = 0; // Initialize step count
-  bool isRunning = false; // Track running state
+  bool isRunning = false;
+  int elapsedTime = 0; // Elapsed time in seconds
+  Timer? timer;
+  int steps = 0;
+  double caloriesBurned = 0.0; // Calories burned counter
+// Steps counter
+  Stream<StepCount>? _stepCountStream; // Stream to listen to step counts
 
-  // Variables for calculating values
-  String totalTime = '0h 0m';
-  String distanceCovered = '0 miles';
-  String caloriesBurned = '0 Kcal';
-  final int stepsPerMile = 2000; // Average steps in a mile
-  final int kcalPerMile = 100; // Calories burned per mile
-  int elapsedTime = 0; // Elapsed time for running
 
-  // Initialize the pedometer and start listening
-  void startRunning() {
+
+  // Start the timer
+  void startTimer() {
+    if (isRunning) return; // Prevent restarting if already running
     isRunning = true;
-    elapsedTime = 0; // Reset elapsed time
-    stepCount = 0; // Reset step count
+    elapsedTime = 0; // Reset time
+    steps = 0; // Reset steps count
 
+    // Initialize step count stream
     _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream.listen((StepCount event) {
+    _stepCountStream?.listen((StepCount stepCount) {
       setState(() {
-        stepCount = event.steps; // Update step count from pedometer
-        // Update calculated values
-        totalTime = formatElapsedTime(elapsedTime);
-        distanceCovered = (stepCount / stepsPerMile).toStringAsFixed(2) + ' miles';
-        caloriesBurned = ((stepCount / stepsPerMile) * kcalPerMile).toStringAsFixed(0) + ' Kcal';
+        steps = stepCount.steps; // Update steps count
+        caloriesBurned = calculateCalories(steps); // Update calories
       });
     });
 
-    Timer.periodic(Duration(seconds: 1), (Timer t) {
-      if (isRunning) {
-        setState(() {
-          elapsedTime++; // Increment elapsed time
-        });
-      }
+    // Start timer for elapsed time
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      setState(() {
+        elapsedTime++; // Increment elapsed time
+      });
     });
   }
 
-  void stopRunning() {
-    isRunning = false; // Stop running
-  }
 
+
+  // Convert elapsed time to a readable format
   String formatElapsedTime(int seconds) {
     int hours = seconds ~/ 3600;
     int minutes = (seconds % 3600) ~/ 60;
-    return '${hours}h ${minutes}m';
+    int secs = seconds % 60;
+    return '${hours}h ${minutes}m ${secs}s'; // Show hours, minutes, and seconds
+  }
+
+
+  // Calculate calories burned based on steps
+  double calculateCalories(int steps) {
+    const double caloriesPerStep = 0.05; // Example factor for calorie calculation
+    return steps * caloriesPerStep;
+  }
+  void stopTimer() {
+    isRunning = false;
+    timer?.cancel(); // Stop the timer
+  }
+
+  void clearData() {
+    stopTimer(); // Stop any running timer
+    setState(() {
+      elapsedTime = 0;
+      steps = 0;
+      caloriesBurned = 0.0; // Reset calories
+    });
   }
 
   @override
   void initState() {
     super.initState();
-
+    _stepCountStream = Pedometer.stepCountStream;
+    _stepCountStream?.listen((StepCount stepCount) {
+      setState(() {
+        steps += stepCount.steps; // Update steps with the latest count
+        caloriesBurned = calculateCalories(steps); // Calculate calories burned
+      });
+    });
     dashboardController.fetchUserData(); // Fetch user data from the controller
 
     fetchFollowedUsers(); // Fetch the followed users
@@ -192,9 +212,11 @@ class _DashboardState extends State<Dashboard> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Row(children: [
-            CircularImage(imageUrl: dashboardController.imageUrl!, size: 50,) ,
+            CircularImage(imageUrl: dashboardController.imageUrl ?? AppImagePaths.placeholder1, size: 50)
+,
+            // CircularImage(imageUrl: dashboardController.imageUrl!, size: 50,) ,
             SizedBox(width: 6,),
-            SimpleTextWidget(text: dashboardController.name!, fontWeight: FontWeight.w400, fontSize: 14, color: dark ? Colors.white : AppColor.black
+            SimpleTextWidget(text: dashboardController.name!, fontWeight: FontWeight.w500, fontSize: 14, color: dark ? Colors.white : AppColor.black
                 , fontFamily: 'Poppins')
           ],),
           actions: [
@@ -259,21 +281,23 @@ class _DashboardState extends State<Dashboard> {
                           children: [
                             ProgressContainer(
                               iconPath: AppImagePaths.kcalicon,
-                              label: caloriesBurned, // Updated to show calories
+                              label: '${caloriesBurned.toStringAsFixed(2)} kcal', // Show calories
                               value: 'Kcal',
                             ),
                             ProgressContainer(
                               iconPath: AppImagePaths.clock,
-                              label: totalTime, // Updated to show elapsed time
+                              label: formatElapsedTime(elapsedTime), // Show elapsed time
                               value: 'Time',
                             ),
                             ProgressContainer(
                               iconPath: AppImagePaths.location,
-                              label: stepCount.toString(), // Updated to show steps
+                              label: '$steps', // Show steps count
                               value: 'Steps',
                             ),
                           ],
                         ),
+
+
                       ],
                     ),
                   ),
@@ -310,160 +334,84 @@ class _DashboardState extends State<Dashboard> {
                           align: TextAlign.start,
                         ),
                         const SizedBox(height: 8),
-                        Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              if (!isRunning) {
-                                startRunning(); // Start running if not already running
-                              } else {
-                                stopRunning(); // Stop running if already running
-                              }
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 30,
-                              width: MyAppHelperFunctions.screenWidth() * 0.5,
-                              decoration: BoxDecoration(
-                                color: AppColor.orangeColor,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: SimpleTextWidget(
-                                align: TextAlign.center,
-                                text: isRunning ? 'Stop Run' : 'Record a Run',
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12,
-                                color: dark ? AppColor.black : AppColor.white,
-                                fontFamily: 'Poppins',
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => startTimer(), // Start timer and track steps
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: AppColor.orangeColor,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: SimpleTextWidget(
+                                    align: TextAlign.center,
+                                    text: 'Record a Run',
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 12,
+                                    color: dark ? AppColor.black : AppColor.white,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => stopTimer(), // Stop timer
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: AppColor.error,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: SimpleTextWidget(
+                                    align: TextAlign.center,
+                                    text: 'Stop Run',
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 12,
+                                    color: dark ? AppColor.black : AppColor.white,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => clearData(), // Clear all data
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: AppColor.blueColor,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: SimpleTextWidget(
+                                    align: TextAlign.center,
+                                    text: 'Clear Data',
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 12,
+                                    color: dark ? AppColor.black : AppColor.white,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+
+
+
                       ],
                     ),
                   ),
                 ),
 
-//
-//                 Container(
-//                   width: MyAppHelperFunctions.screenWidth() * 0.95,
-//                   height: 150,
-//                   decoration: BoxDecoration(
-//                     color: dark ? AppColor.grey.withOpacity(0.1) : AppColor.grey.withOpacity(0.3),
-//                     borderRadius: const BorderRadius.all(Radius.circular(6)),
-//                   ),
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         SimpleTextWidget(
-//                           text: 'Your weekly progress',
-//                           fontWeight: FontWeight.w300,
-//                           fontSize: 13,
-//                           color: dark ? AppColor.white : AppColor.black,
-//                           fontFamily: 'Poppins',
-//                           align: TextAlign.start,
-//                         ),
-//                         const SizedBox(height: 8), // Add space between the text and the row
-//                         Row(
-//                           mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Distribute space evenly
-//                           children: [
-//
-//
-//
-//                             ProgressContainer(
-//                               iconPath: AppImagePaths.kcalicon,
-//                               label: '$kcalPerMile',
-//                               value: 'Kcal',
-//                             ),
-//                             ProgressContainer(
-//                               iconPath: AppImagePaths.clock,
-//                               label: '$totalTime',
-//                               value: 'Time',
-//                             ),
-//                             ProgressContainer(
-//                               iconPath: AppImagePaths.location,
-//                               label: '$stepsPerMile',
-//                               value: 'Distance',
-//                             ),
-//
-//
-//
-//
-//                           ],
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 )
-//                 ,
-//                 const SizedBox(height: AppSizes.inputFieldRadius),
-//
-//
-//                 Container(
-//                   width: MyAppHelperFunctions.screenWidth() * 0.95,
-//                   height: 120,
-//                   decoration: BoxDecoration(
-//                     color: dark ? AppColor.grey.withOpacity(0.1) : AppColor.grey.withOpacity(0.3),
-//                     borderRadius: const BorderRadius.all(Radius.circular(6)),
-//                   ),
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start, // Aligns text to the start
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween, // Distributes space between children
-//                       children: [
-//                         SimpleTextWidget(
-//                           text: 'Ready to move forward, Kami?',
-//                           fontWeight: FontWeight.w500,
-//                           fontSize: 12,
-//                           color: dark ? AppColor.white : AppColor.black,
-//                           fontFamily: 'Poppins',
-//                           align: TextAlign.start,
-//                         ),
-//                         SimpleTextWidget(
-//                           text: 'Every step brings you closer to your goals—keep moving and stay motivated!',
-//                           fontWeight: FontWeight.w300,
-//                           fontSize: 10,
-//                           color: dark ? AppColor.white : AppColor.black,
-//                           fontFamily: 'Poppins',
-//                           align: TextAlign.start,
-//                         ),
-//                         const SizedBox(height: 8),
-//                         // Center the button in the remaining space
-//                         Center(
-//                           child: GestureDetector(
-//                             onTap: () {
-//                               if (!isRunning) {
-//                                 startRunning(); // Start running if not already running
-//                               } else {
-//                                 stopRunning(); // Stop running if already running
-//                               }
-//                             },
-//                             child: Container(
-//                               alignment: Alignment.center,
-//                               height: 30,
-//                               width: MyAppHelperFunctions.screenWidth() * 0.5,
-//                               decoration: BoxDecoration(
-//                                 color: AppColor.orangeColor,
-//                                 borderRadius: BorderRadius.circular(16),
-//                               ),
-//                               child: SimpleTextWidget(
-//                                 align: TextAlign.center,
-//                                 text: isRunning ? 'Stop Run' : 'Record a Run',
-//                                 fontWeight: FontWeight.w300,
-//                                 fontSize: 12,
-//                                 color: dark ? AppColor.black : AppColor.white,
-//                                 fontFamily: 'Poppins',
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 )
-// ,
                 const SizedBox(height: AppSizes.inputFieldRadius),
                 ChallengedWidget(dark: dark),
                 const SizedBox(height: AppSizes.inputFieldRadius - 5),
@@ -607,7 +555,7 @@ class _DashboardState extends State<Dashboard> {
           // value contains the followed user data (e.g., name, imageUrl)
           final followedUserId = key;
           final followedUserName = value['name'];
-          final followedUserImageUrl = value['imageUrl'] ?? placeholderImageUrl;
+          final followedUserImageUrl = value['imageUrl'] ?? AppImagePaths.placeholder1;
 
           // Add followed user data to the list
           followingUsersList.add({
@@ -676,7 +624,7 @@ class _DashboardState extends State<Dashboard> {
 
           final userId = key;
           final userName = value['name']; // Adjust according to your data structure
-          final userImageUrl = value['imageUrl'] ?? placeholderImageUrl; // Get image URL or use placeholder
+          final userImageUrl = value['imageUrl'] ?? AppImagePaths.placeholder1; // Get image URL or use placeholder
 
           // Add user data to the list only if it's not the current user and not followed
           if (userId != currentUser.uid && !_isUserFollowed(userId)) {

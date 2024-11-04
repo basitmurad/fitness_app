@@ -22,22 +22,50 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     super.initState();
     _checkEmailVerification();
   }
-
   Future<void> _checkEmailVerification() async {
     User? user = firebaseAuth.currentUser;
+    int attempts = 0;
+    const int maxAttempts = 12; // Check for 1 minute (12 x 5 seconds)
 
     if (user != null) {
-      // Polling every 5 seconds to check if the email is verified
-      while (!user!.emailVerified) {
+      while (attempts < maxAttempts) {
         await Future.delayed(const Duration(seconds: 5));
-        await user.reload();
-        user = firebaseAuth.currentUser; // Get updated user
+        await user?.reload(); // Ensure this is only called if user is not null
+
+        user = firebaseAuth.currentUser; // Refresh user to get updated properties
+        if (user != null && user.emailVerified) {
+          // Navigate to SelectGenderScreen after verification
+          Get.off(() => SelectGenderScreen(email: widget.email, password: widget.password));
+          return; // Exit the loop once verified
+        }
+        attempts++;
       }
 
-      // Navigate to SelectGenderScreen after verification
-      Get.off(() => SelectGenderScreen(email: widget.email, password: widget.password));
+      // If email is not verified after max attempts, show a message
+      if (user != null && !user.emailVerified) {
+        _showSnackbar('Email verification is still pending. Please try again later.');
+      }
+    } else {
+      _showSnackbar('User is not logged in. Please sign in again.');
     }
   }
+
+
+  // Future<void> _checkEmailVerification() async {
+  //   User? user = firebaseAuth.currentUser;
+  //
+  //   if (user != null) {
+  //     // Polling every 5 seconds to check if the email is verified
+  //     while (!user!.emailVerified) {
+  //       await Future.delayed(const Duration(seconds: 5));
+  //       await user.reload();
+  //       user = firebaseAuth.currentUser; // Get updated user
+  //     }
+  //
+  //     // Navigate to SelectGenderScreen after verification
+  //     Get.off(() => SelectGenderScreen(email: widget.email, password: widget.password));
+  //   }
+  // }
 
   Future<void> _resendVerificationEmail() async {
     User? user = firebaseAuth.currentUser;
@@ -94,10 +122,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             const SizedBox(height: 40),
             ElevatedButton(
               onPressed: _checkEmailVerification,
-              child: const Text('Verify'),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
               ),
+              child: const Text('Verify'),
             ),
             const SizedBox(height: 20),
             TextButton(

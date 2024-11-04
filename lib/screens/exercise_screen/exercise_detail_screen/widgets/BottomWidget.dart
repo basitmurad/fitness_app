@@ -27,27 +27,28 @@ class BottomWidget extends StatelessWidget {
 
 
       ),
-      child: Row(
+      child:
+      Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 
-          SizedBox(
-            width: 150,
-            height: 34,
-            child:
-
-            CenteredTextWithIconsRow(
-              text: '1',
-
-              leftIcon: AppImagePaths.right,
-              rightIcon: AppImagePaths.right,
-              text1: '/'+'09', textColor: dark ? AppColor.white :AppColor.black, onLeftIconPressed: () {  }, onRightIconPressed: () {  }, leftIconAngle: 0, rightIconAngle: 3.15,
-            ),
-
-
-
-          ),
+          // SizedBox(
+          //   width: 150,
+          //   height: 34,
+          //   child:
+          //
+          //   CenteredTextWithIconsRow(
+          //     text: '1',
+          //
+          //     leftIcon: AppImagePaths.right,
+          //     rightIcon: AppImagePaths.right,
+          //     text1: '/'+'09', textColor: dark ? AppColor.white :AppColor.black, onLeftIconPressed: () {  }, onRightIconPressed: () {  }, leftIconAngle: 0, rightIconAngle: 3.15,
+          //   ),
+          //
+          //
+          //
+          // ),
 
           GestureDetector(
             onTap: ()=> Get.back(),

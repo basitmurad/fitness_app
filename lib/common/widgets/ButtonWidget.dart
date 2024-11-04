@@ -31,7 +31,7 @@ class ButtonWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             side: const BorderSide(
               color: Colors.transparent, // Transparent border color
-              width: 2,
+              width: 0,
             ),
             borderRadius: BorderRadius.circular(6), // Radius: 6px
           ),

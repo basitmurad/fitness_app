@@ -74,7 +74,7 @@ class ExerciseDetailScreenController extends GetxController  {
 
     try {
       await databaseReference.update({
-        'durarions': newDuration.toString(), // Save duration as string
+        'durations': newDuration.toString(), // Save duration as string
       });
       print('Duration updated to: $newDuration seconds');
     } catch (error) {

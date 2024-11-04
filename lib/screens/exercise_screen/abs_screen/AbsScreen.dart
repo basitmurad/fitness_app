@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -104,6 +103,9 @@ class _AbsScreenState extends State<AbsScreen> {
           String? durations = child.child("durations").value?.toString(); // Fixed typo from "durarions" to "durations"
           String? musclePath;
 
+
+
+
           // Access the multimedia node to get musclePath based on gender
           if (widget.gender.toLowerCase() == 'female') {
             musclePath = child.child("multimedia").child("female").child("musclePath").value?.toString(); // Updated path
@@ -117,7 +119,7 @@ class _AbsScreenState extends State<AbsScreen> {
             fetchedExercises.add({
               "exerciseName": child.key!,
               "exerciseRepetition": repetition,
-              "durations": durations ?? 'N/A',
+              "durarions": durations ?? 'N/A',
               "musclePath": musclePath ?? 'N/A', // Default to 'N/A' if musclePath is null
             });
 
@@ -274,19 +276,31 @@ class _AbsScreenState extends State<AbsScreen> {
                 const Text('No exercises found.'),
 
               const SizedBox(height: AppSizes.appBarHeight - 20),
-              // Start Button
+
               SizedBox(
                 width: double.infinity,
                 child: ButtonWidget(
                   dark: dark,
                   onPressed: () {
-                    Get.to(ExerciseProgressScreen(
-                      gender: widget.gender, exerciseType: widget.exerciseType,
-                    ));
+                    // Fetch the current exercise details, assuming index 0 for this example
+                    final exercise = exerciseList.isNotEmpty ? exerciseList[0] : null; // Modify index as needed
+                    if (exercise != null) {
+                      Get.to(
+                        ExerciseProgressScreen(
+                          gender: widget.gender,
+                          exerciseType: widget.exerciseType,
+                           exerciseName: exercise["exerciseName"]!, // Pass exercise name
+                        ),
+                      );
+                    } else {
+                      // Handle the case where no exercise is available
+                      Get.snackbar('Error', 'No exercise selected');
+                    }
                   },
                   buttonText: 'Start',
                 ),
               ),
+
             ],
           ),
         ),
@@ -313,7 +327,7 @@ class _AbsScreenState extends State<AbsScreen> {
           ? AppImagePaths.femaleArmWorkout
           : AppImagePaths.maleArmWorkout;
     }
-    if (widget.exerciseType.contains('Legs Workout')) {
+    if (widget.exerciseType.contains('leg Workout')) {
       return widget.gender == 'female'
           ? AppImagePaths.femaleLegWorkout
           : AppImagePaths.maleLegWorkout;

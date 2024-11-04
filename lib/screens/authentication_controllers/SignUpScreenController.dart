@@ -57,7 +57,6 @@ class SignUpController extends GetxController {
   void toggleConfirmPasswordVisibility() {
     isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
   }
-
   Future<void> signUp() async {
     print('Data is being saved');
 
@@ -68,18 +67,7 @@ class SignUpController extends GetxController {
     );
 
     try {
-      await UserPreferences.saveUserData(
-        email: emailController.text,
-        password: passwordController.text,
-        gender: '',
-        name: '',
-        age: 0,
-        height: '',
-        weight: '',
-        targetWeight: '',
-        mainGoal: '',
-      );
-
+      // Create user with email and password
       UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
@@ -87,30 +75,27 @@ class SignUpController extends GetxController {
 
       // Send verification email
       await userCredential.user!.sendEmailVerification();
-      UserData userData = UserData(
-              email: emailController.text,
-              name: '',
-              gender: '',
-              age: '',
-              height: '',
-              weight: '',
-              targetWeight: '',
-            );
+      print('Verification email sent');
 
-            // Upload user data to Firebase Realtime Database
-            await databaseReference.child('users/${userCredential.user!.uid}').set(userData.toJson());
-
-      // Notify user
+      // Notify user about the email sent
       setMessage('Success', 'Verification email sent. Please check your inbox.', Colors.blue);
-      Get.to(EmailVerificationScreen(email: emailController.text, password: passwordController.text));
+
+      // Navigate to the EmailVerificationScreen after successful email sending
+      Get.to(EmailVerificationScreen(
+        email: emailController.text,
+        password: passwordController.text,
+      ));
+      print('Navigated to EmailVerificationScreen');
+
     } catch (e) {
+      // Show error message if any exception occurs
       setMessage('Error', e.toString(), Colors.redAccent);
       print('Error: ${e.toString()}');
     } finally {
-      Get.back(); // Dismiss the progress dialog
+      // Dismiss the progress dialog
+      Get.back();
     }
   }
-
 
   // Future<void> signUp() async {
   //   print('Data is being saved');
@@ -118,21 +103,11 @@ class SignUpController extends GetxController {
   //   // Show progress dialog
   //   Get.dialog(
   //     const Center(child: CircularProgressIndicator()),
-  //     barrierDismissible: false, // Prevent dismissing the dialog by tapping outside
+  //     barrierDismissible: false,
   //   );
   //
   //   try {
-  //     await UserPreferences.saveUserData(
-  //       email: emailController.text,
-  //       password: passwordController.text,
-  //       gender: '',
-  //       name: '',
-  //       age: 0,
-  //       height: '',
-  //       weight: '',
-  //       targetWeight: '',
-  //       mainGoal: '',
-  //     );
+  //
   //
   //     UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
   //       email: emailController.text,
@@ -142,17 +117,17 @@ class SignUpController extends GetxController {
   //     // Send verification email
   //     await userCredential.user!.sendEmailVerification();
   //     UserData userData = UserData(
-  //       email: emailController.text,
-  //       name: '',
-  //       gender: '',
-  //       age: '',
-  //       height: '',
-  //       weight: '',
-  //       targetWeight: '',
-  //     );
+  //             email: emailController.text,
+  //             name: '',
+  //             gender: '',
+  //             age: '',
+  //             height: '',
+  //             weight: '',
+  //             targetWeight: '',
+  //           );
   //
-  //     // Upload user data to Firebase Realtime Database
-  //     await databaseReference.child('users/${userCredential.user!.uid}').set(userData.toJson());
+  //           // Upload user data to Firebase Realtime Database
+  //           await databaseReference.child('users/${userCredential.user!.uid}').set(userData.toJson());
   //
   //     // Notify user
   //     setMessage('Success', 'Verification email sent. Please check your inbox.', Colors.blue);
@@ -164,6 +139,9 @@ class SignUpController extends GetxController {
   //     Get.back(); // Dismiss the progress dialog
   //   }
   // }
+
+
+
 
   void setMessage(String title, String message, Color backgroundColor) {
     Get.snackbar(

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,9 +14,6 @@ class DashboardController extends GetxController{
 
   String? name = '';
   String? imageUrl = '';
-
-
-
 
 
 
@@ -100,6 +96,7 @@ class DashboardController extends GetxController{
           // If all data is present, do nothing or proceed as needed
           debugPrint('User Data is complete. No action required.');
           debugPrint('${userData.name} and ${userData.imageUrl}');
+          await updateUserFcmToken();
 
           name = userData.name;
           imageUrl = userData.imageUrl;
@@ -113,7 +110,36 @@ class DashboardController extends GetxController{
   }
 
 
+  Future<void> updateUserFcmToken() async {
+    final User? user = FirebaseAuth.instance.currentUser;
 
+    if (user == null) {
+      Get.to(() => const LoginScreen());
+      return; // Exit if user is not logged in
+    }
 
+    String userId = user.uid;
+    final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+
+    try {
+      // Get the current FCM token
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+      if (fcmToken != null) {
+        // Update the FCM token in the database
+        await databaseReference.child('users/$userId').update({
+          'userFcmToken': fcmToken,
+        });
+
+        debugPrint('FCM Token updated successfully: $fcmToken');
+      } else {
+        debugPrint('Failed to retrieve FCM token.');
+      }
+    } catch (e) {
+      debugPrint('Error updating FCM token: ${e.toString()}');
+    }
+  }
 }
+
+
 

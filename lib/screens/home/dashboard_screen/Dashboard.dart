@@ -10,11 +10,14 @@ import 'package:fitness/screens/home/dashboard_screen/widgets/ExerciseWidget.dar
 import 'package:fitness/screens/home/dashboard_screen/widgets/FollowUserCard.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/ProgressContainer.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/TextWidget.dart';
+import 'package:fitness/screens/home/footsteps/StepController.dart';
+import 'package:fitness/screens/home/tracking_screen/TrackingScreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../common/widgets/CircularImage.dart';
 import '../../../common/widgets/MyAppGridLayout.dart';
 import '../../../utils/constants/AppColor.dart';
@@ -98,10 +101,11 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
 
   DashboardController dashboardController = Get.put(DashboardController());
 
+  StepController stepController = Get.put(StepController());
   String? name = '';
   String? imageUrl = '';
   List<Map<String, dynamic>> usersList = [];
@@ -112,80 +116,25 @@ class _DashboardState extends State<Dashboard> {
 
   bool isLoading = true;
 
-  bool isRunning = false;
-  int elapsedTime = 0; // Elapsed time in seconds
-  Timer? timer;
-  int steps = 0;
-  double caloriesBurned = 0.0; // Calories burned counter
-// Steps counter
-  Stream<StepCount>? _stepCountStream; // Stream to listen to step counts
+
+
+  int stepCount = 0; // Today's steps
+  List<int> weeklySteps = List<int>.filled(7, 0); // Steps for each day of the week
+  int? baselineStepCount; // Baseline step count for the day
+  int currentDayIndex = DateTime.now().weekday - 1; // 0 = Monday, 6 = Sunday
+
+  late Stream<StepCount> _stepCountStream;
+  StreamSubscription<StepCount>? _stepCountSubscription;
 
 
 
-  // Start the timer
-  void startTimer() {
-    if (isRunning) return; // Prevent restarting if already running
-    isRunning = true;
-    elapsedTime = 0; // Reset time
-    steps = 0; // Reset steps count
-
-    // Initialize step count stream
-    _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream?.listen((StepCount stepCount) {
-      setState(() {
-        steps = stepCount.steps; // Update steps count
-        caloriesBurned = calculateCalories(steps); // Update calories
-      });
-    });
-
-    // Start timer for elapsed time
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
-      setState(() {
-        elapsedTime++; // Increment elapsed time
-      });
-    });
-  }
 
 
 
-  // Convert elapsed time to a readable format
-  String formatElapsedTime(int seconds) {
-    int hours = seconds ~/ 3600;
-    int minutes = (seconds % 3600) ~/ 60;
-    int secs = seconds % 60;
-    return '${hours}h ${minutes}m ${secs}s'; // Show hours, minutes, and seconds
-  }
-
-
-  // Calculate calories burned based on steps
-  double calculateCalories(int steps) {
-    const double caloriesPerStep = 0.05; // Example factor for calorie calculation
-    return steps * caloriesPerStep;
-  }
-  void stopTimer() {
-    isRunning = false;
-    timer?.cancel(); // Stop the timer
-  }
-
-  void clearData() {
-    stopTimer(); // Stop any running timer
-    setState(() {
-      elapsedTime = 0;
-      steps = 0;
-      caloriesBurned = 0.0; // Reset calories
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream?.listen((StepCount stepCount) {
-      setState(() {
-        steps += stepCount.steps; // Update steps with the latest count
-        caloriesBurned = calculateCalories(steps); // Calculate calories burned
-      });
-    });
     dashboardController.fetchUserData(); // Fetch user data from the controller
 
     fetchFollowedUsers(); // Fetch the followed users
@@ -193,6 +142,103 @@ class _DashboardState extends State<Dashboard> {
 
   }
 
+
+
+
+  Future<void> requestPermissions() async {
+    if (await Permission.activityRecognition.request().isGranted) {
+      print("Activity recognition permission granted");
+      initializePedometer();
+    } else {
+      print("Activity recognition permission not granted");
+    }
+  }
+
+  void startListening() async {
+    if (await Permission.activityRecognition.isGranted) {
+      initializePedometer();
+    } else {
+      print("Activity recognition permission is not granted.");
+    }
+  }
+
+  Future<void> initializePedometer() async {
+    _stepCountStream = Pedometer.stepCountStream;
+    _stepCountSubscription = _stepCountStream.listen(
+          (event) {
+        print("Steps detected: ${event.steps}");
+        onStepCount(event);
+      },
+      onError: (error) => print("Step count error: $error"),
+    );
+  }
+  void onStepCount(StepCount event) {
+    int todayIndex = DateTime.now().weekday - 1; // Get today's index (0 = Monday)
+    print("Steps detected: ${event.steps}");
+    print("Current Day Index: $todayIndex");
+
+    // Initialize baseline if it's null (first time the app runs for the day)
+    if (baselineStepCount == null) {
+      baselineStepCount = event.steps;
+      print("Initial baseline set to $baselineStepCount for the day.");
+    }
+
+    // Check if the day has changed
+    if (todayIndex != currentDayIndex) {
+      print("Day has changed. Setting new baseline.");
+      currentDayIndex = todayIndex;
+      baselineStepCount = event.steps; // Reset baseline for the new day
+      setState(() {
+        weeklySteps[currentDayIndex] = 0; // Reset today's steps in weekly array
+        stepCount = 0; // Reset today's step count in UI
+      });
+    }
+
+    // Update today's steps based on the new step count and baseline
+    if (baselineStepCount != null) {
+      int calculatedSteps = event.steps - baselineStepCount!;
+      if (calculatedSteps != weeklySteps[currentDayIndex]) {
+        setState(() {
+          weeklySteps[currentDayIndex] = calculatedSteps;
+          stepCount = calculatedSteps;
+        });
+        print("Updated weeklySteps for today (${_getDayName(todayIndex)}): ${weeklySteps[currentDayIndex]}");
+      }
+    } else {
+      print("Error: Baseline step count is null.");
+    }
+  }
+
+  String _getDayName(int index) {
+    switch (index) {
+      case 0: return 'Mon';
+      case 1: return 'Tue';
+      case 2: return 'Wed';
+      case 3: return 'Thu';
+      case 4: return 'Fri';
+      case 5: return 'Sat';
+      case 6: return 'Sun';
+      default: return '';
+    }
+  }
+
+
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && _stepCountSubscription?.isPaused == true) {
+      _stepCountSubscription?.resume();
+    } else if (state == AppLifecycleState.paused) {
+      _stepCountSubscription?.pause();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _stepCountSubscription?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +254,8 @@ class _DashboardState extends State<Dashboard> {
         }
         return Future.value(true);
       },
-      child: Scaffold(
+      child:
+      Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Row(children: [
@@ -255,9 +302,56 @@ class _DashboardState extends State<Dashboard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Container(
+                //   width: MyAppHelperFunctions.screenWidth() * 0.95,
+                //   height: 150,
+                //   decoration: BoxDecoration(
+                //     color: dark ? AppColor.grey.withOpacity(0.1) : AppColor.grey.withOpacity(0.3),
+                //     borderRadius: const BorderRadius.all(Radius.circular(6)),
+                //   ),
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         SimpleTextWidget(
+                //           text: 'Your weekly progress',
+                //           fontWeight: FontWeight.w300,
+                //           fontSize: 13,
+                //           color: dark ? AppColor.white : AppColor.black,
+                //           fontFamily: 'Poppins',
+                //           align: TextAlign.start,
+                //         ),
+                //         const SizedBox(height: 8),
+                //         Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //           children: [
+                //             ProgressContainer(
+                //               iconPath: AppImagePaths.kcalicon,
+                //               label: '${stepController.caloriesBurned.toStringAsFixed(2)} ', // Show calories
+                //               value: 'Kcal',
+                //             ),
+                //             ProgressContainer(
+                //               iconPath: AppImagePaths.clock,
+                //               label: '234', // Show elapsed time
+                //               value: 'Time',
+                //             ),
+                //             ProgressContainer(
+                //               iconPath: AppImagePaths.location,
+                //               label: '${stepCount}', // Show steps count
+                //               value: 'Steps',
+                //             ),
+                //           ],
+                //         ),
+                //
+                //
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 Container(
                   width: MyAppHelperFunctions.screenWidth() * 0.95,
-                  height: 150,
+                  height: 200, // Adjust height as needed
                   decoration: BoxDecoration(
                     color: dark ? AppColor.grey.withOpacity(0.1) : AppColor.grey.withOpacity(0.3),
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
@@ -281,135 +375,133 @@ class _DashboardState extends State<Dashboard> {
                           children: [
                             ProgressContainer(
                               iconPath: AppImagePaths.kcalicon,
-                              label: '${caloriesBurned.toStringAsFixed(2)} kcal', // Show calories
+                              label: stepController.caloriesBurned.toStringAsFixed(2), // Show calories
                               value: 'Kcal',
                             ),
                             ProgressContainer(
                               iconPath: AppImagePaths.clock,
-                              label: formatElapsedTime(elapsedTime), // Show elapsed time
+                              label: '234', // Show elapsed time
                               value: 'Time',
                             ),
                             ProgressContainer(
                               iconPath: AppImagePaths.location,
-                              label: '$steps', // Show steps count
+                              label: '$stepCount', // Show steps count
                               value: 'Steps',
                             ),
                           ],
                         ),
+                        const SizedBox(height: 16),
 
+                        // Rounded Progress Line with Orange Color
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10), // Rounded corners
+                          child: LinearProgressIndicator(
+                            value: 0.76, // Example: Set to your dynamic progress value (e.g., 0.76 = 76%)
+                            minHeight: 10, // Increase thickness for better visibility
+                            backgroundColor: dark ? AppColor.grey.withOpacity(0.1) : AppColor.grey.withOpacity(0.3),
+                            valueColor: AlwaysStoppedAnimation<Color>(AppColor.orangeColor), // Set to orange color
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+
+                        // Percentage Text Below Progress Bar
+                        Text(
+                          '76%', // Show dynamic progress percentage (you can replace this with the actual percentage)
+                          style: TextStyle(
+                            color: dark ? AppColor.white : AppColor.black,
+                            fontFamily: 'Poppins',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: GestureDetector(
+                            onTap: (){
+                              print('click');
+
+                              Get.to(TrackingScreen());
+
+                            },
+                            child: SimpleTextWidget(
+                                align: TextAlign.end,
+                                text: 'See More', fontWeight: FontWeight.w300, fontSize: 12, color: dark ? AppColor.white : AppColor.black, fontFamily: 'Poppins'),
+                          ),
+                        )
 
                       ],
                     ),
                   ),
                 ),
+
                 const SizedBox(height: AppSizes.inputFieldRadius),
-                // Container for Motivation
-                Container(
-                  width: MyAppHelperFunctions.screenWidth() * 0.95,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: dark ? AppColor.grey.withOpacity(0.1) : AppColor.grey.withOpacity(0.3),
-                    borderRadius: const BorderRadius.all(Radius.circular(6)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SimpleTextWidget(
-                          text: 'Ready to move forward, Kami?',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          color: dark ? AppColor.white : AppColor.black,
-                          fontFamily: 'Poppins',
-                          align: TextAlign.start,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => startListening(),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: AppColor.orangeColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: SimpleTextWidget(
+                            text: 'Record a Run',
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12,
+                            color: dark ? AppColor.black : AppColor.white,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
-                        SimpleTextWidget(
-                          text: 'Every step brings you closer to your goals—keep moving and stay motivated!',
-                          fontWeight: FontWeight.w300,
-                          fontSize: 10,
-                          color: dark ? AppColor.white : AppColor.black,
-                          fontFamily: 'Poppins',
-                          align: TextAlign.start,
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () => startTimer(), // Start timer and track steps
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: AppColor.orangeColor,
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: SimpleTextWidget(
-                                    align: TextAlign.center,
-                                    text: 'Record a Run',
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12,
-                                    color: dark ? AppColor.black : AppColor.white,
-                                    fontFamily: 'Poppins',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () => stopTimer(), // Stop timer
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: AppColor.error,
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: SimpleTextWidget(
-                                    align: TextAlign.center,
-                                    text: 'Stop Run',
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12,
-                                    color: dark ? AppColor.black : AppColor.white,
-                                    fontFamily: 'Poppins',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () => clearData(), // Clear all data
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: AppColor.blueColor,
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: SimpleTextWidget(
-                                    align: TextAlign.center,
-                                    text: 'Clear Data',
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12,
-                                    color: dark ? AppColor.black : AppColor.white,
-                                    fontFamily: 'Poppins',
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-
-
-                      ],
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => stepController.stopListening(),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: AppColor.error,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: SimpleTextWidget(
+                            text: 'Stop Run',
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12,
+                            color: dark ? AppColor.black : AppColor.white,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => stepController.clearData(),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: AppColor.blueColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: SimpleTextWidget(
+                            text: 'Clear Data',
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12,
+                            color: dark ? AppColor.black : AppColor.white,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: AppSizes.inputFieldRadius),

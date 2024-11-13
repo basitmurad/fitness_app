@@ -100,6 +100,8 @@ class AppImagePaths {
   static const String kcalicon = "assets/myicons/kcalicon.png";
   static const String clock = "assets/myicons/clock.png";
   static const String location = "assets/myicons/location.png";
+  static const String footstep = "assets/myicons/footstep.png";
+  static const String footicon = "assets/myicons/footicon.png";
 
 
 }

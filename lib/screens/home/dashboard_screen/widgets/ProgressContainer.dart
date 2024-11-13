@@ -1,4 +1,7 @@
+import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class ProgressContainer extends StatelessWidget {
   final String iconPath;
@@ -11,21 +14,31 @@ class ProgressContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox( height: 8,),
+        SizedBox( height: 2,),
 
         Image.asset(
           iconPath,
-          width: 28, // Adjust the size as needed
-          height: 28, // Adjust the size as needed
+          width: 20, // Adjust the size as needed
+          height: 20, // Adjust the size as needed
         ),
-        SizedBox( height: 8,),
-
-        Text(label),
         SizedBox( height: 4,),
 
+        SimpleTextWidget(
+          text: label,
+          fontWeight: FontWeight.w200,
+          fontSize: 10,
+          fontFamily: 'Poppins', color: AppColor.black,
+        ),
 
-        Text(value),
-      ],
+        SizedBox( height: 2,),
+
+
+        SimpleTextWidget(
+          text: value,
+          fontWeight: FontWeight.w200,
+          fontSize: 10,
+          fontFamily: 'Poppins', color: AppColor.black,
+        ),      ],
     );
   }
 }

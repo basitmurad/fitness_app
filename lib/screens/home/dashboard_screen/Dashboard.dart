@@ -28,7 +28,6 @@ import '../../../utils/helpers/MyAppHelper.dart';
 import '../../exercise_screen/abs_screen/AbsScreen.dart';
 import '../social/post_screen/AddPostScreen.dart';
 
-
 List<Map<String, String>> maleExercise = [
   {
     'imagePath': AppImagePaths.maleAbsWorkout,
@@ -95,14 +94,13 @@ List<Map<String, String>> femaleExercises = [
 ];
 
 class Dashboard extends StatefulWidget {
-   const Dashboard({super.key});
+  const Dashboard({super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
-
+class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
   DashboardController dashboardController = Get.put(DashboardController());
 
   StepController stepController = Get.put(StepController());
@@ -116,9 +114,9 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
 
   bool isLoading = true;
 
-
   int stepCount = 0; // Today's steps
-  List<int> weeklySteps = List<int>.filled(7, 0); // Steps for each day of the week
+  List<int> weeklySteps =
+      List<int>.filled(7, 0); // Steps for each day of the week
   int? baselineStepCount; // Baseline step count for the day
   int currentDayIndex = DateTime.now().weekday - 1; // 0 = Monday, 6 = Sunday
   double distance = 0.0; // Distance covered in meters
@@ -131,13 +129,6 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
   StreamSubscription<StepCount>? _stepCountSubscription;
   List<double> weeklyCalories = List<double>.filled(7, 0.0);
 
-
-
-
-
-
-
-
   @override
   void initState() {
     super.initState();
@@ -146,16 +137,7 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
     requestPermissions();
     fetchFollowedUsers(); // Fetch the followed users
     fetchUsers(); // Fetch users when the widget is initialized
-
   }
-
-
-
-
-
-
-
-
 
   Future<void> requestPermissions() async {
     if (await Permission.activityRecognition.request().isGranted) {
@@ -169,8 +151,6 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
   void startListening() async {
     print('tracking value is$isTracking');
 
-
-
     if (await Permission.activityRecognition.isGranted) {
       print("Start Tracking.");
 
@@ -181,31 +161,29 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
     }
   }
 
-  // void stopListening() {
-  //   _stepCountSubscription?.cancel();
-  //   _stepCountSubscription = null;
-  //   _stepCountStream = null;
-  //   stopTimer();
-  //   print("Stopped tracking footsteps and cleared pedometer stream.");
-  // }
-
   void stopListening() async {
-
-    print('tracking value is$isTracking');
+    if (kDebugMode) {
+      print('tracking value is$isTracking');
+    }
     // Assuming you already have variables for step count, calories burned, and time tracked
     String userID = FirebaseAuth.instance.currentUser!.uid;
-    double caloriesBurned = calculateCaloriesBurned(stepCount);  // Calculate the total calories burned
-    int timeTracked = calculateTimeTracked();  // Calculate the time spent in the tracking session
+    double caloriesBurned = calculateCaloriesBurned(
+        stepCount); // Calculate the total calories burned
+    int timeTracked =
+        calculateTimeTracked(); // Calculate the time spent in the tracking session
 
     // Get the current date and format it for the day name (e.g., "Monday")
     String dayName = getCurrentDayName();
 
     // Firebase reference to track steps for the user on the current day
-    DatabaseReference trackingRef = FirebaseDatabase.instance.ref('Tracking/$userID/$dayName');
+    DatabaseReference trackingRef =
+        FirebaseDatabase.instance.ref('Tracking/$userID/$dayName');
 
     // Fetch the existing step count data for the current day
-    DatabaseEvent event = await trackingRef.once(); // This returns a DatabaseEvent, not DataSnapshot
-    DataSnapshot snapshot = event.snapshot;  // Extract the snapshot from the DatabaseEvent
+    DatabaseEvent event = await trackingRef
+        .once(); // This returns a DatabaseEvent, not DataSnapshot
+    DataSnapshot snapshot =
+        event.snapshot; // Extract the snapshot from the DatabaseEvent
 
     // Safely cast the snapshot value to Map<String, dynamic>
     Map<String, dynamic> existingData = (snapshot.value is Map)
@@ -219,14 +197,16 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
 
     // Add the new step count, calories, and time to the previous values
     int newStepCount = previousSteps + stepCount;
-    double newCaloriesBurned = previousCalories + caloriesBurned;  // Add the newly calculated calories
-    int newTimeTracked = previousTimeTracked + timeTracked;  // Add the new time tracked
+    double newCaloriesBurned =
+        previousCalories + caloriesBurned; // Add the newly calculated calories
+    int newTimeTracked =
+        previousTimeTracked + timeTracked; // Add the new time tracked
 
     // Prepare the updated data to be saved
     Map<String, dynamic> data = {
       'steps': newStepCount,
-      'caloriesBurned': newCaloriesBurned,  // Updated total calories burned
-      'timeTracked': newTimeTracked,  // Updated total time tracked
+      'caloriesBurned': newCaloriesBurned, // Updated total calories burned
+      'timeTracked': newTimeTracked, // Updated total time tracked
     };
 
     // Update the database with the new data
@@ -245,74 +225,40 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
     print("Stopped tracking footsteps and cleared pedometer stream.");
   }
 
-
-  // void stopListening() {
-  //   // Assuming you already have variables for step count, calories burned, and time tracked
-  //    // Example step count, replace with actual value
-  //   String userID = FirebaseAuth.instance.currentUser!.uid;
-  //   double caloriesBurned = calculateCaloriesBurned(stepCount);  // Example, replace with actual calculation
-  //   int timeTracked = calculateTimeTracked();  // Example, replace with actual time
-  //
-  //
-  //   // Get the current date and format it for the day name (e.g., "Monday")
-  //   String dayName = getCurrentDayName();  // Example function to get the current day name
-  //
-  //   // Firebase reference
-  //   DatabaseReference trackingRef = FirebaseDatabase.instance.ref('users/$userID/tracking/$dayName');
-  //
-  //   // Prepare the data to be saved
-  //   Map<String, dynamic> data = {
-  //     'steps': stepCount,
-  //     'caloriesBurned': caloriesBurned,
-  //     'timeTracked': timeTracked,
-  //   };
-  //
-  //   // Update the database with the collected data
-  //   trackingRef.set(data).then((_) {
-  //     print("Footstep tracking data updated for $dayName.");
-  //   }).catchError((error) {
-  //     print("Failed to update data: $error");
-  //   });
-  //
-  //   // Stop the subscription and clean up
-  //   _stepCountSubscription?.cancel();
-  //   _stepCountSubscription = null;
-  //   _stepCountStream = null;
-  //   stopTimer();
-  //
-  //   print("Stopped tracking footsteps and cleared pedometer stream.");
-  // }
-
-// Function to calculate calories burned (example)
   double calculateCaloriesBurned(int steps) {
     // Use your formula to calculate calories burned based on the steps
-    double caloriesPerStep = 0.04;  // Example, adjust based on your calculations
+    double caloriesPerStep = 0.04; // Example, adjust based on your calculations
     return steps * caloriesPerStep;
   }
 
 // Function to calculate the time tracked (example)
   int calculateTimeTracked() {
     // Return the total time in minutes or seconds
-    return 60;  // Example, replace with actual logic
+    return 60; // Example, replace with actual logic
   }
 
 // Function to get the current day name (example)
   String getCurrentDayName() {
     DateTime now = DateTime.now();
-    return now.weekday == DateTime.monday ? 'Monday' :
-    now.weekday == DateTime.tuesday ? 'Tuesday' :
-    now.weekday == DateTime.wednesday ? 'Wednesday' :
-    now.weekday == DateTime.thursday ? 'Thursday' :
-    now.weekday == DateTime.friday ? 'Friday' :
-    now.weekday == DateTime.saturday ? 'Saturday' : 'Sunday';
+    return now.weekday == DateTime.monday
+        ? 'Monday'
+        : now.weekday == DateTime.tuesday
+            ? 'Tuesday'
+            : now.weekday == DateTime.wednesday
+                ? 'Wednesday'
+                : now.weekday == DateTime.thursday
+                    ? 'Thursday'
+                    : now.weekday == DateTime.friday
+                        ? 'Friday'
+                        : now.weekday == DateTime.saturday
+                            ? 'Saturday'
+                            : 'Sunday';
   }
-
-
 
   Future<void> initializePedometer() async {
     _stepCountStream = Pedometer.stepCountStream;
     _stepCountSubscription = _stepCountStream!.listen(
-          (event) {
+      (event) {
         print("Steps detected: ${event.steps}");
         onStepCount(event);
       },
@@ -322,9 +268,7 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
 
   void onStepCount(StepCount event) {
     int todayIndex = DateTime.now().weekday - 1;
-    if (baselineStepCount == null) {
-      baselineStepCount = event.steps;
-    }
+    baselineStepCount ??= event.steps;
 
     if (todayIndex != currentDayIndex) {
       currentDayIndex = todayIndex;
@@ -346,28 +290,23 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
           distance = calculatedSteps * 0.762; // Average stride length in meters
         });
       }
-
     }
-
-
 
     double caloriesBurned = calculateCalories(stepCount);
     print('Calories burned: $caloriesBurned');
   }
 
-
   void startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        elapsedTime += Duration(seconds: 1);  // Update elapsed time
+        elapsedTime += Duration(seconds: 1); // Update elapsed time
       });
     });
     setState(() {
-      isTracking = true;  // Indicate that the tracking is started
+      isTracking = true; // Indicate that the tracking is started
     });
   }
-
 
   void stopTimer() {
     _timer?.cancel();
@@ -375,7 +314,6 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
       isTracking = false;
     });
   }
-
 
   void onResumeTracking() {
     setState(() {
@@ -386,34 +324,32 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && _stepCountSubscription?.isPaused == true) {
+    if (state == AppLifecycleState.resumed &&
+        _stepCountSubscription?.isPaused == true) {
       _stepCountSubscription?.resume();
     } else if (state == AppLifecycleState.paused) {
       _stepCountSubscription?.pause();
     }
 
-    if (state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
-    }
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {}
   }
 
   @override
   void dispose() {
-
     WidgetsBinding.instance.removeObserver(this);
     _stepCountSubscription?.cancel();
     _timer?.cancel();
     super.dispose();
   }
 
-
   double calculateCalories(int steps) {
-    const double caloriesPerStep = 0.04;  // Estimated calories per step
+    const double caloriesPerStep = 0.04; // Estimated calories per step
     double calories = steps * caloriesPerStep;
 
     // Round to 4 decimal places
     return double.parse(calories.toStringAsFixed(4));
   }
-
 
   String formatElapsedTime(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
@@ -423,14 +359,11 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
     return "$hours:${twoDigits(minutes)}:${twoDigits(seconds)}";
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
 
     return WillPopScope(
-
       onWillPop: () async {
         if (Platform.isAndroid) {
           SystemNavigator.pop(); // Closes the app on Android
@@ -439,22 +372,30 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
         }
         return Future.value(true);
       },
-      child:
-      Scaffold(
+      child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Row(children: [
-            CircularImage(imageUrl: dashboardController.imageUrl ?? AppImagePaths.placeholder1, size: 50)
-,
-            // CircularImage(imageUrl: dashboardController.imageUrl!, size: 50,) ,
-            SizedBox(width: 6,),
-            SimpleTextWidget(text: dashboardController.name!, fontWeight: FontWeight.w500, fontSize: 14, color: dark ? Colors.white : AppColor.black
-                , fontFamily: 'Poppins')
-          ],),
+          title: Row(
+            children: [
+              CircularImage(
+                  imageUrl: dashboardController.imageUrl ??
+                      AppImagePaths.placeholder1,
+                  size: 50),
+              // CircularImage(imageUrl: dashboardController.imageUrl!, size: 50,) ,
+              SizedBox(
+                width: 6,
+              ),
+              SimpleTextWidget(
+                  text: dashboardController.name!,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: dark ? Colors.white : AppColor.black,
+                  fontFamily: 'Poppins')
+            ],
+          ),
           actions: [
             GestureDetector(
-              onTap: (){
-
+              onTap: () {
                 Get.to(() => const ChatsUserScreen());
                 if (kDebugMode) {
                   print('message');
@@ -469,8 +410,7 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () {
-              },
+              onTap: () {},
               child: Image(
                 width: 20,
                 height: 20,
@@ -483,16 +423,18 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Container(
                   width: MyAppHelperFunctions.screenWidth() * 0.95,
-                  height: 200, // Adjust height as needed
+                  height: 170, // Adjust height as needed
                   decoration: BoxDecoration(
-                    color: dark ? AppColor.grey.withOpacity(0.1) : AppColor.grey.withOpacity(0.3),
+                    color: dark
+                        ? AppColor.grey.withOpacity(0.1)
+                        : AppColor.grey.withOpacity(0.3),
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
                   ),
                   child: Padding(
@@ -501,7 +443,7 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SimpleTextWidget(
-                          text: 'Your weekly progress',
+                          text: 'Your  progress',
                           fontWeight: FontWeight.w300,
                           fontSize: 13,
                           color: dark ? AppColor.white : AppColor.black,
@@ -514,38 +456,47 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
                           children: [
                             ProgressContainer(
                               iconPath: AppImagePaths.kcalicon,
-                              label: '${calculateCalories(stepCount)}', // Show calories
+                              label: '${calculateCalories(stepCount)}',
+                              // Show calories
                               value: 'Kcal',
                             ),
                             ProgressContainer(
                               iconPath: AppImagePaths.clock,
-                              label: '${formatElapsedTime(elapsedTime)}', // Show elapsed time
+                              label: formatElapsedTime(elapsedTime),
+                              // Show elapsed time
                               value: 'Time',
                             ),
                             ProgressContainer(
                               iconPath: AppImagePaths.location,
-                              label: '${stepCount}', // Show steps count
+                              label: '$stepCount', // Show steps count
                               value: 'Steps',
                             ),
                           ],
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 8),
 
                         // Rounded Progress Line with Orange Color
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(10), // Rounded corners
+                          borderRadius: BorderRadius.circular(10),
+                          // Rounded corners
                           child: LinearProgressIndicator(
-                            value: 0.76, // Example: Set to your dynamic progress value (e.g., 0.76 = 76%)
-                            minHeight: 10, // Increase thickness for better visibility
-                            backgroundColor: dark ? AppColor.grey.withOpacity(0.1) : AppColor.grey.withOpacity(0.3),
-                            valueColor: AlwaysStoppedAnimation<Color>(AppColor.orangeColor), // Set to orange color
+                            value: 0.76,
+                            // Example: Set to your dynamic progress value (e.g., 0.76 = 76%)
+                            minHeight: 10,
+                            // Increase thickness for better visibility
+                            backgroundColor: dark
+                                ? AppColor.grey.withOpacity(0.1)
+                                : AppColor.grey.withOpacity(0.3),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColor.orangeColor), // Set to orange color
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 2),
 
                         // Percentage Text Below Progress Bar
                         Text(
-                          '76%', // Show dynamic progress percentage (you can replace this with the actual percentage)
+                          '76%',
+                          // Show dynamic progress percentage (you can replace this with the actual percentage)
                           style: TextStyle(
                             color: dark ? AppColor.white : AppColor.black,
                             fontFamily: 'Poppins',
@@ -557,18 +508,24 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: GestureDetector(
-                            onTap: (){
-                              print('click');
+                            onTap: () {
+                              if (kDebugMode) {
+                                print('click');
+                              }
 
-                              Get.to(TrackingScreen(dayName: getCurrentDayName(),));
-
+                              Get.to(TrackingScreen(
+                                dayName: getCurrentDayName(),
+                              ));
                             },
                             child: SimpleTextWidget(
                                 align: TextAlign.end,
-                                text: 'See More', fontWeight: FontWeight.w300, fontSize: 12, color: dark ? AppColor.white : AppColor.black, fontFamily: 'Poppins'),
+                                text: 'See More',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: dark ? AppColor.white : AppColor.black,
+                                fontFamily: 'Poppins'),
                           ),
                         )
-
                       ],
                     ),
                   ),
@@ -578,60 +535,63 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
                     Expanded(
-                      child: GestureDetector(
-                        onTap: () {
+                      child: TextButton(
+                        onPressed: () {
                           if (!isTracking) {
-                            startListening();  // Call the function explicitly
+                            MyAppHelperFunctions.showSnackBar('Tracking has been started');
+                            startListening(); // Call the function explicitly
                           }
                         },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: AppColor.orangeColor,
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppColor.orangeColor,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: SimpleTextWidget(
-                            text: 'Record a Run',
-                            fontWeight: FontWeight.w300,
-                            fontSize: 12,
-                            color: dark ? AppColor.black : AppColor.white,
-                            fontFamily: 'Poppins',
-                          ),
+                          minimumSize: Size(double.infinity,
+                              30), // Set minimum size to match height
+                        ),
+                        child: SimpleTextWidget(
+                          text: 'Record a Run',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 12,
+                          color: dark ? AppColor.black : AppColor.white,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
-
                     const SizedBox(width: 10),
                     Expanded(
-                      child: GestureDetector(
-                        onTap: () {  if (isTracking) {
-                          stopListening();  // Call the function explicitly
-                        }},
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: AppColor.error,
+                      child: TextButton(
+                        onPressed: () {
+                          if (isTracking) {
+                            MyAppHelperFunctions.showSnackBar('Tracking has been Stopped');
+
+                            stopListening(); // Call the function explicitly
+                          }
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppColor.error,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: SimpleTextWidget(
-                            text: 'Stop Run',
-                            fontWeight: FontWeight.w300,
-                            fontSize: 12,
-                            color: dark ? AppColor.black : AppColor.white,
-                            fontFamily: 'Poppins',
-                          ),
+                          minimumSize: Size(double.infinity,
+                              30), // Set minimum size to match height
+                        ),
+                        child: SimpleTextWidget(
+                          text: 'Stop Run',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 12,
+                          color: dark ? AppColor.black : AppColor.white,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
-
                   ],
-                ),
+                )
 
-                const SizedBox(height: AppSizes.inputFieldRadius),
+                ,
+                SizedBox(height: AppSizes.inputFieldRadius),
                 ChallengedWidget(dark: dark),
                 const SizedBox(height: AppSizes.inputFieldRadius - 5),
                 Text(
@@ -643,34 +603,34 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
                 ),
                 const SizedBox(height: AppSizes.inputFieldRadius),
                 MyAppGridLayout(
-                  itemCount: filteredUsersList.length, // Set the itemCount to the length of the filtered list
+                  itemCount: filteredUsersList.length,
+                  // Set the itemCount to the length of the filtered list
                   itemBuilder: (context, index) {
                     final user = filteredUsersList[index];
                     // Get the user from the filtered list
                     return Card(
                       child: FollowUserCard(
                         dark: dark,
-                        userName: user['name'] ?? 'Unknown User', // Pass the user's name
-                        imagePath: user['imageUrl'] ?? '', // Pass the user's image URL
+                        userName: user['name'] ?? 'Unknown User',
+                        // Pass the user's name
+                        imagePath: user['imageUrl'] ?? '',
+                        // Pass the user's image URL
                         onRemovePressed: () => onRemove(user['id']),
                         onFollowPressed: () => onFollow(
-                            user['id'],
-                            user['name'],
-                            user[
-                            'imageUrl']),
+                            user['id'], user['name'], user['imageUrl']),
                       ),
                     );
-
                   },
                   scrollDirection: Axis.horizontal,
                 ),
 
-                             const SizedBox(height: AppSizes.spaceBtwInputFields),
+                const SizedBox(height: AppSizes.spaceBtwInputFields),
                 TextWidget(dark: dark),
 
                 // Use FutureBuilder to handle the async gender fetching
                 FutureBuilder<String>(
-                  future: dashboardController.fetchUserGender(), // Call the gender fetching function
+                  future: dashboardController.fetchUserGender(),
+                  // Call the gender fetching function
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // Show loading while waiting for the future to complete
@@ -681,9 +641,8 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
                     } else if (snapshot.hasData) {
                       // Once the data (gender) is received, update the exercise list based on gender
                       String gender = snapshot.data!;
-                      List<Map<String, String>> exercisesList = gender == 'Female'
-                          ? femaleExercises
-                          : maleExercise;
+                      List<Map<String, String>> exercisesList =
+                          gender == 'Female' ? femaleExercises : maleExercise;
 
                       return ListView.builder(
                         shrinkWrap: true,
@@ -694,21 +653,21 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
                             padding: EdgeInsets.zero,
                             child: GestureDetector(
                               onTap: () {
-                                Get.to(()=>AbsScreen(
-                                  exerciseType:
-                                  exercisesList[index]['exerciseName']!,
-                                  exerciseRepititon:
-                                  exercisesList[index]['exerciseRepetition']!,
-                                  gender: gender,
-                                ));
+                                Get.to(() => AbsScreen(
+                                      exerciseType: exercisesList[index]
+                                          ['exerciseName']!,
+                                      exerciseRepititon: exercisesList[index]
+                                          ['exerciseRepetition']!,
+                                      gender: gender,
+                                    ));
                               },
                               child: ExerciseWidget(
                                 dark: dark,
                                 imagePath: exercisesList[index]['imagePath']!,
-                                exerciseName:
-                                exercisesList[index]['exerciseName']!,
-                                exerciseRepeation:
-                                exercisesList[index]['exerciseRepetition']!,
+                                exerciseName: exercisesList[index]
+                                    ['exerciseName']!,
+                                exerciseRepeation: exercisesList[index]
+                                    ['exerciseRepetition']!,
                               ),
                             ),
                           );
@@ -730,9 +689,11 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
           },
           backgroundColor: AppColor.orangeColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50), // Ensures the shape is a circle
+            borderRadius:
+                BorderRadius.circular(50), // Ensures the shape is a circle
           ),
-          child: const Icon(Icons.add, color: Colors.white, size: 45), // Customize the FAB icon
+          child: const Icon(Icons.add,
+              color: Colors.white, size: 45), // Customize the FAB icon
         ),
       ),
     );
@@ -763,7 +724,7 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
       if (dataSnapshot.exists) {
         // Convert the data to a Map
         final Map<dynamic, dynamic> followingMap =
-        dataSnapshot.value as Map<dynamic, dynamic>;
+            dataSnapshot.value as Map<dynamic, dynamic>;
 
         // Clear previous data
         followingUsersList.clear();
@@ -774,7 +735,8 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
           // value contains the followed user data (e.g., name, imageUrl)
           final followedUserId = key;
           final followedUserName = value['name'];
-          final followedUserImageUrl = value['imageUrl'] ?? AppImagePaths.placeholder1;
+          final followedUserImageUrl =
+              value['imageUrl'] ?? AppImagePaths.placeholder1;
 
           // Add followed user data to the list
           followingUsersList.add({
@@ -790,7 +752,7 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
 
         setState(() {
           isLoadingFollowing =
-          false; // Set loading state to false after fetching
+              false; // Set loading state to false after fetching
         });
       } else {
         if (kDebugMode) {
@@ -810,12 +772,11 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
     });
   }
 
-
-
-
   Future<void> fetchUsers() async {
-    final DatabaseReference usersRef = FirebaseDatabase.instance.ref('users'); // Reference to the 'users' node
-    final User? currentUser = FirebaseAuth.instance.currentUser; // Get the current logged-in user
+    final DatabaseReference usersRef =
+        FirebaseDatabase.instance.ref('users'); // Reference to the 'users' node
+    final User? currentUser =
+        FirebaseAuth.instance.currentUser; // Get the current logged-in user
 
     if (currentUser == null) {
       if (kDebugMode) {
@@ -824,8 +785,6 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
       return;
     }
 
-
-
     // Listen for value changes at the 'users' node
     usersRef.onValue.listen((DatabaseEvent event) {
       final dataSnapshot = event.snapshot;
@@ -833,17 +792,19 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
       // Check if data is available
       if (dataSnapshot.exists) {
         // Convert the data to a Map
-        final Map<dynamic, dynamic> usersMap = dataSnapshot.value as Map<dynamic, dynamic>;
+        final Map<dynamic, dynamic> usersMap =
+            dataSnapshot.value as Map<dynamic, dynamic>;
 
         // Clear previous data
         usersList.clear();
 
         // Iterate through each user in the map
         usersMap.forEach((key, value) {
-
           final userId = key;
-          final userName = value['name']; // Adjust according to your data structure
-          final userImageUrl = value['imageUrl'] ?? AppImagePaths.placeholder1; // Get image URL or use placeholder
+          final userName =
+              value['name']; // Adjust according to your data structure
+          final userImageUrl = value['imageUrl'] ??
+              AppImagePaths.placeholder1; // Get image URL or use placeholder
 
           // Add user data to the list only if it's not the current user and not followed
           if (userId != currentUser.uid && !_isUserFollowed(userId)) {
@@ -888,8 +849,10 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
     });
   }
 
-  void onFollow(String followedUserId, String followedUserName, String imageUrl) async {
-    final User? currentUser = FirebaseAuth.instance.currentUser; // Get current logged-in user
+  void onFollow(
+      String followedUserId, String followedUserName, String imageUrl) async {
+    final User? currentUser =
+        FirebaseAuth.instance.currentUser; // Get current logged-in user
     if (currentUser == null) {
       if (kDebugMode) {
         print("User not logged in.");
@@ -928,5 +891,4 @@ class _DashboardState extends State<Dashboard>  with WidgetsBindingObserver {
       }
     }
   }
-
 }

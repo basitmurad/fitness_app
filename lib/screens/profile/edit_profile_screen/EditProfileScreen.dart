@@ -7,7 +7,7 @@ import '../../../../../utils/constants/AppColor.dart';
 import '../../../../../utils/helpers/MyAppHelper.dart';
 import '../../../../common/widgets/ButtonWidget.dart';
 import '../../../../utils/constants/AppString.dart';
-import '../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import '../controller/EditProfileScreenController.dart';
 import 'package:get/get.dart';
 

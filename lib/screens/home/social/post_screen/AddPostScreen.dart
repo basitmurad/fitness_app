@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../common/widgets/CircularImage.dart';
 import '../../../../utils/constants/AppColor.dart';
-import '../../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import '../../models/Post.dart';
 
 class AddPostScreen extends StatelessWidget {

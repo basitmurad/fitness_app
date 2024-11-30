@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import 'package:fitness/screens/home/tracking_screen/widgets/CircularProgressPainter.dart';
 import 'package:fitness/screens/home/tracking_screen/widgets/OpenCirclePainter1.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
@@ -8,8 +7,8 @@ import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/constants/AppImagePaths.dart';
+import '../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import '../dashboard_screen/widgets/ProgressContainer.dart';
-import 'BarChartPainter.dart';
 
 class TrackingScreen extends StatefulWidget {
   const TrackingScreen({super.key, required this.dayName});

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import '../../../../../utils/constants/AppColor.dart';
-import '../../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class UserFollowingPostWidget extends StatelessWidget {
    UserFollowingPostWidget({

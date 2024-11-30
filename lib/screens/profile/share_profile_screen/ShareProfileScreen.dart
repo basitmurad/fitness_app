@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import '../../../../common/widgets/CircularImage.dart';
 import '../../../../utils/constants/AppColor.dart';
 import '../../../../utils/constants/AppSizes.dart';
-import '../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 
 class ShareProfileScreen extends StatelessWidget {

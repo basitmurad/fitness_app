@@ -2,7 +2,7 @@ import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class ProgressContainer extends StatelessWidget {
   final String iconPath;

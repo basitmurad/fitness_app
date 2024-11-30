@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import 'package:fitness/screens/home/chats/chat_user_screen/ChatsUserScreen.dart';
 import 'package:fitness/screens/home/controller/DashboardController.dart';
 import 'package:fitness/screens/home/dashboard_screen/widgets/ChallengedWidget.dart';
@@ -25,7 +24,8 @@ import '../../../utils/constants/AppImagePaths.dart';
 import '../../../utils/constants/AppSizes.dart';
 import '../../../utils/constants/AppString.dart';
 import '../../../utils/helpers/MyAppHelper.dart';
-import '../../exercise_screen/abs_screen/AbsScreen.dart';
+import '../../exercise_screen/screen/abs_screen/AbsScreen.dart';
+import '../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import '../social/post_screen/AddPostScreen.dart';
 
 List<Map<String, String>> maleExercise = [
@@ -139,226 +139,6 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
     fetchUsers(); // Fetch users when the widget is initialized
   }
 
-  Future<void> requestPermissions() async {
-    if (await Permission.activityRecognition.request().isGranted) {
-      print("Activity recognition permission granted");
-      initializePedometer();
-    } else {
-      print("Activity recognition permission not granted");
-    }
-  }
-
-  void startListening() async {
-    print('tracking value is$isTracking');
-
-    if (await Permission.activityRecognition.isGranted) {
-      print("Start Tracking.");
-
-      initializePedometer();
-      startTimer();
-    } else {
-      print("Activity recognition permission is not granted.");
-    }
-  }
-
-  void stopListening() async {
-    if (kDebugMode) {
-      print('tracking value is$isTracking');
-    }
-    // Assuming you already have variables for step count, calories burned, and time tracked
-    String userID = FirebaseAuth.instance.currentUser!.uid;
-    double caloriesBurned = calculateCaloriesBurned(
-        stepCount); // Calculate the total calories burned
-    int timeTracked =
-        calculateTimeTracked(); // Calculate the time spent in the tracking session
-
-    // Get the current date and format it for the day name (e.g., "Monday")
-    String dayName = getCurrentDayName();
-
-    // Firebase reference to track steps for the user on the current day
-    DatabaseReference trackingRef =
-        FirebaseDatabase.instance.ref('Tracking/$userID/$dayName');
-
-    // Fetch the existing step count data for the current day
-    DatabaseEvent event = await trackingRef
-        .once(); // This returns a DatabaseEvent, not DataSnapshot
-    DataSnapshot snapshot =
-        event.snapshot; // Extract the snapshot from the DatabaseEvent
-
-    // Safely cast the snapshot value to Map<String, dynamic>
-    Map<String, dynamic> existingData = (snapshot.value is Map)
-        ? Map<String, dynamic>.from(snapshot.value as Map)
-        : {};
-
-    // Get the previous step count, calories, and time if they exist
-    int previousSteps = existingData['steps'] ?? 0;
-    double previousCalories = existingData['caloriesBurned'] ?? 0.0;
-    int previousTimeTracked = existingData['timeTracked'] ?? 0;
-
-    // Add the new step count, calories, and time to the previous values
-    int newStepCount = previousSteps + stepCount;
-    double newCaloriesBurned =
-        previousCalories + caloriesBurned; // Add the newly calculated calories
-    int newTimeTracked =
-        previousTimeTracked + timeTracked; // Add the new time tracked
-
-    // Prepare the updated data to be saved
-    Map<String, dynamic> data = {
-      'steps': newStepCount,
-      'caloriesBurned': newCaloriesBurned, // Updated total calories burned
-      'timeTracked': newTimeTracked, // Updated total time tracked
-    };
-
-    // Update the database with the new data
-    trackingRef.set(data).then((_) {
-      print("Footstep tracking data updated for $dayName.");
-    }).catchError((error) {
-      print("Failed to update data: $error");
-    });
-
-    // Stop the subscription and clean up
-    _stepCountSubscription?.cancel();
-    _stepCountSubscription = null;
-    _stepCountStream = null;
-    stopTimer();
-
-    print("Stopped tracking footsteps and cleared pedometer stream.");
-  }
-
-  double calculateCaloriesBurned(int steps) {
-    // Use your formula to calculate calories burned based on the steps
-    double caloriesPerStep = 0.04; // Example, adjust based on your calculations
-    return steps * caloriesPerStep;
-  }
-
-// Function to calculate the time tracked (example)
-  int calculateTimeTracked() {
-    // Return the total time in minutes or seconds
-    return 60; // Example, replace with actual logic
-  }
-
-// Function to get the current day name (example)
-  String getCurrentDayName() {
-    DateTime now = DateTime.now();
-    return now.weekday == DateTime.monday
-        ? 'Monday'
-        : now.weekday == DateTime.tuesday
-            ? 'Tuesday'
-            : now.weekday == DateTime.wednesday
-                ? 'Wednesday'
-                : now.weekday == DateTime.thursday
-                    ? 'Thursday'
-                    : now.weekday == DateTime.friday
-                        ? 'Friday'
-                        : now.weekday == DateTime.saturday
-                            ? 'Saturday'
-                            : 'Sunday';
-  }
-
-  Future<void> initializePedometer() async {
-    _stepCountStream = Pedometer.stepCountStream;
-    _stepCountSubscription = _stepCountStream!.listen(
-      (event) {
-        print("Steps detected: ${event.steps}");
-        onStepCount(event);
-      },
-      onError: (error) => print("Step count error: $error"),
-    );
-  }
-
-  void onStepCount(StepCount event) {
-    int todayIndex = DateTime.now().weekday - 1;
-    baselineStepCount ??= event.steps;
-
-    if (todayIndex != currentDayIndex) {
-      currentDayIndex = todayIndex;
-      baselineStepCount = event.steps;
-      setState(() {
-        weeklySteps[currentDayIndex] = 0;
-        stepCount = 0;
-        distance = 0.0;
-        elapsedTime = Duration.zero;
-      });
-    }
-
-    if (baselineStepCount != null) {
-      int calculatedSteps = event.steps - baselineStepCount!;
-      if (calculatedSteps != weeklySteps[currentDayIndex]) {
-        setState(() {
-          weeklySteps[currentDayIndex] = calculatedSteps;
-          stepCount = calculatedSteps;
-          distance = calculatedSteps * 0.762; // Average stride length in meters
-        });
-      }
-    }
-
-    double caloriesBurned = calculateCalories(stepCount);
-    print('Calories burned: $caloriesBurned');
-  }
-
-  void startTimer() {
-    _timer?.cancel();
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        elapsedTime += Duration(seconds: 1); // Update elapsed time
-      });
-    });
-    setState(() {
-      isTracking = true; // Indicate that the tracking is started
-    });
-  }
-
-  void stopTimer() {
-    _timer?.cancel();
-    setState(() {
-      isTracking = false;
-    });
-  }
-
-  void onResumeTracking() {
-    setState(() {
-      isTracking = true;
-    });
-    startListening(); // Resume step tracking
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed &&
-        _stepCountSubscription?.isPaused == true) {
-      _stepCountSubscription?.resume();
-    } else if (state == AppLifecycleState.paused) {
-      _stepCountSubscription?.pause();
-    }
-
-    if (state == AppLifecycleState.paused ||
-        state == AppLifecycleState.detached) {}
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _stepCountSubscription?.cancel();
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  double calculateCalories(int steps) {
-    const double caloriesPerStep = 0.04; // Estimated calories per step
-    double calories = steps * caloriesPerStep;
-
-    // Round to 4 decimal places
-    return double.parse(calories.toStringAsFixed(4));
-  }
-
-  String formatElapsedTime(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    int hours = duration.inHours;
-    int minutes = duration.inMinutes.remainder(60);
-    int seconds = duration.inSeconds.remainder(60);
-    return "$hours:${twoDigits(minutes)}:${twoDigits(seconds)}";
-  }
-
   @override
   Widget build(BuildContext context) {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
@@ -377,20 +157,36 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
           automaticallyImplyLeading: false,
           title: Row(
             children: [
-              CircularImage(
-                  imageUrl: dashboardController.imageUrl ??
-                      AppImagePaths.placeholder1,
-                  size: 50),
-              // CircularImage(imageUrl: dashboardController.imageUrl!, size: 50,) ,
-              SizedBox(
-                width: 6,
-              ),
-              SimpleTextWidget(
-                  text: dashboardController.name!,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: dark ? Colors.white : AppColor.black,
-                  fontFamily: 'Poppins')
+              Obx(() => CircularImage(
+                    imageUrl: dashboardController.imageUrl.value.isEmpty
+                        ? AppImagePaths.placeholder1
+                        : dashboardController.imageUrl.value,
+                    size: 50,
+                  )),
+              const SizedBox(width: 6),
+              Obx(() => SimpleTextWidget(
+                    text: dashboardController.name.value.isEmpty
+                        ? 'Loading...'
+                        : dashboardController.name.value,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: dark ? Colors.white : AppColor.black,
+                    fontFamily: 'Poppins',
+                  )),
+              // CircularImage(
+              //     imageUrl: dashboardController.imageUrl ??
+              //         AppImagePaths.placeholder1,
+              //     size: 50),
+              // // CircularImage(imageUrl: dashboardController.imageUrl!, size: 50,) ,
+              // SizedBox(
+              //   width: 6,
+              // ),
+              // SimpleTextWidget(
+              //     text: dashboardController.name!,
+              //     fontWeight: FontWeight.w500,
+              //     fontSize: 14,
+              //     color: dark ? Colors.white : AppColor.black,
+              //     fontFamily: 'Poppins')
             ],
           ),
           actions: [
@@ -539,7 +335,8 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                       child: TextButton(
                         onPressed: () {
                           if (!isTracking) {
-                            MyAppHelperFunctions.showSnackBar('Tracking has been started');
+                            MyAppHelperFunctions.showSnackBar(
+                                'Tracking has been started');
                             startListening(); // Call the function explicitly
                           }
                         },
@@ -565,7 +362,8 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                       child: TextButton(
                         onPressed: () {
                           if (isTracking) {
-                            MyAppHelperFunctions.showSnackBar('Tracking has been Stopped');
+                            MyAppHelperFunctions.showSnackBar(
+                                'Tracking has been Stopped');
 
                             stopListening(); // Call the function explicitly
                           }
@@ -588,9 +386,7 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                       ),
                     ),
                   ],
-                )
-
-                ,
+                ),
                 SizedBox(height: AppSizes.inputFieldRadius),
                 ChallengedWidget(dark: dark),
                 const SizedBox(height: AppSizes.inputFieldRadius - 5),
@@ -890,5 +686,226 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
         print("Error following user: $e");
       }
     }
+  }
+
+  Future<void> requestPermissions() async {
+    if (await Permission.activityRecognition.request().isGranted) {
+      print("Activity recognition permission granted");
+      initializePedometer();
+    } else {
+      print("Activity recognition permission not granted");
+    }
+  }
+
+  void startListening() async {
+    print('tracking value is$isTracking');
+
+    if (await Permission.activityRecognition.isGranted) {
+      print("Start Tracking.");
+
+      initializePedometer();
+      startTimer();
+    } else {
+      print("Activity recognition permission is not granted.");
+    }
+  }
+
+  void stopListening() async {
+    if (kDebugMode) {
+      print('tracking value is$isTracking');
+    }
+    // Assuming you already have variables for step count, calories burned, and time tracked
+    String userID = FirebaseAuth.instance.currentUser!.uid;
+    double caloriesBurned = calculateCaloriesBurned(
+        stepCount); // Calculate the total calories burned
+    int timeTracked =
+        calculateTimeTracked(); // Calculate the time spent in the tracking session
+
+    // Get the current date and format it for the day name (e.g., "Monday")
+    String dayName = getCurrentDayName();
+
+    // Firebase reference to track steps for the user on the current day
+    DatabaseReference trackingRef =
+        FirebaseDatabase.instance.ref('Tracking/$userID/$dayName');
+
+    // Fetch the existing step count data for the current day
+    DatabaseEvent event = await trackingRef
+        .once(); // This returns a DatabaseEvent, not DataSnapshot
+    DataSnapshot snapshot =
+        event.snapshot; // Extract the snapshot from the DatabaseEvent
+
+    // Safely cast the snapshot value to Map<String, dynamic>
+    Map<String, dynamic> existingData = (snapshot.value is Map)
+        ? Map<String, dynamic>.from(snapshot.value as Map)
+        : {};
+
+    // Get the previous step count, calories, and time if they exist
+    int previousSteps = existingData['steps'] ?? 0;
+    double previousCalories = existingData['caloriesBurned'] ?? 0.0;
+    int previousTimeTracked = existingData['timeTracked'] ?? 0;
+
+    // Add the new step count, calories, and time to the previous values
+    int newStepCount = previousSteps + stepCount;
+    double newCaloriesBurned =
+        previousCalories + caloriesBurned; // Add the newly calculated calories
+    int newTimeTracked =
+        previousTimeTracked + timeTracked; // Add the new time tracked
+
+    // Prepare the updated data to be saved
+    Map<String, dynamic> data = {
+      'steps': newStepCount,
+      'caloriesBurned': newCaloriesBurned, // Updated total calories burned
+      'timeTracked': newTimeTracked, // Updated total time tracked
+    };
+
+    // Update the database with the new data
+    trackingRef.set(data).then((_) {
+      print("Footstep tracking data updated for $dayName.");
+    }).catchError((error) {
+      print("Failed to update data: $error");
+    });
+
+    // Stop the subscription and clean up
+    _stepCountSubscription?.cancel();
+    _stepCountSubscription = null;
+    _stepCountStream = null;
+    stopTimer();
+
+    print("Stopped tracking footsteps and cleared pedometer stream.");
+  }
+
+  double calculateCaloriesBurned(int steps) {
+    // Use your formula to calculate calories burned based on the steps
+    double caloriesPerStep = 0.04; // Example, adjust based on your calculations
+    return steps * caloriesPerStep;
+  }
+
+// Function to calculate the time tracked (example)
+  int calculateTimeTracked() {
+    // Return the total time in minutes or seconds
+    return 60; // Example, replace with actual logic
+  }
+
+// Function to get the current day name (example)
+
+  double calculateCalories(int steps) {
+    const double caloriesPerStep = 0.04; // Estimated calories per step
+    double calories = steps * caloriesPerStep;
+
+    // Round to 4 decimal places
+    return double.parse(calories.toStringAsFixed(4));
+  }
+
+  String formatElapsedTime(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
+    return "$hours:${twoDigits(minutes)}:${twoDigits(seconds)}";
+  }
+
+  String getCurrentDayName() {
+    DateTime now = DateTime.now();
+    return now.weekday == DateTime.monday
+        ? 'Monday'
+        : now.weekday == DateTime.tuesday
+            ? 'Tuesday'
+            : now.weekday == DateTime.wednesday
+                ? 'Wednesday'
+                : now.weekday == DateTime.thursday
+                    ? 'Thursday'
+                    : now.weekday == DateTime.friday
+                        ? 'Friday'
+                        : now.weekday == DateTime.saturday
+                            ? 'Saturday'
+                            : 'Sunday';
+  }
+
+  Future<void> initializePedometer() async {
+    _stepCountStream = Pedometer.stepCountStream;
+    _stepCountSubscription = _stepCountStream!.listen(
+      (event) {
+        print("Steps detected: ${event.steps}");
+        onStepCount(event);
+      },
+      onError: (error) => print("Step count error: $error"),
+    );
+  }
+
+  void onStepCount(StepCount event) {
+    int todayIndex = DateTime.now().weekday - 1;
+    baselineStepCount ??= event.steps;
+
+    if (todayIndex != currentDayIndex) {
+      currentDayIndex = todayIndex;
+      baselineStepCount = event.steps;
+      setState(() {
+        weeklySteps[currentDayIndex] = 0;
+        stepCount = 0;
+        distance = 0.0;
+        elapsedTime = Duration.zero;
+      });
+    }
+
+    if (baselineStepCount != null) {
+      int calculatedSteps = event.steps - baselineStepCount!;
+      if (calculatedSteps != weeklySteps[currentDayIndex]) {
+        setState(() {
+          weeklySteps[currentDayIndex] = calculatedSteps;
+          stepCount = calculatedSteps;
+          distance = calculatedSteps * 0.762; // Average stride length in meters
+        });
+      }
+    }
+
+    double caloriesBurned = calculateCalories(stepCount);
+    print('Calories burned: $caloriesBurned');
+  }
+
+  void startTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        elapsedTime += Duration(seconds: 1); // Update elapsed time
+      });
+    });
+    setState(() {
+      isTracking = true; // Indicate that the tracking is started
+    });
+  }
+
+  void stopTimer() {
+    _timer?.cancel();
+    setState(() {
+      isTracking = false;
+    });
+  }
+
+  void onResumeTracking() {
+    setState(() {
+      isTracking = true;
+    });
+    startListening(); // Resume step tracking
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed &&
+        _stepCountSubscription?.isPaused == true) {
+      _stepCountSubscription?.resume();
+    } else if (state == AppLifecycleState.paused) {
+      _stepCountSubscription?.pause();
+    }
+
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {}
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _stepCountSubscription?.cancel();
+    _timer?.cancel();
+    super.dispose();
   }
 }

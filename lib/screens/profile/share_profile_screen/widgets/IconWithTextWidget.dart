@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import '../../../../../utils/constants/AppColor.dart';
 import '../../../../../utils/constants/AppImagePaths.dart';
 import '../../../../../utils/constants/AppString.dart';
-import '../../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class IconWithTextWidget extends StatelessWidget {
   const IconWithTextWidget({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../utils/constants/AppColor.dart';
-import '../../../exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import '../../edit_profile_screen/EditProfileScreen.dart';
 import '../../share_profile_screen/ShareProfileScreen.dart';
 

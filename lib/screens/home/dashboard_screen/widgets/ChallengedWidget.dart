@@ -1,16 +1,11 @@
-import 'dart:ffi';
-
-import 'package:fitness/screens/exercise_screen/challenge_screen/ChallengeScreen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../../../common/widgets/CustomButton.dart';
 import '../../../../utils/constants/AppColor.dart';
 import '../../../../utils/constants/AppDevicesUtils.dart';
 import '../../../../utils/constants/AppImagePaths.dart';
 import '../../../../utils/constants/AppString.dart';
+import '../../../exercise_screen/screen/challenge_screen/ChallengeScreen.dart';
 
 class ChallengedWidget extends StatelessWidget {
   const ChallengedWidget({

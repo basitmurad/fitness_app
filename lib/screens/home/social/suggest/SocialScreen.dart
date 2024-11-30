@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fitness/screens/exercise_screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import 'package:intl/intl.dart';
 import '../../../../common/widgets/ButtonWidget.dart';
 import '../../../../utils/constants/AppColor.dart';
 import '../../../../utils/constants/AppImagePaths.dart';
+import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import '../../controller/PostController.dart';
 import '../../models/Post.dart';
 

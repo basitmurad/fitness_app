@@ -3,19 +3,19 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../authentications/login_screen/LoginScreen.dart';
-import '../../authentications/select_gender_screen/SelectGenderScreen.dart';
+import '../../authentication_screens/screens/login_screen/LoginScreen.dart';
+import '../../authentication_screens/screens/select_gender_screen/SelectGenderScreen.dart';
 import '../../modelClass/UserData .dart';
 
 class DashboardController extends GetxController{
 
 
 
-  String? name = '';
-  String? imageUrl = '';
+  // String? name = '';
+  // String? imageUrl = '';
 
-
+  RxString name = ''.obs; // Reactive variable for the name
+  RxString imageUrl = ''.obs;
 
 
   Future<String> fetchUserGender() async {
@@ -98,8 +98,13 @@ class DashboardController extends GetxController{
           debugPrint('${userData.name} and ${userData.imageUrl}');
           await updateUserFcmToken();
 
-          name = userData.name;
-          imageUrl = userData.imageUrl;
+
+          Future.delayed(Duration(seconds: 2), () {
+            name.value = userData.name!; // Replace with actual data
+            imageUrl.value = userData.imageUrl!; // Replace with actual data
+          });
+          // name = userData.name;
+          // imageUrl = userData.imageUrl;
         }
       } else {
         debugPrint("No user data found or data is not in the expected format.");

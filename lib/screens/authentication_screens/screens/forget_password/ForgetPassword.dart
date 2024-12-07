@@ -71,7 +71,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   child: ButtonWidget(dark: dark,
 
                     onPressed: () {
-                    forgetController.forgetPassword();
+                    forgetController.sendPasswordResetEmail(context);
                   }, buttonText: AppStrings.send,),
                 ),
 

@@ -1,6 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fitness/screens/authentication_screens/screens/login_screen/LoginScreen.dart';
 import 'package:fitness/screens/profile/user_profile_main/widgets/ButtonsWidget.dart';
 import 'package:fitness/screens/profile/user_profile_main/widgets/UserFollowingPostWidget.dart';
 import 'package:fitness/utils/constants/AppString.dart';
@@ -44,54 +45,67 @@ class UserProfileScreen extends StatelessWidget {
 
         ),
         drawer: Drawer(
-          child: Theme(
-            data: ThemeData(
-              iconTheme: IconThemeData(
-                color: dark ? AppColor.white : AppColor.black,
+          child: Container(
+            color: dark ? AppColor.black : AppColor.white, // Ensure background color matches the theme
+            child: Theme(
+              data: ThemeData(
+                iconTheme: IconThemeData(
+                  color: dark ? AppColor.black : AppColor.white, // Icons adapt to theme
+                ),
               ),
-            ),
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-
-                SizedBox(height: 32,),
-
-                ListTile(
-                  leading: Icon(Icons.arrow_back),
-                  title: Text(AppStrings.textSetting),
-                  onTap: () {
-                    Navigator.pop(context); // Close the drawer
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text('Home'),
-                  onTap: () {
-                    Navigator.pop(context); // Close the drawer
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text('Settings'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Divider(), // Add a visual divider for separation
-                ListTile(
-                  leading: Icon(Icons.logout),
-                  title: Text('Logout'),
-                  onTap: () async {
-                    try {
-                      await FirebaseAuth.instance.signOut(); // Perform the logout operation
-                      // Redirect to the login screen
-                      Get.offAllNamed('/login'); // Replace '/login' with your login route
-                    } catch (e) {
-                      Get.snackbar('Logout Failed', 'Error: $e', snackPosition: SnackPosition.BOTTOM);
-                    }
-                  },
-                ),
-              ],
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  SizedBox(height: 32),
+                  ListTile(
+                    leading: Icon(Icons.arrow_back),
+                    title: Text(
+                      AppStrings.textSetting,
+                      style: TextStyle(color: dark ? AppColor.white : AppColor.black), // Text adapts to theme
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.home),
+                    title: Text(
+                      'Home',
+                      style: TextStyle(color: dark ? AppColor.white : AppColor.black),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.settings),
+                    title: Text(
+                      'Settings',
+                      style: TextStyle(color: dark ? AppColor.white : AppColor.black),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Divider(color: dark ? AppColor.white : AppColor.black),
+                  Spacer(),// Adjust divider color
+                  ListTile(
+                    leading: Icon(Icons.logout),
+                    title: Text(
+                      'Logout',
+                      style: TextStyle(color: dark ? AppColor.white : AppColor.black),
+                    ),
+                    onTap: () async {
+                      try {
+                        await FirebaseAuth.instance.signOut();
+                        Get.offAll(LoginScreen()  );
+                      } catch (e) {
+                        Get.snackbar('Logout Failed', 'Error: $e', snackPosition: SnackPosition.BOTTOM);
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

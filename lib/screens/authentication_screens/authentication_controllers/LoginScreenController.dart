@@ -7,6 +7,7 @@ class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   var isPasswordVisible = true.obs;
+  var isLoading = false.obs;
 
   void login() {
     final email = emailController.text;

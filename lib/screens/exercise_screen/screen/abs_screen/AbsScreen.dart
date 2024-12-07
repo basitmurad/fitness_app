@@ -5,6 +5,7 @@ import 'package:fitness/utils/constants/AppDevicesUtils.dart';
 import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,7 +40,9 @@ class _AbsScreenState extends State<AbsScreen> {
   @override
   void initState() {
     super.initState();
-    print('name is ${widget.exerciseType}');
+    if (kDebugMode) {
+      print('name is ${widget.exerciseType}');
+    }
 
     _getImagePath();
     getData();
@@ -57,7 +60,9 @@ class _AbsScreenState extends State<AbsScreen> {
   }
   Future<void> getData() async {
     DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
-    print('Fetching data from: ${databaseReference.path}'); // Debugging print statement
+    if (kDebugMode) {
+      print('Fetching data from: ${databaseReference.path}');
+    } // Debugging print statement
 
     DataSnapshot snapshot = await databaseReference.get();
 
@@ -71,7 +76,9 @@ class _AbsScreenState extends State<AbsScreen> {
               "exerciseName": child.key!,
               "exerciseRepetition": repetition,
             });
-            print('Fetched: ${child.key!} - Repetition: $repetition'); // Debugging print
+            if (kDebugMode) {
+              print('Fetched: ${child.key!} - Repetition: $repetition');
+            } // Debugging print
           }
         }
       }
@@ -82,7 +89,9 @@ class _AbsScreenState extends State<AbsScreen> {
 
 
     } else {
-      print('No data exists for the given exercise type: ${widget.exerciseType}');
+      if (kDebugMode) {
+        print('No data exists for the given exercise type: ${widget.exerciseType}');
+      }
       setState(() {
         isLoading = false;
       });
@@ -90,7 +99,9 @@ class _AbsScreenState extends State<AbsScreen> {
   }
   Future<void> getData1() async {
     DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
-    print('Fetching data from: ${databaseReference.path}'); // Debugging print statement
+    if (kDebugMode) {
+      print('Fetching data from: ${databaseReference.path}');
+    } // Debugging print statement
 
     DataSnapshot snapshot = await databaseReference.get();
 
@@ -153,7 +164,9 @@ class _AbsScreenState extends State<AbsScreen> {
 
     // Store the List of JSON Strings in Shared Preferences
     await prefs.setStringList('exercises_${widget.exerciseType}', jsonExercises);
-    print('Stored exercises in Shared Preferences for type: ${widget.exerciseType}');
+    if (kDebugMode) {
+      print('Stored exercises in Shared Preferences for type: ${widget.exerciseType}');
+    }
   }
 
 
@@ -163,7 +176,9 @@ class _AbsScreenState extends State<AbsScreen> {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
     final imagePath = _getImagePath();
 
-    print(imagePath);
+    if (kDebugMode) {
+      print(imagePath);
+    }
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -181,7 +196,6 @@ class _AbsScreenState extends State<AbsScreen> {
                 width: AppDevicesUtils.getScreenWidth(context) * 0.95,
                 height: 200,
                 decoration: BoxDecoration(
-                  color: Colors.red,
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
                     fit: BoxFit.cover,

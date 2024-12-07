@@ -39,6 +39,7 @@ class _SocialScreenState extends State<SocialScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool dark = MyAppHelperFunctions.isDarkMode(context);
 
     postController.fetchPosts();
     String userId = FirebaseAuth.instance.currentUser!.uid;
@@ -51,7 +52,10 @@ class _SocialScreenState extends State<SocialScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Social Screen'), // Optional: Title of the AppBar
-          bottom: const TabBar(
+          bottom:  TabBar(
+            indicatorColor: AppColor.orangeColor,
+            labelColor: dark ? AppColor.white : AppColor.dark,
+            unselectedLabelColor: Colors.grey,
             tabs: [
               Tab(text: 'Friends'),
               Tab(text: 'Foryou'),

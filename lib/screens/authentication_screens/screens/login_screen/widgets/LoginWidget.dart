@@ -70,19 +70,26 @@ class LoginWidget extends StatelessWidget {
           const SizedBox(height: AppSizes.spaceBtwSections + 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0),
-            child: ButtonWidget(
-              dark: dark,
-              onPressed: () async {
-                await _loginUser(controller);
-              },
-              buttonText: AppStrings.sigIn,
-            ),
+            child:   Obx(() {
+              return controller.isLoading.value
+                  ? const CircularProgressIndicator()
+                  : ElevatedButton(
+                onPressed: () => _loginUser(controller),
+                child: const Text('Login'),
+              );
+            }),
+            // ButtonWidget(
+            //   dark: dark,
+            //   onPressed: () async {
+            //     await _loginUser(controller);
+            //   },
+            //   buttonText: AppStrings.sigIn,
+            // ),
           ),
         ],
       ),
     );
   }
-
   Future<void> _loginUser(LoginController controller) async {
     try {
       // Get email and password from the controller
@@ -99,11 +106,20 @@ class LoginWidget extends StatelessWidget {
         return;
       }
 
+      // Show loading dialog
+      Get.dialog(
+        Center(child: CircularProgressIndicator()),
+        barrierDismissible: false,
+      );
+
       // Sign in with email and password
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      // Close loading dialog
+      Get.back();
 
       // Unfocus fields after login
       FocusScope.of(Get.context!).unfocus();
@@ -112,6 +128,9 @@ class LoginWidget extends StatelessWidget {
       Get.to(() => const NavigationMenu());
 
     } on FirebaseAuthException catch (e) {
+      // Close loading dialog if there's an error
+      if (Get.isDialogOpen ?? false) Get.back();
+
       // Handle errors here
       String message;
       if (e.code == 'user-not-found') {
@@ -128,7 +147,63 @@ class LoginWidget extends StatelessWidget {
         backgroundColor: AppColor.error,
       );
     } catch (e) {
+      // Close loading dialog if there's an error
+      if (Get.isDialogOpen ?? false) Get.back();
+
+      // Show generic error message
       Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM);
     }
   }
+
+
+  // Future<void> _loginUser(LoginController controller) async {
+  //   try {
+  //     // Get email and password from the controller
+  //     var isLoading = false.obs;
+  //
+  //     String email = controller.emailController.text.trim();
+  //     String password = controller.passwordController.text.trim();
+  //
+  //     // Check if fields are empty
+  //     if (email.isEmpty || password.isEmpty) {
+  //       ShowSnackbar.showMessage(
+  //         title: 'Login Failed',
+  //         message: 'Please fill in all fields.',
+  //         backgroundColor: AppColor.error,
+  //       );
+  //       return;
+  //     }
+  //
+  //     // Sign in with email and password
+  //     UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+  //
+  //     // Unfocus fields after login
+  //     FocusScope.of(Get.context!).unfocus();
+  //
+  //     // Navigate to the next screen on success
+  //     Get.to(() => const NavigationMenu());
+  //
+  //   } on FirebaseAuthException catch (e) {
+  //     // Handle errors here
+  //     String message;
+  //     if (e.code == 'user-not-found') {
+  //       message = 'No user found for that email.';
+  //     } else if (e.code == 'wrong-password') {
+  //       message = 'Wrong password provided for that user.';
+  //     } else {
+  //       message = 'An error occurred. Please try again.';
+  //     }
+  //
+  //     ShowSnackbar.showMessage(
+  //       title: 'Login Failed',
+  //       message: message,
+  //       backgroundColor: AppColor.error,
+  //     );
+  //   } catch (e) {
+  //     Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM);
+  //   }
+  // }
 }

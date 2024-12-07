@@ -161,6 +161,9 @@ class AppStrings {
 
 
 
+  static String textSetting= "Setting and activity";
+
+
 
 
 

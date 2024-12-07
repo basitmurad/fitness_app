@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/profile/user_profile_main/widgets/ButtonsWidget.dart';
 import 'package:fitness/screens/profile/user_profile_main/widgets/UserFollowingPostWidget.dart';
+import 'package:fitness/utils/constants/AppString.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../common/widgets/CircularImage.dart';
 import '../../../../utils/constants/AppColor.dart';
 import '../../../../utils/constants/AppSizes.dart';
 import '../../../../utils/helpers/MyAppHelper.dart';
+import '../../../utils/constants/AppImagePaths.dart';
 import '../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class UserProfileScreen extends StatelessWidget {
@@ -51,17 +53,15 @@ class UserProfileScreen extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Text(
-                    'Header Content',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
+
+                SizedBox(height: 32,),
+
+                ListTile(
+                  leading: Icon(Icons.arrow_back),
+                  title: Text(AppStrings.textSetting),
+                  onTap: () {
+                    Navigator.pop(context); // Close the drawer
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.home),
@@ -110,20 +110,20 @@ class UserProfileScreen extends StatelessWidget {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       return CircularImage(
-                        imageUrl: snapshot.data ?? 'https://via.placeholder.com/100',
+                        imageUrl: snapshot.data ?? AppImagePaths.placeholder,
                         size: 100,
                       );
                     }
                   },
                 ),
                 const SizedBox(height: 4),
-                SimpleTextWidget(
-                  text: '@knc sors',
-                  fontWeight: FontWeight.w300,
-                  fontSize: 14,
-                  color: dark ? AppColor.white : AppColor.black,
-                  fontFamily: 'Poppins',
-                ),
+                // SimpleTextWidget(
+                //   text: '@knc sors',
+                //   fontWeight: FontWeight.w300,
+                //   fontSize: 14,
+                //   color: dark ? AppColor.white : AppColor.black,
+                //   fontFamily: 'Poppins',
+                // ),
                 const SizedBox(height: AppSizes.spaceBtwSections - 20),
                 FutureBuilder<Map<String, int>>(
                   future: fetchUserCounts(),

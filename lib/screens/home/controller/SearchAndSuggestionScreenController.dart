@@ -1,8 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-
-import '../search_screen/UserModel.dart';
+import '../../modelClass/UserModel.dart';
 
 class SearchAndSuggestionScreenController extends GetxController{
   var isSearching = false.obs;
@@ -47,10 +46,15 @@ class SearchAndSuggestionScreenController extends GetxController{
           return UserModel.fromJson(entry.value);
         }).toList();
       } else {
-        print('No users found.');
+
+        if (kDebugMode) {
+          print('No users found.');
+        }
       }
     } catch (e) {
-      print('Error fetching users: $e');
+      if (kDebugMode) {
+        print('Error fetching users: $e');
+      }
     }
   }
 }

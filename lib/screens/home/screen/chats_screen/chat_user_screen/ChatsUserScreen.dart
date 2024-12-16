@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fitness/screens/home/chats/chat_detail_screen/ChatDetailScreen.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../search_screen/widgets/UserCard1.dart';
+import '../chat_detail_screen/ChatDetailScreen.dart';
 
 class ChatsUserScreen extends StatefulWidget {
   const ChatsUserScreen({super.key});

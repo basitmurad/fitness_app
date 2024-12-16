@@ -1,9 +1,10 @@
+import 'package:fitness/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../utils/constants/AppColor.dart';
 import '../../../../../utils/constants/AppDevicesUtils.dart';
 import '../../../../../utils/constants/AppString.dart';
-import '../../../../home/dashboard_screen/Dashboard.dart';
+import '../../../../home/screen/dashboard_screen/Dashboard.dart';
 import '../../exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class AppbarWidget extends StatelessWidget {
@@ -24,7 +25,7 @@ class AppbarWidget extends StatelessWidget {
         IconButton(
             padding: EdgeInsets.zero,
             onPressed: (){
-          Get.to( Dashboard());
+          Get.to( NavigationMenu());
 
         }, icon: Icon(Icons.arrow_back ,color: dark ? AppColor.white :AppColor.black
           ,)),

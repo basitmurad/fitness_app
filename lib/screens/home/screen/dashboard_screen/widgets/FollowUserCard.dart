@@ -2,11 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../common/widgets/CustomButton.dart';
-import '../../../../common/widgets/CustomButtonWithIcon.dart';
-import '../../../../utils/constants/AppColor.dart';
-import '../../../../utils/constants/AppImagePaths.dart'; // Import the file containing your placeholder image path
-
+import '../../../../../common/widgets/CustomButton.dart';
+import '../../../../../common/widgets/CustomButtonWithIcon.dart';
+import '../../../../../utils/constants/AppColor.dart';
+import '../../../../../utils/constants/AppImagePaths.dart';
 class FollowUserCard extends StatelessWidget {
   final bool dark;
   final String userName;

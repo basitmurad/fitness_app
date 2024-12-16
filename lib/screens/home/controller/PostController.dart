@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import '../models/Post.dart';
+
+import '../../modelClass/Post.dart';
 
 class PostController extends GetxController {
   var posts = <Post>[].obs;

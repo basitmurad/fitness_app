@@ -3,10 +3,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/common/snackbar/ShowSnackbar.dart';
 import 'package:fitness/common/widgets/ButtonWidget.dart';
 import 'package:fitness/screens/exercise_screen/screen/create_challenge_screen/widgets/NotifyWidgets.dart';
-import 'package:fitness/screens/home/dashboard_screen/Dashboard.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../navigation_menu.dart';
 import '../../../../utils/constants/AppColor.dart';
 import '../../../../utils/constants/AppString.dart';
 import '../../../../utils/helpers/MyAppHelper.dart';
@@ -661,7 +661,7 @@ class CreateChallengeScreen extends StatelessWidget {
                             backgroundColor: Colors.green, // Use an appropriate color for success
                           );
 
-                          Get.to(Dashboard());
+                          Get.to(NavigationMenu());
 
                           // Optionally, navigate or clear the form after saving
                           // Navigator.pop(context); // Navigate back if needed

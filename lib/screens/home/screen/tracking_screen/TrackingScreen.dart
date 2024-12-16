@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fitness/screens/home/tracking_screen/widgets/CircularProgressPainter.dart';
-import 'package:fitness/screens/home/tracking_screen/widgets/OpenCirclePainter1.dart';
+import 'package:fitness/screens/home/screen/tracking_screen/widgets/CircularProgressPainter.dart';
+import 'package:fitness/screens/home/screen/tracking_screen/widgets/OpenCirclePainter1.dart';
 import 'package:fitness/utils/constants/AppColor.dart';
 import 'package:fitness/utils/constants/AppSizes.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
 import 'package:flutter/material.dart';
-import '../../../utils/constants/AppImagePaths.dart';
-import '../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../../utils/constants/AppImagePaths.dart';
+import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 import '../dashboard_screen/widgets/ProgressContainer.dart';
 
 class TrackingScreen extends StatefulWidget {
@@ -49,7 +49,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
       DatabaseEvent event = await trackingRef.once();
       DataSnapshot snapshot = event.snapshot;
 
-      print('data is $snapshot');
       if (snapshot.value != null) {
         Map<String, dynamic> data =
             Map<String, dynamic>.from(snapshot.value as Map);
@@ -62,9 +61,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
         String timeTrackedFormatted = convertSecondsToMinutes(
             timeTracked); // Convert to minutes and seconds
 
-        print("Steps: $steps");
-        print("Calories Burned: $caloriesBurned");
-        print("Time Tracked: $timeTrackedFormatted");
       } else {
         // If no data exists for the day, set default values
         setState(() {
@@ -73,8 +69,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
           timeTracked = 0;
         });
       }
-    } catch (e) {
-      print("Error fetching tracking data: $e");
     } finally {
       setState(() {
         isLoading = false;
@@ -121,11 +115,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
           steps = data['steps'] ?? 0; // Extract the 'steps' for the day
         }
 
-        // Store the steps data for each day
         stepsData[dayName] = steps;
         totalSteps += steps;
 
-        // Calculate miles and kcal
         totalMiles += steps * stepsToMilesConversionFactor / 1000; // Convert steps to miles
         totalKcal += steps * stepsToKcalConversionFactor; // Convert steps to kcal
       }
@@ -139,12 +131,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
       });
 
       // Print the results
-      print('Weekly Steps: $weeklySteps');
-      print('Total Steps for the Week: $weeklyTotalSteps');
-      print('Total Miles for the Week: $weeklyTotalMiles');
-      print('Total Kcal for the Week: $weeklyTotalKcal');
-    } catch (e) {
-      print("Error fetching weekly data: $e");
     } finally {
       setState(() {
         isLoading = false;
@@ -173,7 +159,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
     // Check if it's Sunday at 11:59 PM
     if (currentTime.weekday == DateTime.sunday && currentTime.hour == 23 && currentTime.minute == 59) {
-      // Variables to store weekly data
       int totalSteps = 0;
       double totalMiles = 0.0;
       double totalKcal = 0.0;
@@ -183,7 +168,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
         'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
       ];
 
-      // Conversion factors
       const double stepsToMilesConversionFactor = 0.5; // Assuming 1000 steps = 0.5 miles
       const double stepsToKcalConversionFactor = 0.04; // Assuming 0.04 kcal per step
 
@@ -201,23 +185,19 @@ class _TrackingScreenState extends State<TrackingScreen> {
             steps = data['steps'] ?? 0;
           }
 
-          // Store the daily steps data
           weeklyStepsData[dayName] = steps;
           totalSteps += steps;
 
-          // Convert to miles and kcal
           totalMiles += steps * stepsToMilesConversionFactor / 1000; // Convert steps to miles
           totalKcal += steps * stepsToKcalConversionFactor; // Convert steps to kcal
         }
 
-        // Prepare the all-time data node
         DatabaseReference allTimeTrackingRef = FirebaseDatabase.instance.ref('AllTimeTracking/$userID');
         DatabaseEvent allTimeEvent = await allTimeTrackingRef.once();
         DataSnapshot allTimeSnapshot = allTimeEvent.snapshot;
 
         Map<String, dynamic> allTimeData = {};
         if (allTimeSnapshot.value != null) {
-          // If all-time data exists, retrieve it and update
           allTimeData = Map<String, dynamic>.from(allTimeSnapshot.value as Map);
           allTimeData['totalSteps'] += totalSteps;
           allTimeData['totalMiles'] += totalMiles;
@@ -232,25 +212,19 @@ class _TrackingScreenState extends State<TrackingScreen> {
           };
         }
 
-        // Update the "AllTimeTracking" node with the new data
         await allTimeTrackingRef.set(allTimeData);
 
-        // Clear the current week's data from the "Tracking" node
         for (String dayName in daysOfWeek) {
           DatabaseReference dailyRef = FirebaseDatabase.instance.ref('Tracking/$userID/$dayName');
           await dailyRef.remove(); // Remove data for each day of the week
         }
 
-        // Log the updated all-time data
-        print('Updated All-Time Data: $allTimeData');
 
-        // Start the new week tracking (reset tracking data for Monday onwards)
         for (String dayName in daysOfWeek.sublist(0, 6)) {
           DatabaseReference trackingRef = FirebaseDatabase.instance.ref('Tracking/$userID/$dayName');
           await trackingRef.remove(); // Clear previous week tracking data
         }
 
-        // Set the new weekly data for Monday (start fresh week tracking)
         setState(() {
           weeklySteps = weeklyStepsData;
           weeklyTotalSteps = totalSteps;
@@ -259,12 +233,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
         });
 
         // Print the current week's data
-        print('Current Week Data:');
-        print('Total Steps: $weeklyTotalSteps');
-        print('Total Miles: $weeklyTotalMiles');
-        print('Total Kcal: $weeklyTotalKcal');
-      } catch (e) {
-        print("Error updating all-time tracking: $e");
       } finally {
         setState(() {
           isLoading = false;
@@ -272,11 +240,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
       }
     } else {
       // If the time is not Sunday 11:59 PM, show previous week's data
-      print("Not Sunday 11:59 PM yet. Showing previous week data:");
-      print('Weekly Steps: $weeklySteps');
-      print('Total Steps for the Week: $weeklyTotalSteps');
-      print('Total Miles for the Week: $weeklyTotalMiles');
-      print('Total Kcal for the Week: $weeklyTotalKcal');
     }
   }
 
@@ -400,9 +363,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                 const BorderRadius.all(Radius.circular(8)),
                             boxShadow: [
                               BoxShadow(
-                                color: dark
-                                    ? Colors.black.withOpacity(0.3)
-                                    : Colors.black.withOpacity(0.1),
+                                color: !dark
+                                    ? Colors.black.withOpacity(0.1)
+                                    : Colors.black.withOpacity(0.3),
                                 blurRadius: 8, // Blur radius for the shadow
                                 spreadRadius: 2, // Spread radius for the shadow
                                 offset: Offset(
@@ -458,10 +421,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 height: 120, // Adjust height as needed
                 decoration: BoxDecoration(
                   color: dark
-                      ? AppColor.grey.withOpacity(0.1)
-                      : AppColor.grey.withOpacity(0.3),
+                      ? AppColor.grey.withValues(alpha: 0.1)
+                      : AppColor.grey.withValues(alpha: 0.3),
                   borderRadius: const BorderRadius.all(Radius.circular(6)),
                 ),
+
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -543,8 +507,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 height: 200, // Adjust height as needed
                 decoration: BoxDecoration(
                   color: dark
-                      ? AppColor.grey.withOpacity(0.1)
-                      : AppColor.grey.withOpacity(0.3),
+                      ? AppColor.grey.withValues(alpha: 0.1)
+                      : AppColor.grey.withValues(alpha: 0.3),
                   borderRadius: const BorderRadius.all(Radius.circular(6)),
                 ),
                 child: Padding(
@@ -609,31 +573,26 @@ class _TrackingScreenState extends State<TrackingScreen> {
                         SizedBox(
                           height: AppSizes.spaceBtwInputFields,
                         ),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-// Evenly spaced children
                           children: [
-// Calories Container
                             Container(
                               height: 60,
                               width: 72,
                               decoration: BoxDecoration(
                                 color: dark
-                                    ? AppColor.white.withOpacity(0.1)
+                                    ? AppColor.white.withValues(alpha: 0.1)
                                     : AppColor.white,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
+                                borderRadius: const BorderRadius.all(Radius.circular(8)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: dark
-                                        ? Colors.black.withOpacity(0.3)
-                                        : Colors.black.withOpacity(0.1),
+                                        ? Colors.black.withValues(alpha: 0.3)
+                                        : Colors.black.withValues(alpha: 0.1),
                                     blurRadius: 8,
-// Blur radius for the shadow
                                     spreadRadius: 2,
-// Spread radius for the shadow
-                                    offset: Offset(
-                                        0, 4), // Position of the shadow (X, Y)
+                                    offset: Offset(0, 4), // Position of the shadow (X, Y)
                                   ),
                                 ],
                               ),
@@ -642,27 +601,23 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                 label: '$weeklyTotalKcal',
                                 value: 'kcal',
                               ),
-                            ), // Time Container
+                            ),
                             Container(
                               height: 60,
                               width: 72,
                               decoration: BoxDecoration(
                                 color: dark
-                                    ? AppColor.white.withOpacity(0.1)
+                                    ? AppColor.white.withValues(alpha: 0.1)
                                     : AppColor.white,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
+                                borderRadius: const BorderRadius.all(Radius.circular(8)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: dark
-                                        ? Colors.black.withOpacity(0.3)
-                                        : Colors.black.withOpacity(0.1),
-                                    blurRadius: 8,
-// Blur radius for the shadow
-                                    spreadRadius: 2,
-// Spread radius for the shadow
-                                    offset: Offset(
-                                        0, 4), // Position of the shadow (X, Y)
+                                        ? Colors.black.withValues(alpha: 0.3)
+                                        : Colors.black.withValues(alpha: 0.1),
+                                    blurRadius: 8, // Blur radius for the shadow
+                                    spreadRadius: 2, // Spread radius for the shadow
+                                    offset: Offset(0, 4), // Position of the shadow (X, Y)
                                   ),
                                 ],
                               ),
@@ -672,27 +627,22 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                 value: 'time',
                               ),
                             ),
-// Steps Container
                             Container(
                               height: 60,
                               width: 72,
                               decoration: BoxDecoration(
                                 color: dark
-                                    ? AppColor.white.withOpacity(0.1)
+                                    ? AppColor.white.withValues(alpha: 0.1)
                                     : AppColor.white,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
+                                borderRadius: const BorderRadius.all(Radius.circular(8)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: dark
-                                        ? Colors.black.withOpacity(0.3)
-                                        : Colors.black.withOpacity(0.1),
+                                        ? Colors.black.withValues(alpha: 0.3)
+                                        : Colors.black.withValues(alpha: 0.1),
                                     blurRadius: 8,
-// Blur radius for the shadow
                                     spreadRadius: 2,
-// Spread radius for the shadow
-                                    offset: Offset(
-                                        0, 4), // Position of the shadow (X, Y)
+                                    offset: Offset(0, 4), // Position of the shadow (X, Y)
                                   ),
                                 ],
                               ),
@@ -702,27 +652,22 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                 value: 'steps',
                               ),
                             ),
-// Distance Container
                             Container(
                               height: 60,
                               width: 72,
                               decoration: BoxDecoration(
                                 color: dark
-                                    ? AppColor.white.withOpacity(0.1)
+                                    ? AppColor.white.withValues(alpha: 0.1)
                                     : AppColor.white,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
+                                borderRadius: const BorderRadius.all(Radius.circular(8)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: dark
-                                        ? Colors.black.withOpacity(0.3)
-                                        : Colors.black.withOpacity(0.1),
-                                    blurRadius: 8,
-// Blur radius for the shadow
-                                    spreadRadius: 2,
-// Spread radius for the shadow
-                                    offset: Offset(
-                                        0, 4), // Position of the shadow (X, Y)
+                                        ? Colors.black.withValues(alpha: 0.3)
+                                        : Colors.black.withValues(alpha: 0.1),
+                                    blurRadius: 8, // Blur radius for the shadow
+                                    spreadRadius: 2, // Spread radius for the shadow
+                                    offset: Offset(0, 4), // Position of the shadow (X, Y)
                                   ),
                                 ],
                               ),
@@ -734,16 +679,10 @@ class _TrackingScreenState extends State<TrackingScreen> {
                             ),
                           ],
                         ),
+
                       ],
                     )),
               ),
-
-              // SizedBox(height: 20,),
-              // BarChartWidget(
-              //   values: [weeklyTotalMiles, weeklyTotalSteps, weeklyTotalKcal, 2333],
-              //   labels: ["Kcal", "Time", "Step", "Miles"],
-              // ),
-              // SizedBox(height: 20,),
 
 
             ],

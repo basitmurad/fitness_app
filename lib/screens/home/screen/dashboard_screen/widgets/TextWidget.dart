@@ -1,7 +1,8 @@
+
 import 'package:flutter/cupertino.dart';
 
-import '../../../../utils/constants/AppColor.dart';
-import '../../../../utils/constants/AppString.dart';
+import '../../../../../utils/constants/AppColor.dart';
+import '../../../../../utils/constants/AppString.dart';
 
 class TextWidget extends StatelessWidget {
   const TextWidget({

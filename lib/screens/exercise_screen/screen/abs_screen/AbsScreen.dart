@@ -13,8 +13,6 @@ import '../../../../utils/constants/AppColor.dart';
 import '../exercise_start_screen/ExerciseProgressScreen.dart';
 import 'widgets/ExerciseDetailWidget.dart';
 
-
-
 class AbsScreen extends StatefulWidget {
   const AbsScreen({
     super.key,
@@ -22,7 +20,6 @@ class AbsScreen extends StatefulWidget {
     required this.gender,
     required this.exerciseRepititon,
   });
-
 
   final String exerciseRepititon;
 
@@ -34,7 +31,8 @@ class AbsScreen extends StatefulWidget {
 }
 
 class _AbsScreenState extends State<AbsScreen> {
-  List<Map<String, String>> exerciseList = []; // Store exercise names and repetitions
+  List<Map<String, String>> exerciseList =
+      []; // Store exercise names and repetitions
   bool isLoading = true; // Show loading indicator while data is being fetched
 
   @override
@@ -49,17 +47,15 @@ class _AbsScreenState extends State<AbsScreen> {
     getData1();
   }
 
-
-
-
-  String getImagePath(){
-
-
-       return widget.gender == 'female' ? AppImagePaths.male : AppImagePaths.female;
-
+  String getImagePath() {
+    return widget.gender == 'female'
+        ? AppImagePaths.male
+        : AppImagePaths.female;
   }
+
   Future<void> getData() async {
-    DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
+    DatabaseReference databaseReference =
+        FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
     if (kDebugMode) {
       print('Fetching data from: ${databaseReference.path}');
     } // Debugging print statement
@@ -70,7 +66,8 @@ class _AbsScreenState extends State<AbsScreen> {
       List<Map<String, String>> fetchedExercises = [];
       for (var child in snapshot.children) {
         if (child.key != null) {
-          String? repetition = child.child("exerciseRepetition").value?.toString();
+          String? repetition =
+              child.child("exerciseRepetition").value?.toString();
           if (repetition != null) {
             fetchedExercises.add({
               "exerciseName": child.key!,
@@ -86,19 +83,20 @@ class _AbsScreenState extends State<AbsScreen> {
         exerciseList = fetchedExercises;
         isLoading = false;
       });
-
-
     } else {
       if (kDebugMode) {
-        print('No data exists for the given exercise type: ${widget.exerciseType}');
+        print(
+            'No data exists for the given exercise type: ${widget.exerciseType}');
       }
       setState(() {
         isLoading = false;
       });
     }
   }
+
   Future<void> getData1() async {
-    DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
+    DatabaseReference databaseReference =
+        FirebaseDatabase.instance.ref("Exercise").child(widget.exerciseType);
     if (kDebugMode) {
       print('Fetching data from: ${databaseReference.path}');
     } // Debugging print statement
@@ -109,18 +107,29 @@ class _AbsScreenState extends State<AbsScreen> {
       List<Map<String, String>> fetchedExercises = [];
       for (var child in snapshot.children) {
         if (child.key != null) {
-          String? repetition = child.child("exerciseRepetition").value?.toString();
-          String? durations = child.child("durations").value?.toString(); // Fixed typo from "durarions" to "durations"
+          String? repetition =
+              child.child("exerciseRepetition").value?.toString();
+          String? durations = child
+              .child("durations")
+              .value
+              ?.toString(); // Fixed typo from "durarions" to "durations"
           String? musclePath;
-
-
-
 
           // Access the multimedia node to get musclePath based on gender
           if (widget.gender.toLowerCase() == 'female') {
-            musclePath = child.child("multimedia").child("female").child("musclePath").value?.toString(); // Updated path
+            musclePath = child
+                .child("multimedia")
+                .child("female")
+                .child("musclePath")
+                .value
+                ?.toString(); // Updated path
           } else if (widget.gender.toLowerCase() == 'male') {
-            musclePath = child.child("multimedia").child("male").child("musclePath").value?.toString(); // Updated path
+            musclePath = child
+                .child("multimedia")
+                .child("male")
+                .child("musclePath")
+                .value
+                ?.toString(); // Updated path
           }
 
           print('Muscle image is $musclePath');
@@ -130,12 +139,15 @@ class _AbsScreenState extends State<AbsScreen> {
               "exerciseName": child.key!,
               "exerciseRepetition": repetition,
               "durarions": durations ?? 'N/A',
-              "musclePath": musclePath ?? 'N/A', // Default to 'N/A' if musclePath is null
+              "musclePath": musclePath ?? 'N/A',
+              // Default to 'N/A' if musclePath is null
             });
 
             print('Child Key: ${child.key}');
-            print('Female data: ${child.child("multimedia").child("female").value}'); // Updated path
-            print('Male data: ${child.child("multimedia").child("male").value}'); // Updated path
+            print(
+                'Female data: ${child.child("multimedia").child("female").value}'); // Updated path
+            print(
+                'Male data: ${child.child("multimedia").child("male").value}'); // Updated path
           }
         }
       }
@@ -145,31 +157,30 @@ class _AbsScreenState extends State<AbsScreen> {
       });
       await _storeDataInSharedPreferences(fetchedExercises);
     } else {
-      print('No data exists for the given exercise type: ${widget.exerciseType}');
+      print(
+          'No data exists for the given exercise type: ${widget.exerciseType}');
       setState(() {
         isLoading = false;
       });
     }
   }
 
-
-
-
-
-  Future<void> _storeDataInSharedPreferences(List<Map<String, String>> exercises) async {
+  Future<void> _storeDataInSharedPreferences(
+      List<Map<String, String>> exercises) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // Convert the List of Map to a List of JSON Strings for storage
-    List<String> jsonExercises = exercises.map((exercise) => jsonEncode(exercise)).toList();
+    List<String> jsonExercises =
+        exercises.map((exercise) => jsonEncode(exercise)).toList();
 
     // Store the List of JSON Strings in Shared Preferences
-    await prefs.setStringList('exercises_${widget.exerciseType}', jsonExercises);
+    await prefs.setStringList(
+        'exercises_${widget.exerciseType}', jsonExercises);
     if (kDebugMode) {
-      print('Stored exercises in Shared Preferences for type: ${widget.exerciseType}');
+      print(
+          'Stored exercises in Shared Preferences for type: ${widget.exerciseType}');
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -233,25 +244,31 @@ class _AbsScreenState extends State<AbsScreen> {
                           Text(
                             widget.exerciseType,
                             textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                              color: AppColor.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 0.1,
-                              fontSize: 20,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(
+                                  color: AppColor.white,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0.1,
+                                  fontSize: 20,
+                                ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             widget.exerciseRepititon,
                             textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                              color: AppColor.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 0.1,
-                              fontSize: 12,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(
+                                  color: AppColor.white,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0.1,
+                                  fontSize: 12,
+                                ),
                           ),
                         ],
                       ),
@@ -261,8 +278,7 @@ class _AbsScreenState extends State<AbsScreen> {
               ),
               const SizedBox(height: AppSizes.spaceBtwItems - 10),
               // Loading indicator if data is still being fetched
-              if (isLoading)
-                const CircularProgressIndicator(),
+              if (isLoading) const CircularProgressIndicator(),
               // ListView of exercises once data is loaded
               if (!isLoading && exerciseList.isNotEmpty)
                 ListView.builder(
@@ -277,7 +293,8 @@ class _AbsScreenState extends State<AbsScreen> {
                         dark: dark,
                         exerciseName: exercise["exerciseName"]!,
                         exercieRep: exercise["exerciseRepetition"]!,
-                        imageUrl: imagePath, // Add image URL if you have one
+                        imageUrl: imagePath,
+                        // Add image URL if you have one
                         exerciseType: widget.exerciseType,
                         gender: widget.gender,
                         exerciseList: [], // Add your list here if needed
@@ -296,13 +313,16 @@ class _AbsScreenState extends State<AbsScreen> {
                   dark: dark,
                   onPressed: () {
                     // Fetch the current exercise details, assuming index 0 for this example
-                    final exercise = exerciseList.isNotEmpty ? exerciseList[0] : null; // Modify index as needed
+                    final exercise = exerciseList.isNotEmpty
+                        ? exerciseList[0]
+                        : null; // Modify index as needed
                     if (exercise != null) {
                       Get.to(
                         ExerciseProgressScreen(
                           gender: widget.gender,
                           exerciseType: widget.exerciseType,
-                           exerciseName: exercise["exerciseName"]!, // Pass exercise name
+                          exerciseName:
+                              exercise["exerciseName"]!, // Pass exercise name
                         ),
                       );
                     } else {
@@ -313,7 +333,6 @@ class _AbsScreenState extends State<AbsScreen> {
                   buttonText: 'Start',
                 ),
               ),
-
             ],
           ),
         ),
@@ -321,14 +340,12 @@ class _AbsScreenState extends State<AbsScreen> {
     );
   }
 
-
-
-
   String _getImagePath() {
     // Example logic to get the image path based on exercise name and gender
     if (widget.exerciseType.contains('Abs Workout')) {
-      return widget.gender == 'female' ? AppImagePaths.femaleAbsWorkout : AppImagePaths
-          .maleAbs;
+      return widget.gender == 'female'
+          ? AppImagePaths.femaleAbsWorkout
+          : AppImagePaths.maleAbs;
     }
     if (widget.exerciseType.contains('Chest Workout')) {
       return widget.gender == 'female'
@@ -356,6 +373,8 @@ class _AbsScreenState extends State<AbsScreen> {
           : AppImagePaths.maleBackWorkout;
     }
     // Add more conditions for other exercise types and genders
-    return widget.gender == 'female' ? AppImagePaths.male : AppImagePaths.female;
+    return widget.gender == 'female'
+        ? AppImagePaths.male
+        : AppImagePaths.female;
   }
 }

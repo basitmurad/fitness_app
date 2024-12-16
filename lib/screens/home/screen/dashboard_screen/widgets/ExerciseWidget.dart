@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../../utils/constants/AppColor.dart';
-import '../../../../utils/constants/AppDevicesUtils.dart';
+
+import '../../../../../utils/constants/AppColor.dart';
+import '../../../../../utils/constants/AppDevicesUtils.dart';
+
 
 class ExerciseWidget extends StatelessWidget {
   const ExerciseWidget({

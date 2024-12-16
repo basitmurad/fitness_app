@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../common/widgets/CustomButton.dart';
-import '../../../../utils/constants/AppColor.dart';
-import '../../../../utils/constants/AppDevicesUtils.dart';
-import '../../../../utils/constants/AppImagePaths.dart';
-import '../../../../utils/constants/AppString.dart';
-import '../../../exercise_screen/screen/challenge_screen/ChallengeScreen.dart';
+import '../../../../../common/widgets/CustomButton.dart';
+import '../../../../../utils/constants/AppColor.dart';
+import '../../../../../utils/constants/AppDevicesUtils.dart';
+import '../../../../../utils/constants/AppImagePaths.dart';
+import '../../../../../utils/constants/AppString.dart';
+import '../../../../exercise_screen/screen/challenge_screen/ChallengeScreen.dart';
+
 
 class ChallengedWidget extends StatelessWidget {
   const ChallengedWidget({

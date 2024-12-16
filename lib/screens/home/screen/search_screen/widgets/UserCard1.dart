@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/CircularImage.dart';
-import '../../../../utils/constants/AppColor.dart';
-import '../../../../utils/constants/AppDevicesUtils.dart';
-import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../../../common/widgets/CircularImage.dart';
+import '../../../../../utils/constants/AppColor.dart';
+import '../../../../../utils/constants/AppDevicesUtils.dart';
+import '../../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
 
 class UserCard1 extends StatelessWidget {
   const UserCard1({

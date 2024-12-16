@@ -20,7 +20,7 @@ class StepController extends GetxController with WidgetsBindingObserver {
   @override
   void onInit() {
     super.onInit();
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     requestPermissions(); // Request permission on initialization
   }
 

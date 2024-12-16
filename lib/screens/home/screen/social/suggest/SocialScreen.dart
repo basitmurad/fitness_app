@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../../../common/widgets/ButtonWidget.dart';
-import '../../../../utils/constants/AppColor.dart';
-import '../../../../utils/constants/AppImagePaths.dart';
-import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
-import '../../controller/PostController.dart';
-import '../../models/Post.dart';
+import '../../../../../common/widgets/ButtonWidget.dart';
+import '../../../../../utils/constants/AppColor.dart';
+import '../../../../../utils/constants/AppImagePaths.dart';
+import '../../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../../modelClass/Post.dart';
+import '../../../controller/PostController.dart';
 
 
 class SocialScreen extends StatefulWidget {
@@ -31,11 +31,6 @@ class _SocialScreenState extends State<SocialScreen> {
     postController.fetchPostsFromFollowingUsers(userId);  // Fetch followed users' posts
     postController.fetchPosts();  // Fetch general posts
   }
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {

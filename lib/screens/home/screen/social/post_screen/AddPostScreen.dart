@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -6,13 +5,15 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fitness/screens/home/controller/AddPostController.dart';
 import 'package:fitness/utils/constants/AppImagePaths.dart';
 import 'package:fitness/utils/helpers/MyAppHelper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
-import '../../../../common/widgets/CircularImage.dart';
-import '../../../../utils/constants/AppColor.dart';
-import '../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
-import '../../models/Post.dart';
+import '../../../../../common/widgets/CircularImage.dart';
+import '../../../../../utils/constants/AppColor.dart';
+import '../../../../exercise_screen/screen/exercise_detail_screen/widgets/SimpleTextWidget.dart';
+import '../../../../modelClass/Post.dart';
+
 
 class AddPostScreen extends StatelessWidget {
   const AddPostScreen({super.key});
@@ -46,11 +47,11 @@ class AddPostScreen extends StatelessWidget {
             onTap: () async {
               // Check if there are selected images or text in the input field
               String inputText = addPostController.inputText.value;
-              List<String> images = [
+              List<String> images = {
                 if (addPostController.captureImagePath.isNotEmpty)
                   addPostController.captureImagePath.value,
                 ...addPostController.selectedImages
-              ].toSet().toList(); // Ensure unique images
+              }.toList(); // Ensure unique images
 
               if (images.isEmpty && inputText.isEmpty) {
                 print("No images or text provided.");
@@ -180,7 +181,7 @@ class AddPostScreen extends StatelessWidget {
                           width: 100,
                           padding: const EdgeInsets.only(left: 4, top: 4, bottom: 4),
                           decoration: BoxDecoration(
-                            color: AppColor.orangeLight.withOpacity(0.5),
+                            color: AppColor.orangeLight.withValues(alpha: 0.5),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Row(
@@ -234,11 +235,11 @@ class AddPostScreen extends StatelessWidget {
               const SizedBox(height: 16),
               // Image Selection Grid
               Obx(() {
-                final images = [
+                final images = {
                   if (addPostController.captureImagePath.isNotEmpty)
                     addPostController.captureImagePath.value,
                   ...addPostController.selectedImages
-                ].toSet().toList(); // Ensure unique images
+                }.toList(); // Ensure unique images
 
                 if (images.isNotEmpty) {
                   return GridView.builder(
@@ -302,7 +303,9 @@ class AddPostScreen extends StatelessWidget {
 
     // Save post data to Realtime Database
     await postRef.set(post.toMap());
-    print('Post saved to Realtime Database!');
+    if (kDebugMode) {
+      print('Post saved to Realtime Database!');
+    }
   }
 
   Future<List<String>> uploadImages(List<String> imagePaths) async {
@@ -312,7 +315,7 @@ class AddPostScreen extends StatelessWidget {
       File file = File(imagePath);
       try {
         // Create a reference to the Firebase Storage location
-        String fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg'; // Unique filename
+        String fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg'; // Unique filename
         Reference storageRef = FirebaseStorage.instance.ref().child('posts/$fileName');
 
         // Upload the file
@@ -322,7 +325,9 @@ class AddPostScreen extends StatelessWidget {
         String downloadUrl = await uploadTask.ref.getDownloadURL();
         imageUrls.add(downloadUrl);
       } catch (e) {
-        print('Error uploading image: $e');
+        if (kDebugMode) {
+          print('Error uploading image: $e');
+        }
       }
     }
 

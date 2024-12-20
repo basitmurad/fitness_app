@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fitness/common/widgets/ButtonWidget.dart';
 import 'package:fitness/screens/home/controller/DashboardController.dart';
 import 'package:fitness/screens/home/screen/dashboard_screen/widgets/ChallengedWidget.dart';
 import 'package:fitness/screens/home/screen/dashboard_screen/widgets/ExerciseWidget.dart';
 import 'package:fitness/screens/home/screen/dashboard_screen/widgets/FollowUserCard.dart';
 import 'package:fitness/screens/home/screen/dashboard_screen/widgets/ProgressContainer.dart';
 import 'package:fitness/screens/home/screen/dashboard_screen/widgets/TextWidget.dart';
+import 'package:fitness/screens/home/screen/map_screen/MapTrackingScreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +29,6 @@ import '../../controller/StepController.dart';
 import '../chats_screen/chat_user_screen/ChatsUserScreen.dart';
 import '../social/post_screen/AddPostScreen.dart';
 import '../tracking_screen/TrackingScreen.dart';
-
 
 List<Map<String, String>> maleExercise = [
   {
@@ -174,20 +175,6 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                     color: dark ? Colors.white : AppColor.black,
                     fontFamily: 'Poppins',
                   )),
-              // CircularImage(
-              //     imageUrl: dashboardController.imageUrl ??
-              //         AppImagePaths.placeholder1,
-              //     size: 50),
-              // // CircularImage(imageUrl: dashboardController.imageUrl!, size: 50,) ,
-              // SizedBox(
-              //   width: 6,
-              // ),
-              // SimpleTextWidget(
-              //     text: dashboardController.name!,
-              //     fontWeight: FontWeight.w500,
-              //     fontSize: 14,
-              //     color: dark ? Colors.white : AppColor.black,
-              //     fontFamily: 'Poppins')
             ],
           ),
           actions: [
@@ -329,65 +316,197 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                 ),
 
                 const SizedBox(height: AppSizes.inputFieldRadius),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          if (!isTracking) {
-                            MyAppHelperFunctions.showSnackBar(
-                                'Tracking has been started');
-                            startListening(); // Call the function explicitly
-                          }
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppColor.orangeColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  width: MyAppHelperFunctions.screenWidth() * 0.95,
+                  height: 125, // Ensure this matches the content height exactly
+                  decoration: BoxDecoration(
+                    color: dark
+                        ? AppColor.grey.withOpacity(0.1)
+                        : AppColor.grey.withOpacity(0.3),
+                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min, // Ensure the column takes only as much space as needed
+                    children: [
+                      SimpleTextWidget(
+                        align: TextAlign.start,
+                        text: 'Ready to move forward.Kami ?',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: dark ? AppColor.white : AppColor.black,
+                        fontFamily: 'Poppins',
+                      ),
+                      SizedBox(height: 2),
+                      SimpleTextWidget(
+                        align: TextAlign.start,
+                        text: 'Every step brings you closer to your goals—keep moving and stay motivated!',
+                        fontWeight: FontWeight.w300,
+                        fontSize: 10,
+                        color: dark ? AppColor.white : AppColor.black,
+                        fontFamily: 'Poppins',
+                      ),
+                      SizedBox(height: 8),
+                      Align(
+                        alignment: Alignment.center,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Get.to(()=>MapTrackingScreen());
+                            // Define the action for the button
+                            print("Button Pressed!");
+                          },
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(200, 26), // Exact button size
+                            backgroundColor: AppColor.orangeColor,
+                            foregroundColor: Colors.white, // Text color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16), // Rounded corners
+                            ),
+                            elevation: 2, // Shadow
+                            padding: EdgeInsets.zero, // Removes default padding to fit height
                           ),
-                          minimumSize: Size(double.infinity,
-                              30), // Set minimum size to match height
-                        ),
-                        child: SimpleTextWidget(
-                          text: 'Record a Run',
-                          fontWeight: FontWeight.w300,
-                          fontSize: 12,
-                          color: dark ? AppColor.black : AppColor.white,
-                          fontFamily: 'Poppins',
+                          child: Text(
+                            "Record a Run",
+                            style: TextStyle(
+                              fontSize: 14, // Adjusted text size to fit smaller height
+                              fontWeight: FontWeight.w400, // Text style
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          if (isTracking) {
-                            MyAppHelperFunctions.showSnackBar(
-                                'Tracking has been Stopped');
-
-                            stopListening(); // Call the function explicitly
-                          }
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppColor.error,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          minimumSize: Size(double.infinity,
-                              30), // Set minimum size to match height
-                        ),
-                        child: SimpleTextWidget(
-                          text: 'Stop Run',
-                          fontWeight: FontWeight.w300,
-                          fontSize: 12,
-                          color: dark ? AppColor.black : AppColor.white,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+
+                // Container(
+                //   padding: EdgeInsets.all(10),
+                //   width: MyAppHelperFunctions.screenWidth() * 0.95,
+                //   height: 132,
+                //   // Adjust height as needed
+                //   decoration: BoxDecoration(
+                //     color: dark
+                //         ? AppColor.grey.withOpacity(0.1)
+                //         : AppColor.grey.withOpacity(0.3),
+                //     borderRadius: const BorderRadius.all(Radius.circular(6)),
+                //   ),
+                //
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       SimpleTextWidget(
+                //           align: TextAlign.start,
+                //           text: 'Ready to move forward.Kami ?',
+                //           fontWeight: FontWeight.w400,
+                //           fontSize: 12,
+                //           color: dark ? AppColor.white : AppColor.black,
+                //           fontFamily: 'Poppins'),
+                //       SizedBox(height: 2),
+                //       SimpleTextWidget(
+                //           align: TextAlign.start,
+                //           text:
+                //               'Every step brings you closer to your goals—keep moving and stay motivated!',
+                //           fontWeight: FontWeight.w300,
+                //           fontSize: 10,
+                //           color: dark ? AppColor.white : AppColor.black,
+                //           fontFamily: 'Poppins'),
+                //       SizedBox(height: 8),
+                //   Align(
+                //     alignment: Alignment.center,
+                //     child: Container(
+                //       alignment: Alignment.center,
+                //       width: 200, // Button width
+                //       height: 26, // Button height
+                //       child: ElevatedButton(
+                //
+                //         onPressed: () {
+                //           // Define the action for the button
+                //           print("Button Pressed!");
+                //         },
+                //         style: ElevatedButton.styleFrom(
+                //           minimumSize: Size(200, 32),
+                //           foregroundColor: AppColor.orangeColor, backgroundColor: AppColor.orangeColor, // Text color
+                //           shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(16), // Rounded corners
+                //           ),
+                //           elevation: 2, // Shadow
+                //           padding: EdgeInsets.zero, // Removes default padding to fit height
+                //         ),
+                //         child: Text(
+                //           "Record a Run",
+                //           style: TextStyle(
+                //             color: Colors.white,
+                //             fontSize: 14, // Adjusted text size to fit smaller height
+                //             fontWeight: FontWeight.w400, // Text style
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                //
+                //                     ],
+                //   ),
+                // ),
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Expanded(
+                //       child: TextButton(
+                //         onPressed: () {
+                //           if (!isTracking) {
+                //             MyAppHelperFunctions.showSnackBar(
+                //                 'Tracking has been started');
+                //             startListening(); // Call the function explicitly
+                //           }
+                //         },
+                //         style: TextButton.styleFrom(
+                //           backgroundColor: AppColor.orangeColor,
+                //           shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(16),
+                //           ),
+                //           minimumSize: Size(double.infinity,
+                //               30), // Set minimum size to match height
+                //         ),
+                //         child: SimpleTextWidget(
+                //           text: 'Record a Run',
+                //           fontWeight: FontWeight.w300,
+                //           fontSize: 12,
+                //           color: dark ? AppColor.black : AppColor.white,
+                //           fontFamily: 'Poppins',
+                //         ),
+                //       ),
+                //     ),
+                //     const SizedBox(width: 10),
+                //     Expanded(
+                //       child: TextButton(
+                //         onPressed: () {
+                //           if (isTracking) {
+                //             MyAppHelperFunctions.showSnackBar(
+                //                 'Tracking has been Stopped');
+                //
+                //             stopListening(); // Call the function explicitly
+                //           }
+                //         },
+                //         style: TextButton.styleFrom(
+                //           backgroundColor: AppColor.error,
+                //           shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(16),
+                //           ),
+                //           minimumSize: Size(double.infinity,
+                //               30), // Set minimum size to match height
+                //         ),
+                //         child: SimpleTextWidget(
+                //           text: 'Stop Run',
+                //           fontWeight: FontWeight.w300,
+                //           fontSize: 12,
+                //           color: dark ? AppColor.black : AppColor.white,
+                //           fontFamily: 'Poppins',
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(height: AppSizes.inputFieldRadius),
                 ChallengedWidget(dark: dark),
                 const SizedBox(height: AppSizes.inputFieldRadius - 5),

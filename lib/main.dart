@@ -1,5 +1,6 @@
 
 import 'package:fitness/navigation_menu.dart';
+import 'package:fitness/profile_screen.dart';
 import 'package:fitness/screens/authentication_screens/screens/login_screen/LoginScreen.dart';
 import 'package:fitness/utils/helpers/KeyboardController.dart';
 import 'package:fitness/utils/theme/MyAppTheme.dart';

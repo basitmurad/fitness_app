@@ -49,7 +49,7 @@ class TextInputWidget extends StatelessWidget {
                 Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: dark ? AppColor.white : AppColor.textColor,
                   fontSize: 14,
-                  fontWeight: headerFontWeight ?? FontWeight.w500,
+                  fontWeight: headerFontWeight ?? FontWeight.w400,
                   fontFamily: headerFontFamily ?? 'Manrope',
                 ),
           ),

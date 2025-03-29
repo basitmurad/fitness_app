@@ -44,21 +44,36 @@ class SignUpScreen extends StatelessWidget {
 
 
 
-              const SizedBox(
-                height: AppSizes.inputFieldRadius - 6,
-              ),
-              TextInputWidget(
-                controller: signUpController.emailController,
-                prefixIcon: const Icon(Icons.email),
-                isPassword: false,
+              const SizedBox(height: AppSizes.sm +6,),
+
+              Obx(() => TextInputWidget(
+                dark: dark, headerText: AppStrings.name,
+                controller: signUpController.nameController
+                ,
+                prefixIcon: const Icon(Icons.person),
+                hintText: AppStrings.name,
+                // Password field
                 headerFontFamily: 'Poppins',
-                headerFontWeight: FontWeight.w700,
-                hintText: AppStrings.emailText, dark: dark, headerText: AppStrings.enterEmail,// Not a password field
-              ),
+                headerFontWeight: FontWeight.w500,
+                obscureText: signUpController.isConfirmPasswordVisible.value,
+                onObscureTextChanged: signUpController.toggleConfirmPasswordVisibility,
+              )),
+              const SizedBox(height: AppSizes.sm +6,),
 
-              const SizedBox(height: AppSizes.inputFieldRadius + 3),
 
-              const SizedBox(height: AppSizes.inputFieldRadius - 6),
+
+              Obx(() => TextInputWidget(
+                  controller: signUpController.emailController,
+                  prefixIcon: const Icon(Icons.email),
+                  hintText: AppStrings.email,
+                  // Password field
+                  headerFontFamily: 'Poppins',
+                  headerFontWeight: FontWeight.w500,
+                  dark: dark, headerText: AppStrings.emailText
+              )),
+
+              const SizedBox(height: AppSizes.sm +6,),
+
               Obx(() => TextInputWidget(
                 controller: signUpController.passwordController,
                 prefixIcon: const Icon(Icons.lock),
@@ -66,15 +81,14 @@ class SignUpScreen extends StatelessWidget {
                 hintText: AppStrings.entrePassword,
                 // Password field
                   headerFontFamily: 'Poppins',
-                  headerFontWeight: FontWeight.w700,
+                  headerFontWeight: FontWeight.w500,
                 obscureText: signUpController.isPasswordVisible.value,
                 onObscureTextChanged: signUpController.togglePasswordVisibility,
                   dark: dark, headerText: AppStrings.passwordNew
               )),
 
-              const SizedBox(height: AppSizes.inputFieldRadius + 3),
+              const SizedBox(height: AppSizes.sm +6,),
 
-              const SizedBox(height: AppSizes.inputFieldRadius - 6),
               Obx(() => TextInputWidget(
                 dark: dark, headerText: AppStrings.passwordConfirm,
                 controller: signUpController.confirmPasswordController,
@@ -83,12 +97,12 @@ class SignUpScreen extends StatelessWidget {
                 hintText: AppStrings.entrePassword,
                 // Password field
                 headerFontFamily: 'Poppins',
-                headerFontWeight: FontWeight.w700,
+                headerFontWeight: FontWeight.w500,
                 obscureText: signUpController.isConfirmPasswordVisible.value,
                 onObscureTextChanged: signUpController.toggleConfirmPasswordVisibility,
               )),
 
-              const SizedBox(height: AppSizes.sm,),
+              const SizedBox(height: AppSizes.sm +6,),
 
               GestureDetector(
                 onTap: (){

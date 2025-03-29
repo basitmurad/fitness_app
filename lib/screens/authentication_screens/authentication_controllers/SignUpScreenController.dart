@@ -10,6 +10,7 @@ class SignUpController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final nameController = TextEditingController();
   final numberController = TextEditingController();
   var selectedGender = ''.obs;
   var isPasswordVisible = true.obs;
@@ -23,8 +24,9 @@ class SignUpController extends GetxController {
     final email = emailController.text;
     final password = passwordController.text;
     final confirmPassword = confirmPasswordController.text;
+    final name = nameController.text;
 
-    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty  || name.isEmpty) {
       setMessage('Failed', 'Please fill in all fields', Colors.redAccent);
       return;
     }
@@ -82,7 +84,7 @@ class SignUpController extends GetxController {
       // Navigate to the EmailVerificationScreen after successful email sending
       Get.to(EmailVerificationScreen(
         email: emailController.text,
-        password: passwordController.text,
+        password: passwordController.text, name: '',
       ));
       print('Navigated to EmailVerificationScreen');
 
@@ -95,49 +97,6 @@ class SignUpController extends GetxController {
       Get.back();
     }
   }
-
-  // Future<void> signUp() async {
-  //   print('Data is being saved');
-  //
-  //   // Show progress dialog
-  //   Get.dialog(
-  //     const Center(child: CircularProgressIndicator()),
-  //     barrierDismissible: false,
-  //   );
-  //
-  //   try {
-  //
-  //
-  //     UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
-  //       email: emailController.text,
-  //       password: passwordController.text,
-  //     );
-  //
-  //     // Send verification email
-  //     await userCredential.user!.sendEmailVerification();
-  //     UserData userData = UserData(
-  //             email: emailController.text,
-  //             name: '',
-  //             gender: '',
-  //             age: '',
-  //             height: '',
-  //             weight: '',
-  //             targetWeight: '',
-  //           );
-  //
-  //           // Upload user data to Firebase Realtime Database
-  //           await databaseReference.child('users/${userCredential.user!.uid}').set(userData.toJson());
-  //
-  //     // Notify user
-  //     setMessage('Success', 'Verification email sent. Please check your inbox.', Colors.blue);
-  //     Get.to(EmailVerificationScreen(email: emailController.text, password: passwordController.text));
-  //   } catch (e) {
-  //     setMessage('Error', e.toString(), Colors.redAccent);
-  //     print('Error: ${e.toString()}');
-  //   } finally {
-  //     Get.back(); // Dismiss the progress dialog
-  //   }
-  // }
 
 
 
@@ -175,6 +134,7 @@ class SignUpController extends GetxController {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 }

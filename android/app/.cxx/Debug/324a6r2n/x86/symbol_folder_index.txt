@@ -1,0 +1,1 @@
+/home/appomatrix/AndroidStudioProjects/fitness_app/build/app/intermediates/cxx/Debug/324a6r2n/obj/x86

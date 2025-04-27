@@ -141,9 +141,12 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fitness/navigation_menu.dart';
+import 'package:fitness/screens/modelClass/UserData%20.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../ProfileScreen.dart';
 import '../screens/email_verification_screen/EmailVerificationScreen.dart';
 
 class SignUpController extends GetxController {
@@ -166,7 +169,10 @@ class SignUpController extends GetxController {
     final confirmPassword = confirmPasswordController.text;
     final name = nameController.text;
 
-    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty  || name.isEmpty) {
+    if (email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty ||
+        name.isEmpty) {
       setMessage('Failed', 'Please fill in all fields', Colors.redAccent);
       return;
     }
@@ -198,6 +204,7 @@ class SignUpController extends GetxController {
   void toggleConfirmPasswordVisibility() {
     isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
   }
+
   Future<void> signUp() async {
     print('Data is being saved');
 
@@ -209,25 +216,25 @@ class SignUpController extends GetxController {
 
     try {
       // Create user with email and password
-      UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await firebaseAuth.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
-
+      await uploadUserDataToFirebase(
+          email: emailController.text, name: nameController.text);
       // Send verification email
-      await userCredential.user!.sendEmailVerification();
+      // await userCredential.user!.sendEmailVerification();
       print('Verification email sent');
 
       // Notify user about the email sent
-      setMessage('Success', 'Verification email sent. Please check your inbox.', Colors.blue);
-
-      // Navigate to the EmailVerificationScreen after successful email sending
-      Get.to(EmailVerificationScreen(
-        email: emailController.text,
-        password: passwordController.text, name: '',
-      ));
-      print('Navigated to EmailVerificationScreen');
-
+      setMessage('Success', 'Verification email sent. Please check your inbox.',
+          Colors.blue);
+      Get.offAll(
+        () => ProfileScreen(
+          name: nameController.text,
+        ),
+      );
     } catch (e) {
       // Show error message if any exception occurs
       setMessage('Error', e.toString(), Colors.redAccent);
@@ -238,8 +245,26 @@ class SignUpController extends GetxController {
     }
   }
 
+  Future<void> uploadUserDataToFirebase({
+    required String name,
+    required String email,
+  }) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
 
+    try {
+      UserData userData = UserData(
+        name: name,
+        email: email,
+      );
 
+      await databaseReference.child('users/$userId').set(userData.toJson());
+      debugPrint('Initial user data uploaded to Firebase: $userId');
+    } catch (e) {
+      debugPrint('Error uploading user data: ${e.toString()}');
+      throw e; // Re-throw the error to be caught by the calling function
+    }
+  }
 
   void setMessage(String title, String message, Color backgroundColor) {
     Get.snackbar(

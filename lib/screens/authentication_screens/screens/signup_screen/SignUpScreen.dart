@@ -66,6 +66,8 @@ class SignUpScreen extends StatelessWidget {
                   controller: signUpController.emailController,
                   prefixIcon: const Icon(Icons.email),
                   hintText: AppStrings.email,
+                  obscureText: signUpController.isConfirmPasswordVisible.value,
+
                   // Password field
                   headerFontFamily: 'Poppins',
                   headerFontWeight: FontWeight.w500,

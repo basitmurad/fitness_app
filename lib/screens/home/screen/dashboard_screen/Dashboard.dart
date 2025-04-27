@@ -134,7 +134,10 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
     dashboardController.fetchUserData(); // Fetch user data from the controller
+    print('username ${dashboardController.name}');
+
     WidgetsBinding.instance.addObserver(this);
     requestPermissions();
     fetchFollowedUsers(); // Fetch the followed users
@@ -214,7 +217,7 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
               children: [
                 Container(
                   width: MyAppHelperFunctions.screenWidth() * 0.95,
-                  height: 170, // Adjust height as needed
+                  height: 130, // Adjust height as needed
                   decoration: BoxDecoration(
                     color: dark
                         ? AppColor.grey.withOpacity(0.1)
@@ -258,36 +261,36 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                           ],
                         ),
                         const SizedBox(height: 8),
+                        //
+                        // // Rounded Progress Line with Orange Color
+                        // ClipRRect(
+                        //   borderRadius: BorderRadius.circular(10),
+                        //   // Rounded corners
+                        //   child: LinearProgressIndicator(
+                        //     value: 100,
+                        //     // Example: Set to your dynamic progress value (e.g., 0.76 = 76%)
+                        //     minHeight: 10,
+                        //     // Increase thickness for better visibility
+                        //     backgroundColor: dark
+                        //         ? AppColor.grey.withOpacity(0.1)
+                        //         : AppColor.grey.withOpacity(0.3),
+                        //     valueColor: AlwaysStoppedAnimation<Color>(
+                        //         AppColor.orangeColor), // Set to orange color
+                        //   ),
+                        // ),
+                        // const SizedBox(height: 2),
 
-                        // Rounded Progress Line with Orange Color
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          // Rounded corners
-                          child: LinearProgressIndicator(
-                            value: 0.76,
-                            // Example: Set to your dynamic progress value (e.g., 0.76 = 76%)
-                            minHeight: 10,
-                            // Increase thickness for better visibility
-                            backgroundColor: dark
-                                ? AppColor.grey.withOpacity(0.1)
-                                : AppColor.grey.withOpacity(0.3),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                AppColor.orangeColor), // Set to orange color
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-
-                        // Percentage Text Below Progress Bar
-                        Text(
-                          '76%',
-                          // Show dynamic progress percentage (you can replace this with the actual percentage)
-                          style: TextStyle(
-                            color: dark ? AppColor.white : AppColor.black,
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                          // // Percentage Text Below Progress Bar
+                          // Text(
+                          //   '76%',
+                          //   // Show dynamic progress percentage (you can replace this with the actual percentage)
+                          //   style: TextStyle(
+                          //     color: dark ? AppColor.white : AppColor.black,
+                          //     fontFamily: 'Poppins',
+                          //     fontSize: 14,
+                          //     fontWeight: FontWeight.w500,
+                          //   ),
+                          // ),
 
                         Align(
                           alignment: Alignment.bottomRight,
@@ -315,69 +318,69 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                   ),
                 ),
 
-                const SizedBox(height: AppSizes.inputFieldRadius),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  width: MyAppHelperFunctions.screenWidth() * 0.95,
-                  height: 125, // Ensure this matches the content height exactly
-                  decoration: BoxDecoration(
-                    color: dark
-                        ? AppColor.grey.withOpacity(0.1)
-                        : AppColor.grey.withOpacity(0.3),
-                    borderRadius: const BorderRadius.all(Radius.circular(6)),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min, // Ensure the column takes only as much space as needed
-                    children: [
-                      SimpleTextWidget(
-                        align: TextAlign.start,
-                        text: 'Ready to move forward.Kami ?',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                        color: dark ? AppColor.white : AppColor.black,
-                        fontFamily: 'Poppins',
-                      ),
-                      SizedBox(height: 2),
-                      SimpleTextWidget(
-                        align: TextAlign.start,
-                        text: 'Every step brings you closer to your goals—keep moving and stay motivated!',
-                        fontWeight: FontWeight.w300,
-                        fontSize: 10,
-                        color: dark ? AppColor.white : AppColor.black,
-                        fontFamily: 'Poppins',
-                      ),
-                      SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.center,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Get.to(()=>MapTrackingScreen());
-                            // Define the action for the button
-                            print("Button Pressed!");
-                          },
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size(200, 26), // Exact button size
-                            backgroundColor: AppColor.orangeColor,
-                            foregroundColor: Colors.white, // Text color
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16), // Rounded corners
-                            ),
-                            elevation: 2, // Shadow
-                            padding: EdgeInsets.zero, // Removes default padding to fit height
-                          ),
-                          child: Text(
-                            "Record a Run",
-                            style: TextStyle(
-                              fontSize: 14, // Adjusted text size to fit smaller height
-                              fontWeight: FontWeight.w400, // Text style
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // const SizedBox(height: AppSizes.inputFieldRadius),
+                // Container(
+                //   padding: EdgeInsets.all(10),
+                //   width: MyAppHelperFunctions.screenWidth() * 0.95,
+                //   height: 125, // Ensure this matches the content height exactly
+                //   decoration: BoxDecoration(
+                //     color: dark
+                //         ? AppColor.grey.withOpacity(0.1)
+                //         : AppColor.grey.withOpacity(0.3),
+                //     borderRadius: const BorderRadius.all(Radius.circular(6)),
+                //   ),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     mainAxisSize: MainAxisSize.min, // Ensure the column takes only as much space as needed
+                //     children: [
+                //       SimpleTextWidget(
+                //         align: TextAlign.start,
+                //         text: 'Ready to move forward.Kami ?',
+                //         fontWeight: FontWeight.w400,
+                //         fontSize: 12,
+                //         color: dark ? AppColor.white : AppColor.black,
+                //         fontFamily: 'Poppins',
+                //       ),
+                //       SizedBox(height: 2),
+                //       SimpleTextWidget(
+                //         align: TextAlign.start,
+                //         text: 'Every step brings you closer to your goals—keep moving and stay motivated!',
+                //         fontWeight: FontWeight.w300,
+                //         fontSize: 10,
+                //         color: dark ? AppColor.white : AppColor.black,
+                //         fontFamily: 'Poppins',
+                //       ),
+                //       SizedBox(height: 8),
+                //       Align(
+                //         alignment: Alignment.center,
+                //         child: ElevatedButton(
+                //           onPressed: () {
+                //             Get.to(()=>MapTrackingScreen());
+                //             // Define the action for the button
+                //             print("Button Pressed!");
+                //           },
+                //           style: ElevatedButton.styleFrom(
+                //             minimumSize: Size(200, 26), // Exact button size
+                //             backgroundColor: AppColor.orangeColor,
+                //             foregroundColor: Colors.white, // Text color
+                //             shape: RoundedRectangleBorder(
+                //               borderRadius: BorderRadius.circular(16), // Rounded corners
+                //             ),
+                //             elevation: 2, // Shadow
+                //             padding: EdgeInsets.zero, // Removes default padding to fit height
+                //           ),
+                //           child: Text(
+                //             "Record a Run",
+                //             style: TextStyle(
+                //               fontSize: 14, // Adjusted text size to fit smaller height
+                //               fontWeight: FontWeight.w400, // Text style
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
                 // Container(
                 //   padding: EdgeInsets.all(10),
@@ -448,65 +451,65 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                 //   ),
                 // ),
 
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Expanded(
-                //       child: TextButton(
-                //         onPressed: () {
-                //           if (!isTracking) {
-                //             MyAppHelperFunctions.showSnackBar(
-                //                 'Tracking has been started');
-                //             startListening(); // Call the function explicitly
-                //           }
-                //         },
-                //         style: TextButton.styleFrom(
-                //           backgroundColor: AppColor.orangeColor,
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(16),
-                //           ),
-                //           minimumSize: Size(double.infinity,
-                //               30), // Set minimum size to match height
-                //         ),
-                //         child: SimpleTextWidget(
-                //           text: 'Record a Run',
-                //           fontWeight: FontWeight.w300,
-                //           fontSize: 12,
-                //           color: dark ? AppColor.black : AppColor.white,
-                //           fontFamily: 'Poppins',
-                //         ),
-                //       ),
-                //     ),
-                //     const SizedBox(width: 10),
-                //     Expanded(
-                //       child: TextButton(
-                //         onPressed: () {
-                //           if (isTracking) {
-                //             MyAppHelperFunctions.showSnackBar(
-                //                 'Tracking has been Stopped');
-                //
-                //             stopListening(); // Call the function explicitly
-                //           }
-                //         },
-                //         style: TextButton.styleFrom(
-                //           backgroundColor: AppColor.error,
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(16),
-                //           ),
-                //           minimumSize: Size(double.infinity,
-                //               30), // Set minimum size to match height
-                //         ),
-                //         child: SimpleTextWidget(
-                //           text: 'Stop Run',
-                //           fontWeight: FontWeight.w300,
-                //           fontSize: 12,
-                //           color: dark ? AppColor.black : AppColor.white,
-                //           fontFamily: 'Poppins',
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          if (!isTracking) {
+                            MyAppHelperFunctions.showSnackBar(
+                                'Tracking has been started');
+                            startListening(); // Call the function explicitly
+                          }
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppColor.orangeColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          minimumSize: Size(double.infinity,
+                              30), // Set minimum size to match height
+                        ),
+                        child: SimpleTextWidget(
+                          text: 'Record a Run',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 12,
+                          color: dark ? AppColor.black : AppColor.white,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          if (isTracking) {
+                            MyAppHelperFunctions.showSnackBar(
+                                'Tracking has been Stopped');
+
+                            stopListening(); // Call the function explicitly
+                          }
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppColor.error,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          minimumSize: Size(double.infinity,
+                              30), // Set minimum size to match height
+                        ),
+                        child: SimpleTextWidget(
+                          text: 'Stop Run',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 12,
+                          color: dark ? AppColor.black : AppColor.white,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(height: AppSizes.inputFieldRadius),
                 ChallengedWidget(dark: dark),
                 const SizedBox(height: AppSizes.inputFieldRadius - 5),

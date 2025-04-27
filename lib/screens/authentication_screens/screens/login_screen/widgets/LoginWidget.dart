@@ -125,7 +125,7 @@ class LoginWidget extends StatelessWidget {
       FocusScope.of(Get.context!).unfocus();
 
       // Navigate to the next screen on success
-      Get.to(() => const NavigationMenu());
+      Get.offAll(() => const NavigationMenu());
 
     } on FirebaseAuthException catch (e) {
       // Close loading dialog if there's an error

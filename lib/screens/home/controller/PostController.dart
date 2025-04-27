@@ -60,6 +60,8 @@ class PostController extends GetxController {
     postsRef.onValue.listen((event) {
       final data = event.snapshot.value as Map<dynamic, dynamic>?;
 
+
+      print("data  $data");
       postsFollowing.clear();
       if (data != null) {
         List<Post> tempPosts = [];

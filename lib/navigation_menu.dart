@@ -28,7 +28,6 @@ class NavigationMenu extends StatelessWidget {
               ? AppColor.white.withOpacity(0.1)
               : AppColor.black.withOpacity(0.1),
           onDestinationSelected: (index) {
-            // Check index bounds before assigning
             if (index >= 0 && index < controller.screens.length) {
               controller.selectedIndex.value = index;
             }

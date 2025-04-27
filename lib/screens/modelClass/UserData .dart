@@ -10,8 +10,8 @@ class UserData {
   String? imageUrl;
 
   UserData({
-    this.email,
-    this.name,
+     this.email,
+     this.name,
     this.userFcmToken,
     this.gender,
     this.age,

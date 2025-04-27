@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fitness/screens/authentication_screens/ProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../authentication_screens/screens/login_screen/LoginScreen.dart';
@@ -36,6 +37,8 @@ class DashboardController extends GetxController{
       if (snapshot.exists && snapshot.value is Map) {
         Map<Object?, Object?> userData = snapshot.value as Map<Object?, Object?>;
         gender = userData['gender'] as String? ?? gender;
+        name.value = userData['name'] as String? ?? name.value;
+        imageUrl.value = userData['imageUrl'] as String? ?? imageUrl.value;
 
         print('Gender: $gender');
       } else {
@@ -63,8 +66,8 @@ class DashboardController extends GetxController{
 
         // Create an instance of UserData from the retrieved data
         UserData userData = UserData(
-          email: userDataMap['email'] as String?,
-          name: userDataMap['name'] as String?,
+          email: userDataMap['email'] as String,
+          name: userDataMap['name'] as String,
           userFcmToken: userDataMap['userFcmToken'] as String?,
           gender: userDataMap['gender'] as String?,
           age: userDataMap['age'] as String?,
@@ -80,6 +83,7 @@ class DashboardController extends GetxController{
             userData.height == null || userData.height!.isEmpty ||
             userData.weight == null || userData.weight!.isEmpty ||
             userData.targetWeight == null || userData.targetWeight!.isEmpty) {
+          debugPrint('required.  $userData');
 
           // Show Snackbar notification
           Get.snackbar(
@@ -91,7 +95,7 @@ class DashboardController extends GetxController{
           );
 
           // Navigate to the Gender Selection screen
-          Get.to(() => SelectGenderScreen(email: userData.email!, password: ''));
+          Get.to(() => ProfileScreen(name: name.toString(),));
         } else {
           // If all data is present, do nothing or proceed as needed
           debugPrint('User Data is complete. No action required.');
@@ -99,10 +103,7 @@ class DashboardController extends GetxController{
           await updateUserFcmToken();
 
 
-          Future.delayed(Duration(seconds: 2), () {
-            name.value = userData.name!; // Replace with actual data
-            imageUrl.value = userData.imageUrl!; // Replace with actual data
-          });
+
           // name = userData.name;
           // imageUrl = userData.imageUrl;
         }

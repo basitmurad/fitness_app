@@ -2,6 +2,7 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fitness/screens/authentication_screens/screens/login_screen/LoginScreen.dart';
+import 'package:fitness/screens/home/controller/DashboardController.dart';
 import 'package:fitness/screens/profile/user_profile_main/widgets/ButtonsWidget.dart';
 import 'package:fitness/screens/profile/user_profile_main/widgets/UserFollowingPostWidget.dart';
 import 'package:fitness/utils/constants/AppString.dart';
@@ -23,6 +24,7 @@ class UserProfileScreen extends StatelessWidget {
     final bool dark = MyAppHelperFunctions.isDarkMode(context);
     final String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
 
+    DashboardController dashboardController = Get.put(DashboardController());
     return DefaultTabController(
       length: 2,
       initialIndex: 0,
@@ -36,101 +38,101 @@ class UserProfileScreen extends StatelessWidget {
           //   icon: Icon(Icons.arrow_back, color: dark ? AppColor.white : AppColor.black),
           // ),
           title: SimpleTextWidget(
-            text: 'basit',
+            text: dashboardController.name.value,
             fontWeight: FontWeight.w500,
             fontSize: 16,
             color: dark ? AppColor.white : AppColor.black,
             fontFamily: "Poppins",
           ),
+          
+          actions: [
+            IconButton(onPressed: () async {
+
+              try {
+                await FirebaseAuth.instance.signOut();
+                Get.offAll(LoginScreen()  );
+              } catch (e) {
+                Get.snackbar('Logout Failed', 'Error: $e', snackPosition: SnackPosition.BOTTOM);
+              }
+              
+            }, icon: Icon(Icons.logout))
+          ],
 
         ),
-        drawer: Drawer(
-          child: Container(
-            color: dark ? AppColor.black : AppColor.white, // Ensure background color matches the theme
-            child: Theme(
-              data: ThemeData(
-                iconTheme: IconThemeData(
-                  color: dark ? AppColor.black : AppColor.white, // Icons adapt to theme
-                ),
-              ),
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  SizedBox(height: 32),
-                  ListTile(
-                    leading: Icon(Icons.arrow_back),
-                    title: Text(
-                      AppStrings.textSetting,
-                      style: TextStyle(color: dark ? AppColor.white : AppColor.black), // Text adapts to theme
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.home),
-                    title: Text(
-                      'Home',
-                      style: TextStyle(color: dark ? AppColor.white : AppColor.black),
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text(
-                      'Settings',
-                      style: TextStyle(color: dark ? AppColor.white : AppColor.black),
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Divider(color: dark ? AppColor.white : AppColor.black),
-                  Spacer(),// Adjust divider color
-                  ListTile(
-                    leading: Icon(Icons.logout),
-                    title: Text(
-                      'Logout',
-                      style: TextStyle(color: dark ? AppColor.white : AppColor.black),
-                    ),
-                    onTap: () async {
-                      try {
-                        await FirebaseAuth.instance.signOut();
-                        Get.offAll(LoginScreen()  );
-                      } catch (e) {
-                        Get.snackbar('Logout Failed', 'Error: $e', snackPosition: SnackPosition.BOTTOM);
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        // drawer: Drawer(
+        //   child: Container(
+        //     color: dark ? AppColor.black : AppColor.white, // Ensure background color matches the theme
+        //     child: Theme(
+        //       data: ThemeData(
+        //         iconTheme: IconThemeData(
+        //           color: dark ? AppColor.black : AppColor.white, // Icons adapt to theme
+        //         ),
+        //       ),
+        //       child: ListView(
+        //         padding: EdgeInsets.zero,
+        //         children: <Widget>[
+        //           SizedBox(height: 32),
+        //           ListTile(
+        //             leading: Icon(Icons.arrow_back),
+        //             title: Text(
+        //               AppStrings.textSetting,
+        //               style: TextStyle(color: dark ? AppColor.white : AppColor.black), // Text adapts to theme
+        //             ),
+        //             onTap: () {
+        //               Navigator.pop(context);
+        //             },
+        //           ),
+        //           ListTile(
+        //             leading: Icon(Icons.home),
+        //             title: Text(
+        //               'Home',
+        //               style: TextStyle(color: dark ? AppColor.white : AppColor.black),
+        //             ),
+        //             onTap: () {
+        //               Navigator.pop(context);
+        //             },
+        //           ),
+        //           ListTile(
+        //             leading: Icon(Icons.settings),
+        //             title: Text(
+        //               'Settings',
+        //               style: TextStyle(color: dark ? AppColor.white : AppColor.black),
+        //             ),
+        //             onTap: () {
+        //               Navigator.pop(context);
+        //             },
+        //           ),
+        //           Divider(color: dark ? AppColor.white : AppColor.black),
+        //           Spacer(),// Adjust divider color
+        //           ListTile(
+        //             leading: Icon(Icons.logout),
+        //             title: Text(
+        //               'Logout',
+        //               style: TextStyle(color: dark ? AppColor.white : AppColor.black),
+        //             ),
+        //             onTap: () async {
+        //               try {
+        //                 await FirebaseAuth.instance.signOut();
+        //                 Get.offAll(LoginScreen()  );
+        //               } catch (e) {
+        //                 Get.snackbar('Logout Failed', 'Error: $e', snackPosition: SnackPosition.BOTTOM);
+        //               }
+        //             },
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 8),
-                FutureBuilder<String?>(
-                  future: fetchUserImageUrl(userId),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return CircularImage(
-                        imageUrl: snapshot.data ?? AppImagePaths.placeholder,
-                        size: 100,
-                      );
-                    }
-                  },
-                ),
-                const SizedBox(height: 4),
+              CircularImage(
+                imageUrl: dashboardController.imageUrl.value ?? AppImagePaths.placeholder,
+                size: 100,
+              ),
                 // SimpleTextWidget(
                 //   text: '@knc sors',
                 //   fontWeight: FontWeight.w300,
@@ -160,17 +162,17 @@ class UserProfileScreen extends StatelessWidget {
                 const SizedBox(height: AppSizes.spaceBtwSections - 10),
                 ButtonsWidget(dark: dark),
                 const SizedBox(height: 20),
-                TabBar(
-                  tabs: const [
-                    Tab(icon: Icon(Icons.photo)),
-                    // Tab(icon: Icon(Icons.slow_motion_video_rounded)),
-                    Tab(icon: Icon(Icons.save)),
-                  ],
-                  indicatorColor: Colors.orange,
-                  labelColor: Colors.orange,
-                  unselectedLabelColor: dark ? AppColor.white : AppColor.black,
-                  indicatorSize: TabBarIndicatorSize.label,
-                ),
+                // TabBar(
+                //   tabs: const [
+                //     Tab(icon: Icon(Icons.photo)),
+                //     // Tab(icon: Icon(Icons.slow_motion_video_rounded)),
+                //     // Tab(icon: Icon(Icons.save)),
+                //   ],
+                //   indicatorColor: Colors.orange,
+                //   labelColor: Colors.orange,
+                //   unselectedLabelColor: dark ? AppColor.white : AppColor.black,
+                //   indicatorSize: TabBarIndicatorSize.label,
+                // ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 1),
                   height: MediaQuery.of(context).size.height - 250,
@@ -220,20 +222,20 @@ class UserProfileScreen extends StatelessWidget {
                         },
                       ),
 
-                      DynamicHeightGridView(
-                        itemCount: 120,
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        builder: (ctx, index) {
-                          return Container(
-                            margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
-                            height: 100,
-                            width: 50,
-                            color: Colors.red,
-                          );
-                        },
-                      ),
+                      // DynamicHeightGridView(
+                      //   itemCount: 120,
+                      //   crossAxisCount: 3,
+                      //   crossAxisSpacing: 10,
+                      //   mainAxisSpacing: 10,
+                      //   builder: (ctx, index) {
+                      //     return Container(
+                      //       margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+                      //       height: 100,
+                      //       width: 50,
+                      //       color: Colors.red,
+                      //     );
+                      //   },
+                      // ),
                     ],
                   ),
                 ),
@@ -245,12 +247,6 @@ class UserProfileScreen extends StatelessWidget {
     );
   }
 
-  Future<String?> fetchUserImageUrl(String userId) async {
-    // Same as your existing method
-    DatabaseReference userRef = FirebaseDatabase.instance.ref('users/$userId');
-    final snapshot = await userRef.get();
-    return snapshot.exists ? snapshot.child('imageUrl').value as String? : null;
-  }
 
   Future<List<String>> fetchAllPostImages(String userId) async {
     // Same as your existing method

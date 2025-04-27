@@ -47,50 +47,50 @@ class ButtonsWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 3,
-            child: Container(
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: AppColor.grey,
-              ),
-              child: TextButton(
-                onPressed: () {
-
-
-                  Get.to(() => const ShareProfileScreen());
-
-                },
-                child: const SimpleTextWidget(
-                  text: 'Share Profile',
-                  fontWeight: FontWeight.w300,
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 1,
-            child: Container(
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: AppColor.grey,
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.person,
-                  color: dark ? AppColor.black : AppColor.black,
-                ),
-              ),
-            ),
-          ),
+          // const SizedBox(width: 8),
+          // Expanded(
+          //   flex: 3,
+          //   child: Container(
+          //     height: 40,
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(6),
+          //       color: AppColor.grey,
+          //     ),
+          //     child: TextButton(
+          //       onPressed: () {
+          //
+          //
+          //         Get.to(() => const ShareProfileScreen());
+          //
+          //       },
+          //       child: const SimpleTextWidget(
+          //         text: 'Share Profile',
+          //         fontWeight: FontWeight.w300,
+          //         fontSize: 16,
+          //         color: Colors.black,
+          //         fontFamily: 'Poppins',
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(width: 8),
+          // Expanded(
+          //   flex: 1,
+          //   child: Container(
+          //     height: 40,
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(6),
+          //       color: AppColor.grey,
+          //     ),
+          //     child: IconButton(
+          //       onPressed: () {},
+          //       icon: Icon(
+          //         Icons.person,
+          //         color: dark ? AppColor.black : AppColor.black,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

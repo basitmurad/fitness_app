@@ -1,0 +1,2 @@
+/home/appomatrix/AndroidStudioProjects/fitness_app/android/app/.cxx/Debug/q1h6p563/x86/CMakeFiles/edit_cache.dir
+/home/appomatrix/AndroidStudioProjects/fitness_app/android/app/.cxx/Debug/q1h6p563/x86/CMakeFiles/rebuild_cache.dir

@@ -228,8 +228,8 @@ class SignUpController extends GetxController {
       print('Verification email sent');
 
       // Notify user about the email sent
-      setMessage('Success', 'Verification email sent. Please check your inbox.',
-          Colors.blue);
+      // setMessage('Success', 'Verification email sent. Please check your inbox.',
+      //     Colors.blue);
       Get.offAll(
         () => ProfileScreen(
           name: nameController.text,

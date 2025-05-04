@@ -3,7 +3,6 @@ import 'package:fitness/screens/authentication_screens/ProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../select_gender_screen/SelectGenderScreen.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   final String email;

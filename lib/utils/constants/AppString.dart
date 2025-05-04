@@ -1,3 +1,5 @@
+import 'package:fitness/utils/constants/AppImagePaths.dart';
+
 class AppStrings {
 
   static String pic1TextHeader = "Track Your Workouts";
@@ -165,6 +167,69 @@ class AppStrings {
 
 
 
-
+  static List<Map<String, String>> maleExercise = [
+    {
+      'imagePath': AppImagePaths.maleAbsWorkout,
+      'exerciseName': 'Abs Workout',
+      'exerciseRepetition': '06 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.maleChestWorkout,
+      'exerciseName': 'Chest Workout',
+      'exerciseRepetition': '08 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.maleArmWorkout,
+      'exerciseName': 'Arm Workout',
+      'exerciseRepetition': '05 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.maleLegWorkout,
+      'exerciseName': 'leg Workout',
+      'exerciseRepetition': '06 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.maleShoulderWorkout,
+      'exerciseName': 'Shoulder Workout',
+      'exerciseRepetition': '04 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.maleBackWorkout,
+      'exerciseName': 'Back Workout',
+      'exerciseRepetition': '05',
+    },
+  ];
+  static List<Map<String, String>> femaleExercises = [
+    {
+      'imagePath': AppImagePaths.femaleAbsWorkout,
+      'exerciseName': 'Abs Workout',
+      'exerciseRepetition': '06 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.femaleChestWorkout,
+      'exerciseName': 'Chest Workout',
+      'exerciseRepetition': '08 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.femaleArmWorkout,
+      'exerciseName': 'Arm Workout',
+      'exerciseRepetition': '05 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.femaleLegWorkout,
+      'exerciseName': 'leg Workout',
+      'exerciseRepetition': '06 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.femaleShoulderWorkout,
+      'exerciseName': 'Shoulder Workout',
+      'exerciseRepetition': '04 Exercise',
+    },
+    {
+      'imagePath': AppImagePaths.femaleBackWorkout,
+      'exerciseName': 'Back Workout',
+      'exerciseRepetition': '05',
+    },
+  ];
 
 }
